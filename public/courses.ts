@@ -648,13 +648,13 @@ const coursesList: Course[] = [
   },
 ];
 
-export type TCourseContents = {
+type TCourseContents = {
   sectionName: string;
   chapterNames: string[];
   videoLinks: string[];
 };
 
-export type TReview = {
+type TReview = {
   student: TStudentRankings;
   body: string;
 };
@@ -673,5 +673,30 @@ export type Course = {
   courseIndex?: TCourseContents[];
   reviews?: TReview[];
 };
+
+export type TCourseContent = {
+  sectionName: string;
+  chapterNames: string[];
+  videoLinks: string[];
+  _id: string;
+};
+
+export type TCourseResource = {
+  resourceName: string;
+  resourceLink: string;
+};
+export interface TCourse {
+  _id: string;
+  courseName: string;
+  author: string;
+  courseRating: string;
+  courseImg: string;
+  coursePrice: number;
+  isPaidCourse: boolean;
+  courseLink: string;
+  courseIndex: TCourseContent[];
+  courseResources: TCourseResource[];
+  reviews: any[];
+}
 
 export default coursesList;

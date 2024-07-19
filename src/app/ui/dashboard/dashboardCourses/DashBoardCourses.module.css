@@ -3,5 +3,6 @@
   height: 100%;
 }
 .carouselItem {
-  margin-right: 0.8rem;
+  margin-inline: 0.5rem;
+  margin-block: 0.5rem;
 }

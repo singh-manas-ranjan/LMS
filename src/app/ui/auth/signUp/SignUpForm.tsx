@@ -53,7 +53,7 @@ const formGroupBox = {
 };
 
 type Props = {
-  role: "ADMIN" | "INSTRUCTOR" | "STUDENTS";
+  role: "INSTRUCTOR" | "STUDENTS";
   onClose: () => void;
 };
 

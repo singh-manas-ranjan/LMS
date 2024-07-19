@@ -1,12 +1,11 @@
 "use client";
 import { Box, SimpleGrid } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import coursesList from "../../../../../public/courses";
 import CourseCard from "@/app/ui/dashboard/courseCard/CourseCard";
 import OrderByBtn from "@/app/ui/dashboard/orderByBtn/OrderByBtn";
 import orderByBtns from "../../../../../public/orderByBtns";
 import { sxScrollbar } from "../../../../../public/scrollbarStyle";
-import axios from "axios";
-import { TCourse } from "../../../../../public/courses";
 
 const main = {
   width: "100%",
@@ -18,25 +17,7 @@ const main = {
   padding: "1rem",
   overflow: "hidden",
 };
-
 const Courses = () => {
-  const [coursesList, setCoursesList] = useState<TCourse[]>([]);
-
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await axios.get<TCourse[]>(
-          "http://localhost:3131/api/v1/courses"
-        );
-        setCoursesList(response.data);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
-      }
-    };
-
-    fetchCourses();
-  }, []);
-
   const [filterBy, setFilter] = useState("all");
   const [sortBy, setSortBy] = useState("default");
 
@@ -75,12 +56,13 @@ const Courses = () => {
           templateColumns={{
             base: "repeat(auto-fill, minmax(200px, 1fr))",
             sm: "repeat(auto-fill, minmax(220px, 1fr))",
-            xl: "repeat(auto-fill, minmax(220px, 1fr))",
+            xl: "repeat(auto-fill, minmax(250px, 1fr))",
           }}
+          // w={"100%"}
           justifyContent={"center"}
           padding={".5rem"}
         >
-          {coursesList
+          {/* {coursesList
             .sort((a, b) => {
               if (sortBy === "default") {
                 return 0;
@@ -101,7 +83,7 @@ const Courses = () => {
             })
             .map((course, idx) => (
               <CourseCard key={idx} course={course} />
-            ))}
+            ))} */}
         </SimpleGrid>
       </Box>
     </Box>

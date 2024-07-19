@@ -52,7 +52,6 @@ const SignUpModal = () => {
               <TabList mb="1em">
                 <Tab fontSize={{ base: "sm", lg: "md" }}>Student</Tab>
                 <Tab fontSize={{ base: "sm", lg: "md" }}>Instructor</Tab>
-                <Tab fontSize={{ base: "sm", lg: "md" }}>Admin</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
@@ -60,9 +59,6 @@ const SignUpModal = () => {
                 </TabPanel>
                 <TabPanel>
                   <SignUpForm role="INSTRUCTOR" onClose={onClose} />
-                </TabPanel>
-                <TabPanel>
-                  <SignUpForm role="ADMIN" onClose={onClose} />
                 </TabPanel>
               </TabPanels>
             </Tabs>

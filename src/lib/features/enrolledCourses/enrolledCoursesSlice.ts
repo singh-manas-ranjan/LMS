@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Course } from "../../../../public/courses";
+import { TCourse } from "../../../../public/courses";
 
 export interface EnrolledCoursesState {
-  enrolledCourses: Course[];
+  enrolledCourses: TCourse[];
 }
 
 const initialSate: EnrolledCoursesState = {
@@ -13,12 +13,12 @@ const enrolledCoursesSlice = createSlice({
   name: "courses",
   initialState: initialSate,
   reducers: {
-    addEnrolledCourse(state, action: PayloadAction<Course>) {
+    addEnrolledCourse(state, action: PayloadAction<TCourse>) {
       state.enrolledCourses.push(action.payload);
     },
     removeEnrolledCourse(state, action: PayloadAction<string>) {
       state.enrolledCourses = state.enrolledCourses.filter(
-        (course) => course.courseId !== action.payload
+        (course) => course._id !== action.payload
       );
     },
   },
