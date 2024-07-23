@@ -1,35 +1,68 @@
 "use client";
-import { Box } from "@chakra-ui/react";
+import { Box, Spinner } from "@chakra-ui/react";
 import styles from "./DashBoardCourses.module.css";
-import React from "react";
-import coursesList from "../../../../../public/courses";
+import React, { useEffect, useMemo, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import DashboardCoursesCard from "./DashboardCoursesCard";
+import { TCourse } from "../../../../../public/courses";
+import { fetchCourses } from "@/actions/courses/actions";
 
 const DashBoardCourses = () => {
+  const [courses, setCourses] = useState<TCourse[]>([]);
+  useEffect(() => {
+    async function getCourses() {
+      setCourses(await fetchCourses());
+    }
+    getCourses();
+  }, []);
+
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 1261 },
       items: 5,
+      partialVisibilityGutter: 20, // Adjust the gutter to fit your needs
     },
     desktop: {
       breakpoint: { max: 1260, min: 990 },
       items: 4,
+      partialVisibilityGutter: 20,
     },
     tablet: {
       breakpoint: { max: 989, min: 570 },
       items: 3,
+      partialVisibilityGutter: 15,
     },
     midMobile: {
       breakpoint: { max: 764, min: 520 },
       items: 2,
+      partialVisibilityGutter: 10,
     },
     mobile: {
       breakpoint: { max: 520, min: 0 },
-      items: 1,
+      items: 1.1,
+      partialVisibilityGutter: 5,
     },
   };
+
+  if (courses.length === 0) {
+    return (
+      <Box
+        width={"100%"}
+        display={"grid"}
+        height={"100%"}
+        placeItems={"center"}
+      >
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          color="blue.500"
+          emptyColor="gray.200"
+          size="xl"
+        />
+      </Box>
+    );
+  }
 
   return (
     <Box width={"100%"} display={"grid"} height={"fit-content"}>
@@ -41,7 +74,7 @@ const DashBoardCourses = () => {
         className={styles.carousel}
         removeArrowOnDeviceType={["tablet", "mobile"]}
       >
-        {coursesList
+        {courses
           .filter((course) => Number(course.courseRating) >= 4.5)
           .sort((a, b) => {
             return Number(b.courseRating) - Number(a.courseRating);

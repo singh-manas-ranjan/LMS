@@ -6,10 +6,10 @@ import {
   addEnrolledCourse,
   removeEnrolledCourse,
 } from "@/lib/features/enrolledCourses/enrolledCoursesSlice";
-import { Course } from "../../../../../public/courses";
+import { Course, TCourse } from "../../../../../public/courses";
 
 interface Props {
-  course: Course;
+  course: TCourse;
 }
 
 const DashboardCourseEnrollBtn = ({ course }: Props) => {

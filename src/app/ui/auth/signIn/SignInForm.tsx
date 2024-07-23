@@ -102,8 +102,15 @@ const SignInForm = ({ access: { role, successPath }, onClose }: Props) => {
       console.log(err);
       if (axios.isAxiosError(err)) {
         const axiosError = err as AxiosError;
-        if (axiosError.response?.status === 401) {
-          showFailedToast("Invalid Credentials");
+        switch (axiosError.response?.status) {
+          case 401:
+            showFailedToast("Invalid credentials");
+            break;
+          case 404:
+            showFailedToast("Invalid credentials");
+            break;
+          default:
+            showFailedToast("Something went wrong");
         }
       } else {
         showFailedToast("Unable to Sign In, please try again ");

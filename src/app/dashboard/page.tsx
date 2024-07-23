@@ -19,6 +19,7 @@ import Barchart from "../ui/dashboard/barchart/Barchart";
 import studentRankings from "../../../public/rankingData";
 import DashBoardCourses from "../ui/dashboard/dashboardCourses/DashBoardCourses";
 import { sxScrollbar } from "../../../public/scrollbarStyle";
+import { fetchCourses } from "@/actions/courses/actions";
 
 const main = {
   width: "100%",
@@ -30,7 +31,8 @@ const main = {
   padding: "1rem",
   overflow: "hidden",
 };
-const Dashboard = () => {
+
+const Dashboard = async () => {
   return (
     <Box as="main" sx={main}>
       <Box

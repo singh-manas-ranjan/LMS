@@ -7,15 +7,17 @@ import {
   Grid,
   Heading,
   Image,
+  SkeletonCircle,
+  SkeletonText,
   Text,
 } from "@chakra-ui/react";
 import React from "react";
 import EnrollBtn from "../courseCard/enrollBtn/EnrollBtn";
 import DashboardCourseEnrollBtn from "./DashboardCourseEnrollBtn";
-import { Course } from "../../../../../public/courses";
+import { TCourse } from "../../../../../public/courses";
 
 interface Props {
-  course: Course;
+  course: TCourse;
 }
 
 const textStyle = {
