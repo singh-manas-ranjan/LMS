@@ -26,7 +26,8 @@ const Courses = () => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get<TCourse[]>(
-          "http://localhost:3131/api/v1/courses"
+          // "http://localhost:3131/api/v1/courses"
+          "https://learnopia-backend.vercel.app/api/v1/courses"
         );
         setCoursesList(response.data);
       } catch (error) {
