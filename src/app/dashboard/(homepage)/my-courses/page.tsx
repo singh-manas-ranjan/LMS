@@ -16,7 +16,7 @@ const main = {
 
 const MyCourses = () => {
   return (
-    <Box as="main" sx={main}>
+    <Box as="main" sx={main} rowGap={5} overflow={"hidden"}>
       <Box overflowY={"scroll"} w={"100%"} h={"100%"} sx={sxScrollbar}>
         <EnrolledCourses />
       </Box>

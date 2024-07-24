@@ -1,8 +1,11 @@
 import {
+  Box,
+  Button,
   Card,
   CardBody,
+  CardFooter,
   CardHeader,
-  Flex,
+  Grid,
   Heading,
   Image,
   Text,
@@ -16,32 +19,54 @@ interface Props {
 }
 
 const MyCoursesCard = ({ course }: Props) => {
+  const textStyle = {
+    fontSize: { base: "sm" },
+  };
   return (
-    <Link href={`/dashboard/my-courses/${btoa(course._id)}`}>
-      <Card
-        boxShadow={
-          "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
-        }
+    <Card
+      h={{ base: "100%", sm: "370px", md: "315px" }}
+      boxShadow={
+        "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
+      }
+    >
+      <CardHeader>
+        <Image
+          src={`/${course.courseImg}`}
+          alt={course.courseName}
+          borderRadius="lg"
+          w={"100%"}
+          h={"100%"}
+        />
+      </CardHeader>
+      <CardBody
+        display={"flex"}
+        flexDirection={"column"}
+        justifyContent={"space-between"}
+        paddingBlock={0}
       >
-        <CardHeader h={"60%"}>
-          <Image
-            src={`/${course.courseImg}`}
-            alt={course.courseName}
-            borderRadius="lg"
-            w={"100%"}
-          />
-        </CardHeader>
-        <CardBody display={"flex"} flexDir={"column"} rowGap={3} pt={0}>
-          <Heading size={{ sm: "sm" }} h={"75px"}>
-            {course.courseName}
-          </Heading>
-          <Flex justifyContent={"space-between"}>
-            <Text color="#718096">{course.author}</Text>
-            <Text>{course.courseRating}</Text>
-          </Flex>
-        </CardBody>
-      </Card>
-    </Link>
+        <Heading size={{ base: "xs" }}>{course.courseName}</Heading>
+        <Grid>
+          <Text sx={textStyle} color={"#3c7356"}>
+            {course.author}
+          </Text>
+          <Box display={"flex"} justifyContent={"space-between"}>
+            <Text sx={textStyle}>{course.courseRating}</Text>
+          </Box>
+        </Grid>
+      </CardBody>
+      <CardFooter paddingTop={2} paddingBottom={5} display={"grid"}>
+        <Link href={`/dashboard/my-courses/${btoa(course._id)}`}>
+          <Button
+            fontSize={{ base: "sm", xl: "md" }}
+            colorScheme="teal"
+            size={{ base: "sm", xl: "md" }}
+            width={"100%"}
+          >
+            Watch
+          </Button>
+        </Link>
+      </CardFooter>
+    </Card>
   );
 };
 

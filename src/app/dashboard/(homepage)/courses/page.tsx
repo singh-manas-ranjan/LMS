@@ -5,8 +5,8 @@ import CourseCard from "@/app/ui/dashboard/courseCard/CourseCard";
 import OrderByBtn from "@/app/ui/dashboard/orderByBtn/OrderByBtn";
 import orderByBtns from "../../../../../public/orderByBtns";
 import { sxScrollbar } from "../../../../../public/scrollbarStyle";
-import axios from "axios";
 import { TCourse } from "../../../../../public/courses";
+import { fetchCourses } from "@/actions/courses/actions";
 
 const main = {
   width: "100%",
@@ -23,19 +23,14 @@ const Courses = () => {
   const [coursesList, setCoursesList] = useState<TCourse[]>([]);
 
   useEffect(() => {
-    const fetchCourses = async () => {
+    async function getCourses() {
       try {
-        const response = await axios.get<TCourse[]>(
-          // "http://localhost:3131/api/v1/courses"
-          "https://learnopia-backend.vercel.app/api/v1/courses"
-        );
-        setCoursesList(response.data);
+        setCoursesList(await fetchCourses());
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
-    };
-
-    fetchCourses();
+    }
+    getCourses();
   }, []);
 
   const [filterBy, setFilter] = useState("all");
