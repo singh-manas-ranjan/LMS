@@ -52,11 +52,9 @@ const EnrolledCourses = () => {
   }
 
   return (
-    <Box w={"100%"} h={"100%"} display={"grid"} placeItems={"center"}>
+    <Box w={"100%"} h={"100%"}>
       {Array.isArray(eCourses) && eCourses.length !== 0 ? (
         <SimpleGrid
-          w={"100%"}
-          h={"100%"}
           spacing={5}
           templateColumns={{
             base: "repeat(auto-fill, minmax(200px, 1fr))",
@@ -71,7 +69,11 @@ const EnrolledCourses = () => {
           ))}
         </SimpleGrid>
       ) : (
-        eCourses.length === 0 && <Heading>No courses found</Heading>
+        eCourses.length === 0 && (
+          <Box w={"100%"} h={"100%"} display={"grid"} placeItems={"center"}>
+            <Heading>No courses found</Heading>
+          </Box>
+        )
       )}
     </Box>
   );

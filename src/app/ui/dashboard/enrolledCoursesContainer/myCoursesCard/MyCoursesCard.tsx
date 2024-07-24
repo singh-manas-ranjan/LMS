@@ -24,7 +24,7 @@ const MyCoursesCard = ({ course }: Props) => {
   };
   return (
     <Card
-      h={{ base: "100%", sm: "370px", md: "315px" }}
+      // h={{ base: "fit-content", sm: "370px", md: "315px" }}
       boxShadow={
         "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
       }
@@ -41,7 +41,7 @@ const MyCoursesCard = ({ course }: Props) => {
       <CardBody
         display={"flex"}
         flexDirection={"column"}
-        justifyContent={"space-between"}
+        rowGap={3}
         paddingBlock={0}
       >
         <Heading size={{ base: "xs" }}>{course.courseName}</Heading>
@@ -49,9 +49,7 @@ const MyCoursesCard = ({ course }: Props) => {
           <Text sx={textStyle} color={"#3c7356"}>
             {course.author}
           </Text>
-          <Box display={"flex"} justifyContent={"space-between"}>
-            <Text sx={textStyle}>{course.courseRating}</Text>
-          </Box>
+          <Text sx={textStyle}>{course.courseRating}</Text>
         </Grid>
       </CardBody>
       <CardFooter paddingTop={2} paddingBottom={5} display={"grid"}>

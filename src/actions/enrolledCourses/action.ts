@@ -32,8 +32,8 @@ export const setEnrolledCourses = async (id: string, courseId: string) => {
         body: JSON.stringify({ courseId }),
       }
     );
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+    if (response.status === 409) {
+      return 409;
     }
     return response.status;
   } catch (error) {
