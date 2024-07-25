@@ -5,14 +5,15 @@ import MyCoursesCard from "./myCoursesCard/MyCoursesCard";
 import { getEnrolledCourses } from "@/actions/enrolledCourses/action";
 import { TCourse } from "../../../../../public/courses";
 import { getUserInfoFromLocalStorage } from "../navbar/Navbar";
-import { useAppDispatch } from "@/app/hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks/reduxHooks";
 import { addEnrolledCourse } from "@/lib/features/enrolledCourses/enrolledCoursesSlice";
 
 const EnrolledCourses = () => {
   const dispatch = useAppDispatch();
-  const [eCourses, setECourses] = useState<TCourse[]>([]);
+  const [eCourses, setECourses] = useState<TCourse[]>(
+    useAppSelector((state) => state.courses.enrolledCourses)
+  );
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchEnrolledCourses() {
@@ -20,18 +21,16 @@ const EnrolledCourses = () => {
         const { _id } = getUserInfoFromLocalStorage();
         const courses = await getEnrolledCourses(_id);
         setECourses(courses);
+        dispatch(addEnrolledCourse(courses));
+        localStorage.setItem("enrolledCoursesList", JSON.stringify(courses));
         setLoading(false);
       } catch (error) {
-        setError("Failed to fetch enrolled courses. Please try again later.");
         setLoading(false);
       }
     }
 
     fetchEnrolledCourses();
-  }, []);
-  if (eCourses.length !== 0) {
-    dispatch(addEnrolledCourse(eCourses));
-  }
+  }, [dispatch]);
 
   if (loading) {
     return (
@@ -45,10 +44,6 @@ const EnrolledCourses = () => {
         />
       </Box>
     );
-  }
-
-  if (error) {
-    return <Text>{error}</Text>;
   }
 
   return (

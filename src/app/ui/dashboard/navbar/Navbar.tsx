@@ -104,6 +104,7 @@ export function getUserInfoFromLocalStorage() {
 export function removeUserInfoFromLocalStorage() {
   if (typeof window === "undefined") return;
   localStorage.removeItem("userInfo");
+  localStorage.removeItem("enrolledCoursesList");
 }
 
 const Navbar = ({ navLinks }: Props) => {

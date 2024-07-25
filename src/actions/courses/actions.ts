@@ -10,9 +10,16 @@ export const fetchCourses = async (): Promise<TCourse[]> => {
       method: "GET",
     })
       .then((res) => res.json())
-      .then((data) => data);
+      .then((data) => data.body);
   } catch (err) {
     console.log(err);
   }
   return courses;
+};
+
+export const fetchCourseById = async (courseId: string): Promise<TCourse> => {
+  const response = await fetch(
+    `http://localhost:3131/api/v1/courses/${courseId}`
+  );
+  return await response.json().then((data) => data.body);
 };

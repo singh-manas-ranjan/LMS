@@ -53,7 +53,8 @@ const MyCoursesCard = ({ course }: Props) => {
         </Grid>
       </CardBody>
       <CardFooter paddingTop={2} paddingBottom={5} display={"grid"}>
-        <Link href={`/dashboard/my-courses/${btoa(course._id)}`}>
+        {/* <Link href={`/dashboard/my-courses/${btoa(course._id)}`}> */}
+        <Link href={`/dashboard/my-courses/${course._id}`}>
           <Button
             fontSize={{ base: "sm", xl: "md" }}
             colorScheme="teal"

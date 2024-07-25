@@ -20,8 +20,8 @@ const DashBoardCourses = () => {
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 1261 },
-      items: 5,
-      partialVisibilityGutter: 20, // Adjust the gutter to fit your needs
+      items: 5.5,
+      partialVisibilityGutter: 20,
     },
     desktop: {
       breakpoint: { max: 1260, min: 990 },

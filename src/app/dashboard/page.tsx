@@ -43,7 +43,7 @@ const Dashboard = async () => {
         overflowY={"scroll"}
         sx={sxScrollbar}
       >
-        <Flex flex={6} flexDirection={"column"} p={"1rem"} rowGap={10}>
+        <Flex flex={{ xl: 6 }} flexDirection={"column"} p={"1rem"} rowGap={10}>
           <Box
             flex={{ xl: 5 }}
             borderRadius={8}

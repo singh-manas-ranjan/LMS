@@ -694,6 +694,8 @@ export interface TCourse {
   coursePrice: number;
   isPaidCourse: boolean;
   courseLink: string;
+  aboutCourse: string;
+  description: string;
   courseIndex: TCourseContent[];
   courseResources: TCourseResource[];
   reviews: any[];

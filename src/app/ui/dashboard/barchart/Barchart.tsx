@@ -39,7 +39,7 @@ const Barchart = () => {
         display={"flex"}
         alignItems={"center"}
         columnGap={2}
-        p={".5rem"}
+        p={".3rem"}
       >
         Your Progress <PiChartLineUp size={20} />
       </Text>

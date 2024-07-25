@@ -25,19 +25,20 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { MdOndemandVideo } from "react-icons/md";
-import coursesList from "../../../../../../public/courses";
 import ShareButton from "@/app/ui/dashboard/enrolledCoursesContainer/myCoursesCard/shareButton/ShareButton";
 import TextEditor from "@/app/ui/dashboard/profile/textEditor/TextEditor";
 import { sxScrollbar } from "../../../../../../public/scrollbarStyle";
+import { fetchCourseById } from "@/actions/courses/actions";
 
 interface Props {
   params: { courseId: string };
   children: ReactNode;
 }
 
-const ParticularCourseLayout = ({ params, children }: Props) => {
-  const courseId = atob(params.courseId);
-  const course = coursesList.find((course) => course.courseId === courseId);
+const ParticularCourseLayout = async ({ params, children }: Props) => {
+  // const courseId = atob(params.courseId);
+  const courseId = params.courseId;
+  const course = await fetchCourseById(courseId);
 
   const main = {
     width: "100%",
@@ -72,7 +73,7 @@ const ParticularCourseLayout = ({ params, children }: Props) => {
               overflow={"hidden"}
               width={"100%"}
             >
-              <Flex justifyContent={"space-between"}>
+              <Flex justifyContent={"space-between"} p={2}>
                 <Heading as="h1" size={{ base: "sm", lg: "lg" }} color={"#333"}>
                   {course.courseName}
                 </Heading>
@@ -246,70 +247,20 @@ const ParticularCourseLayout = ({ params, children }: Props) => {
                       </TabPanel>
                       <TabPanel>
                         <Box w={{ base: "100%", md: "65%" }}>
-                          <Text sx={textFontSize}>
-                            Lorem ipsum dolor, sit amet consectetur adipisicing
-                            elit. Nihil tempora optio repudiandae enim nemo
-                            officiis sed, quis molestias odit beatae nobis,
-                            ipsum repellendus laudantium sequi error mollitia
-                            reprehenderit veniam amet.
-                          </Text>
-                          <Text sx={textFontSize} mt={5}>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Commodi, recusandae, consectetur voluptates
-                            ipsam cum dolorum suscipit nemo perferendis placeat,
-                            debitis iure! Nisi pariatur repellendus ullam, et
-                            architecto magnam quia, natus neque in enim soluta
-                            itaque vel ipsum asperiores facilis deserunt,
-                            molestiae veniam eaque. Fugiat odit, commodi aliquid
-                            cupiditate libero nihil.
-                          </Text>
+                          <Text sx={textFontSize}></Text>
+                          <Text sx={textFontSize} mt={5}></Text>
                         </Box>
                       </TabPanel>
                       <TabPanel>
                         <Box w={{ base: "100%", md: "65%" }}>
-                          <Text sx={textFontSize}>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Deleniti, impedit! Iste tempore quos id,
-                            corporis repudiandae consequatur nulla nemo sint!
-                          </Text>
-                          <Text sx={textFontSize} mt={5}>
-                            Project management is so important to organizations
-                            and teams, but in order for it to be really
-                            effective, you need to make sure you&apos;re
-                            correctly mapping your project management
-                            methodology to your team type, project,
-                            organization, and goals.
-                          </Text>
+                          <Text sx={textFontSize}></Text>
+                          <Text sx={textFontSize} mt={5}></Text>
                         </Box>
                       </TabPanel>
                       <TabPanel>
                         <Box w={{ base: "100%", md: "65%" }}>
-                          <Text sx={textFontSize}>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing
-                            elit. Laborum, incidunt cupiditate, ipsa magni
-                            corporis, dolorem porro magnam harum unde iste nisi
-                            architecto iusto minima. Labore vel iure nihil alias
-                            ducimus inventore voluptate in cupiditate? Aut
-                            similique tenetur, cum numquam error repudiandae
-                            voluptate debitis praesentium velit! Dolorem
-                            voluptatibus facere itaque, soluta sunt modi,
-                            impedit minima dolor quidem necessitatibus fuga.
-                            Sint exercitationem odio repudiandae placeat eius
-                            aperiam quaerat quo animi. Maiores quasi dolorem
-                            amet enim illum quia tempore, temporibus molestias
-                            quisquam vitae illo omnis quaerat perspiciatis sequi
-                            earum sapiente ab hic consectetur modi quae tenetur
-                            incidunt repudiandae. Voluptatem error quaerat
-                            praesentium vitae.
-                          </Text>
-                          <Text sx={textFontSize} mt={5}>
-                            Project management is so important to organizations
-                            and teams, but in order for it to be really
-                            effective, you need to make sure you&apos;re
-                            correctly mapping your project management
-                            methodology to your team type, project,
-                            organization, and goals.
-                          </Text>
+                          <Text sx={textFontSize}></Text>
+                          <Text sx={textFontSize} mt={5}></Text>
                         </Box>
                       </TabPanel>
                     </TabPanels>
@@ -434,7 +385,9 @@ const ParticularCourseLayout = ({ params, children }: Props) => {
           </Flex>
         </Flex>
       ) : (
-        <Heading>{`No Course Fount With Id: ${courseId}`}</Heading>
+        <Grid placeItems={"center"} w={"100%"} h={"100%"}>
+          <Heading>{`No Course Found`}</Heading>
+        </Grid>
       )}
     </Box>
   );
