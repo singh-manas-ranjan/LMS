@@ -11,9 +11,10 @@ import {
   useMediaQuery,
   List,
   ListItem,
+  Image,
   useToast,
 } from "@chakra-ui/react";
-import Image from "next/image";
+// import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { IoIosNotifications } from "react-icons/io";
 import { TbLogout2 } from "react-icons/tb";
@@ -114,13 +115,12 @@ const Navbar = ({ navLinks }: Props) => {
   const [maxWidth481] = useMediaQuery("(max-width: 481px)");
   const isMenuOpen = useAppSelector((state) => state.sideBar.isOpen);
 
-  const [userInfo, setUserInfo] = useState<TUser>(
-    getUserInfoFromLocalStorage() || ({} as TUser)
-  );
-
+  const [userInfo, setUserInfo] = useState<TUser>({} as TUser);
+  const [avatarUrl, setAvatarUrl] = useState("/avatar.png");
   useEffect(() => {
-    setUserInfo(getUserInfoFromLocalStorage());
-  }, []);
+    setUserInfo((prev) => (prev = getUserInfoFromLocalStorage()));
+    setAvatarUrl((prev) => userInfo.avatar);
+  }, [userInfo.avatar]);
 
   const toast = useToast();
 
@@ -170,10 +170,11 @@ const Navbar = ({ navLinks }: Props) => {
           >
             <Box sx={profile}>
               <Image
-                src={"/user.jpeg"}
+                loading="lazy"
+                src={avatarUrl}
                 width={30}
                 height={30}
-                alt="user"
+                alt=""
                 style={{ borderRadius: "50%" }}
               />{" "}
               {minWidth600 && <Text>{userInfo.firstName}</Text>}

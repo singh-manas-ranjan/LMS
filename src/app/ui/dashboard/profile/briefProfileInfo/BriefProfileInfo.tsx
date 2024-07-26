@@ -1,9 +1,22 @@
-import React from "react";
-import { Box, Grid, Heading } from "@chakra-ui/react";
-import Image from "next/image";
+"use client";
+import React, { useEffect, useState } from "react";
+import { Box, Grid, Heading, Image } from "@chakra-ui/react";
 import UploadProfilePicBtn from "../UploadProfilePicBtn";
+import { getUserInfoFromLocalStorage, TUser } from "../../navbar/Navbar";
 
 const BriefProfileInfo = () => {
+  const [userInfo, setUserInfo] = useState<TUser>({} as TUser);
+  const [userAvatar, setUserAvatar] = useState("/avatar.png");
+
+  const handleAvatarUpdate = (avatarUrl: string) => {
+    setUserAvatar(avatarUrl);
+  };
+
+  useEffect(() => {
+    setUserInfo((prev) => (prev = getUserInfoFromLocalStorage()));
+    setUserAvatar((prev) => userInfo.avatar);
+  }, [userInfo.avatar]);
+
   return (
     <Box
       p={".3rem"}
@@ -34,10 +47,10 @@ const BriefProfileInfo = () => {
           position={"relative"}
         >
           <Image
-            priority
+            loading="lazy"
             alt="profile-pic"
-            src={"/profilePic.jpeg"}
-            width={"100"}
+            src={userAvatar}
+            width={100}
             height={100}
             style={{
               borderRadius: "50%",
@@ -45,7 +58,10 @@ const BriefProfileInfo = () => {
                 "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em",
             }}
           />
-          <UploadProfilePicBtn />
+          <UploadProfilePicBtn
+            user="STUDENTS"
+            updateAvatar={handleAvatarUpdate}
+          />
         </Box>
         <Grid textAlign={"center"} rowGap={2} color={"#364A63"}>
           <Heading fontSize={{ base: "sm", lg: "md" }}>

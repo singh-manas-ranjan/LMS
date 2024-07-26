@@ -1,5 +1,5 @@
-import { Box, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
-import React, { Suspense } from "react";
+import { Box } from "@chakra-ui/react";
+import React from "react";
 import BriefProfileInfo from "@/app/ui/dashboard/profile/briefProfileInfo/BriefProfileInfo";
 import DetailedProfileInfo from "@/app/ui/dashboard/profile/detailedProfileInfo/DetailedProfileInfo";
 import { sxScrollbar } from "../../../../../public/scrollbarStyle";
