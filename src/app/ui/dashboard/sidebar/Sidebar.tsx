@@ -2,9 +2,9 @@
 import React from "react";
 import { Box, Heading, List, ListItem, useMediaQuery } from "@chakra-ui/react";
 import SideLink from "./sideLinks/SideLink";
-import { useAppSelector } from "@/app/hooks/reduxHooks";
 import HamMenu from "./hamMenu/HamMenu";
 import { NavLinkType } from "../../../../../public/sidebarLinks";
+import { useAppSelector } from "@/lib/store";
 export type TSideBarLinks = {
   [key: string]: NavLinkType[];
 };

@@ -1,18 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Box, Heading, SimpleGrid, Spinner, Text } from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid, Spinner } from "@chakra-ui/react";
 import MyCoursesCard from "./myCoursesCard/MyCoursesCard";
 import { getEnrolledCourses } from "@/actions/enrolledCourses/action";
 import { TCourse } from "../../../../../public/courses";
 import { getUserInfoFromLocalStorage } from "../navbar/Navbar";
-import { useAppDispatch, useAppSelector } from "@/app/hooks/reduxHooks";
-import { addEnrolledCourse } from "@/lib/features/enrolledCourses/enrolledCoursesSlice";
 
 const EnrolledCourses = () => {
-  const dispatch = useAppDispatch();
-  const [eCourses, setECourses] = useState<TCourse[]>(
-    useAppSelector((state) => state.courses.enrolledCourses)
-  );
+  const [eCourses, setECourses] = useState<TCourse[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,7 +16,6 @@ const EnrolledCourses = () => {
         const { _id } = getUserInfoFromLocalStorage();
         const courses = await getEnrolledCourses(_id);
         setECourses(courses);
-        dispatch(addEnrolledCourse(courses));
         localStorage.setItem("enrolledCoursesList", JSON.stringify(courses));
         setLoading(false);
       } catch (error) {
@@ -30,7 +24,7 @@ const EnrolledCourses = () => {
     }
 
     fetchEnrolledCourses();
-  }, [dispatch]);
+  }, []);
 
   if (loading) {
     return (

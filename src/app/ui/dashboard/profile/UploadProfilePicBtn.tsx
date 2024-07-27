@@ -20,10 +20,8 @@ import {
 
 const UploadProfilePicBtn = ({
   user,
-  updateAvatar,
 }: {
   user: "STUDENTS" | "INSTRUCTORS";
-  updateAvatar: (avatarUrl: string) => void;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -45,13 +43,12 @@ const UploadProfilePicBtn = ({
         .then((res) => res.data.body)
         .catch((err) => console.log(err));
       // Update avatar and local storage
-      updateAvatar(response.avatar);
       removeUserInfoFromLocalStorage();
       localStorage.setItem("userInfo", JSON.stringify(response));
       onClose();
+      window?.location.reload();
     } catch (error) {
       console.error("Failed to upload profile picture:", error);
-      // Optional: Show user feedback
     }
   };
 

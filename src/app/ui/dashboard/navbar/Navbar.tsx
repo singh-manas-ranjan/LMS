@@ -11,16 +11,14 @@ import {
   useMediaQuery,
   List,
   ListItem,
-  Image,
   useToast,
 } from "@chakra-ui/react";
-// import Image from "next/image";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { IoIosNotifications } from "react-icons/io";
 import { TbLogout2 } from "react-icons/tb";
 import { FaHandsClapping } from "react-icons/fa6";
 import HamMenu from "../sidebar/hamMenu/HamMenu";
-import { useAppDispatch, useAppSelector } from "@/app/hooks/reduxHooks";
 import { getIcon } from "../sidebar/sideLinks/SideLink";
 import { usePathname } from "next/navigation";
 import NextLink from "next/link";
@@ -28,6 +26,7 @@ import styles from "./Navbar.module.css";
 import { TSideBarLinks } from "../sidebar/Sidebar";
 import { openMenuClick } from "@/lib/features/sideBar/sideBarSlice";
 import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/lib/store";
 
 const nav = {
   bg: "#fff",
@@ -111,16 +110,15 @@ export function removeUserInfoFromLocalStorage() {
 const Navbar = ({ navLinks }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const [minWidth600] = useMediaQuery("(min-width: 600px)");
   const [maxWidth481] = useMediaQuery("(max-width: 481px)");
   const isMenuOpen = useAppSelector((state) => state.sideBar.isOpen);
 
   const [userInfo, setUserInfo] = useState<TUser>({} as TUser);
-  const [avatarUrl, setAvatarUrl] = useState("/avatar.png");
   useEffect(() => {
     setUserInfo((prev) => (prev = getUserInfoFromLocalStorage()));
-    setAvatarUrl((prev) => userInfo.avatar);
-  }, [userInfo.avatar]);
+  }, []);
 
   const toast = useToast();
 
@@ -139,7 +137,6 @@ const Navbar = ({ navLinks }: Props) => {
     }, 500);
   };
 
-  const dispatch = useAppDispatch();
   const handleClick = () => {
     dispatch(openMenuClick(!isMenuOpen));
   };
@@ -170,8 +167,7 @@ const Navbar = ({ navLinks }: Props) => {
           >
             <Box sx={profile}>
               <Image
-                loading="lazy"
-                src={avatarUrl}
+                src={userInfo.avatar ?? "/avatar.png"}
                 width={30}
                 height={30}
                 alt=""

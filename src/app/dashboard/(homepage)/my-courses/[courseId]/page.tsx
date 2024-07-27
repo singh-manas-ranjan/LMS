@@ -25,8 +25,6 @@ const VideoPlayer = ({ params, searchParams }: Props) => {
   }
 
   useEffect(() => {
-    console.log("video player");
-
     const coursesList = getCoursesListFromLocalStorage();
     setCoursesList(coursesList);
   }, []);

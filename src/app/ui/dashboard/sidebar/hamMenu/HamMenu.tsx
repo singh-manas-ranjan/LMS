@@ -1,11 +1,8 @@
 import { Button, Flex } from "@chakra-ui/react";
 import { IoMenu, IoClose } from "react-icons/io5";
 import React from "react";
-import { useAppDispatch, useAppSelector } from "@/app/hooks/reduxHooks";
-import {
-  onMouseEnter,
-  openMenuClick,
-} from "@/lib/features/sideBar/sideBarSlice";
+import { openMenuClick } from "@/lib/features/sideBar/sideBarSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/store";
 
 const HamMenu = ({ isMenuOpen }: { isMenuOpen: boolean }) => {
   const isOpen = useAppSelector((state) => state.sideBar.isOpen);

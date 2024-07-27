@@ -6,15 +6,9 @@ import { getUserInfoFromLocalStorage, TUser } from "../../navbar/Navbar";
 
 const BriefProfileInfo = () => {
   const [userInfo, setUserInfo] = useState<TUser>({} as TUser);
-  const [userAvatar, setUserAvatar] = useState("/avatar.png");
-
-  const handleAvatarUpdate = (avatarUrl: string) => {
-    setUserAvatar(avatarUrl);
-  };
 
   useEffect(() => {
     setUserInfo((prev) => (prev = getUserInfoFromLocalStorage()));
-    setUserAvatar((prev) => userInfo.avatar);
   }, [userInfo.avatar]);
 
   return (
@@ -49,7 +43,7 @@ const BriefProfileInfo = () => {
           <Image
             loading="lazy"
             alt="profile-pic"
-            src={userAvatar}
+            src={userInfo.avatar ?? "/avatar.png"}
             width={100}
             height={100}
             style={{
@@ -58,14 +52,11 @@ const BriefProfileInfo = () => {
                 "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em",
             }}
           />
-          <UploadProfilePicBtn
-            user="STUDENTS"
-            updateAvatar={handleAvatarUpdate}
-          />
+          <UploadProfilePicBtn user="STUDENTS" />
         </Box>
         <Grid textAlign={"center"} rowGap={2} color={"#364A63"}>
           <Heading fontSize={{ base: "sm", lg: "md" }}>
-            Manas Ranjan Singh
+            {userInfo ? `${userInfo.firstName} ${userInfo.lastName}` : ""}
           </Heading>
           <Heading fontSize={{ base: ".8rem", lg: "sm" }}>
             {" "}
