@@ -4,6 +4,17 @@ export type TStudentsInfo = {
   [key: string]: string;
 };
 
+export type TStudent = {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  avatar: string;
+  email: string;
+  phone: string;
+  address: string;
+  enrolledCourses: TCourse[];
+};
+
 const studentInfo: TStudentsInfo = {
   "First Name": "Manas",
   "Last Name": "Singh",

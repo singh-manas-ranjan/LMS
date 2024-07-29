@@ -13,21 +13,10 @@ import {
   VStack,
   Text,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { TCourse } from "../../../../../public/courses";
-import { getEnrolledCourses } from "@/actions/enrolledCourses/action";
-function EnrollModal({ studentId }: { studentId: string }) {
+function EnrollModal({ courses }: { courses: TCourse[] }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const [courses, setCourses] = useState<TCourse[]>([]);
-
-  useEffect(() => {
-    async function fetchAllCourses() {
-      const response = await getEnrolledCourses(studentId);
-      setCourses(response);
-    }
-    fetchAllCourses();
-  }, [studentId]);
 
   return (
     <>
