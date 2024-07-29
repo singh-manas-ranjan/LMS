@@ -16,6 +16,7 @@ import React, { useEffect, useState } from "react";
 import EnrollModal from "../enrollModal/EnrollModal";
 import { TStudent } from "../../../../../public/studentInfo";
 import { fetchAllUsers } from "@/actions/users/action";
+import { TCourse } from "../../../../../public/courses";
 
 const textStyle = {
   fontSize: { base: "sm", xl: "md" },
@@ -57,14 +58,14 @@ const StudentsList = () => {
       {students.map((student) => (
         <Card
           key={student._id}
-          color="#364A63"
+          color="teal"
           boxShadow={
             "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
           }
           direction={"row"}
           h={"60px"}
         >
-          <CardHeader p={2.5} display={{ base: "none", sm: "initial" }}>
+          <CardHeader p={2.5} pl={4} display={{ base: "none", sm: "initial" }}>
             <Image
               src={student.avatar ?? "/avatar.svg"}
               alt={"profilePic"}
@@ -76,17 +77,17 @@ const StudentsList = () => {
           <CardBody
             display={"flex"}
             alignItems={"center"}
-            paddingRight={{ base: 0, sm: "initial" }}
+            paddingInline={{ sm: "0", md: "initial" }}
           >
             <VStack
               spacing={0}
-              flex={{ base: 3, xl: 2 }}
+              flex={{ base: "100px", sm: "120px", lg: 2, xl: 2 }}
               alignItems={{ base: "start", md: "center" }}
               justifyContent={"center"}
             >
-              <Heading
+              <Text
                 sx={textStyle}
-              >{`${student.firstName} ${student.lastName}`}</Heading>
+              >{`${student.firstName} ${student.lastName}`}</Text>
               <Text
                 fontSize={{ base: "xs", md: "sm" }}
                 display={{ md: "none" }}
@@ -112,7 +113,10 @@ const StudentsList = () => {
                 {student.phone}
               </Text>
               <Box flex={1} display={"flex"} justifyContent={"center"}>
-                <EnrollModal courses={student.enrolledCourses} />
+                <EnrollModal
+                  courses={student.enrolledCourses}
+                  studentId={student._id}
+                />
               </Box>
               <Text
                 flex={1}
@@ -127,7 +131,6 @@ const StudentsList = () => {
           <CardFooter
             flexDir={{ sm: "column" }}
             justifyContent={{ base: "space-between", sm: "center" }}
-            rowGap={3}
             alignItems={"center"}
             p={0}
             pr={5}

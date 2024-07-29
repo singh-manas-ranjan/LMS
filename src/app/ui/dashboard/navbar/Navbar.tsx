@@ -28,6 +28,8 @@ import { openMenuClick } from "@/lib/features/sideBar/sideBarSlice";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/lib/store";
 import { TCourse } from "../../../../../public/courses";
+import { fetchCourses } from "@/actions/courses/actions";
+import { addCourses } from "@/lib/features/courses/coursesSlice";
 
 const nav = {
   bg: "#fff",
@@ -119,7 +121,12 @@ const Navbar = ({ navLinks }: Props) => {
   const [userInfo, setUserInfo] = useState<TUser>({} as TUser);
   useEffect(() => {
     setUserInfo((prev) => (prev = getUserInfoFromLocalStorage()));
-  }, []);
+    async function getAllCourses() {
+      const response: TCourse[] = await fetchCourses();
+      dispatch(addCourses(response));
+    }
+    getAllCourses();
+  }, [dispatch]);
 
   const toast = useToast();
 
