@@ -42,7 +42,6 @@ const UploadProfilePicBtn = ({
         )
         .then((res) => res.data.body)
         .catch((err) => console.log(err));
-      // Update avatar and local storage
       removeUserInfoFromLocalStorage();
       localStorage.setItem("userInfo", JSON.stringify(response));
       onClose();

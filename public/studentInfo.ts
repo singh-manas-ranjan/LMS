@@ -1,3 +1,5 @@
+import { TCourse } from "./courses";
+
 export type TStudentsInfo = {
   [key: string]: string;
 };

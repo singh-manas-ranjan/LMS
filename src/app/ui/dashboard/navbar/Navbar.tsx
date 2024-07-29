@@ -27,6 +27,7 @@ import { TSideBarLinks } from "../sidebar/Sidebar";
 import { openMenuClick } from "@/lib/features/sideBar/sideBarSlice";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/lib/store";
+import { TCourse } from "../../../../../public/courses";
 
 const nav = {
   bg: "#fff",
@@ -167,7 +168,7 @@ const Navbar = ({ navLinks }: Props) => {
           >
             <Box sx={profile}>
               <Image
-                src={userInfo.avatar ?? "/avatar.png"}
+                src={userInfo.avatar ?? "/avatar.svg"}
                 width={30}
                 height={30}
                 alt=""

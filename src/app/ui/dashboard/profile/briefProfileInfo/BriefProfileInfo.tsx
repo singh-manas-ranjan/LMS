@@ -43,7 +43,7 @@ const BriefProfileInfo = () => {
           <Image
             loading="lazy"
             alt="profile-pic"
-            src={userInfo.avatar ?? "/avatar.png"}
+            src={userInfo.avatar ?? "/avatar.svg"}
             width={100}
             height={100}
             style={{
