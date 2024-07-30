@@ -116,7 +116,7 @@ function EnrollModal({ courses, studentId }: Props) {
                 type="submit"
                 colorScheme="blue"
                 onClick={onClose}
-                size={{ base: "xs" }}
+                size={{ base: "xs", xl: "sm" }}
               >
                 Enroll
               </Button>
