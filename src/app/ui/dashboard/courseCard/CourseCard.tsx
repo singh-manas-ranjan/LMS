@@ -31,7 +31,7 @@ const CourseCard = ({ course }: Props) => {
     >
       <CardHeader>
         <Image
-          src={`/${course.courseImg}`}
+          src={course.courseImg}
           alt={course.courseName}
           borderRadius="lg"
           w={"100%"}

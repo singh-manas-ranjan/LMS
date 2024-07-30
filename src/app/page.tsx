@@ -19,7 +19,9 @@ export default function Page() {
     <Box
       as="main"
       sx={mainStyle}
-      bgImage={{ base: "url('/bgImg.jpg')" }}
+      bgImage={{
+        base: "url('https://res.cloudinary.com/learnopia/image/upload/v1722329744/bgImg_jtqoqa.jpg')",
+      }}
       backgroundSize={"cover"}
       backgroundPosition={{ base: "center" }}
       backgroundRepeat={"no-repeat"}

@@ -91,7 +91,9 @@ const Dashboard = async () => {
             >
               <Image
                 alt="teacher-avatar"
-                src={"/teacher.png"}
+                src={
+                  "https://res.cloudinary.com/learnopia/image/upload/v1722329722/teacher_cvj8gs.png"
+                }
                 width={{ md: 250 }}
               />
             </Box>

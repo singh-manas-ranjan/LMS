@@ -29,7 +29,7 @@ const CompletedCourseCard = ({ course }: { course: Course }) => {
     >
       <CardHeader flex={1}>
         <Image
-          src={`/${course.courseImg}`}
+          src={course.courseImg}
           alt={course.courseName}
           borderRadius="lg"
           w={"100%"}
