@@ -14,6 +14,7 @@ import {
   Text,
   Box,
   Select,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { TCourse } from "../../../../../public/courses";
@@ -45,6 +46,7 @@ function EnrollModal({ courses, studentId, studentFirstName }: Props) {
     setCourses((prevCourses) => [...prevCourses, newCourse]);
   }
 
+  const toast = useToast();
   const showToast = async (
     title: string,
     description: string,

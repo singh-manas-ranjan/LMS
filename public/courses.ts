@@ -6,7 +6,8 @@ const coursesList: Course[] = [
     courseName: "The Complete 2024 Web Development BootCamp.",
     author: "Dr.Angel Yu",
     courseRating: "4.5",
-    courseImg: "card1.jpeg",
+    courseImg:
+      "https://res.cloudinary.com/learnopia/image/upload/v1722328858/card1_o25jg7.jpg",
     coursePrice: 3099,
     isPaidCourse: true,
     aboutCourse:
@@ -95,7 +96,8 @@ const coursesList: Course[] = [
     courseName: "Spring Boot Complete Tutorial",
     author: "Durgesh Tiwari",
     courseRating: "4.7",
-    courseImg: "card2.jpeg",
+    courseImg:
+      "https://res.cloudinary.com/learnopia/image/upload/v1722328858/card2_pfa9bb.jpg",
     coursePrice: 3099,
     isPaidCourse: true,
     aboutCourse:
@@ -206,7 +208,8 @@ const coursesList: Course[] = [
     courseName: "Selenium WebDriver with Java",
     author: "Pavan Kumar",
     courseRating: "4.6",
-    courseImg: "card3.jpeg",
+    courseImg:
+      "https://res.cloudinary.com/learnopia/image/upload/v1722328859/card13_wwsp2l.jpg",
     coursePrice: 599,
     isPaidCourse: true,
     aboutCourse:
@@ -289,7 +292,8 @@ const coursesList: Course[] = [
     courseName: "Python Django",
     author: "Code With Harry",
     courseRating: "4.3",
-    courseImg: "card4.jpeg",
+    courseImg:
+      "https://res.cloudinary.com/learnopia/image/upload/v1722328858/card4_f4lmcx.jpg",
     coursePrice: 0,
     isPaidCourse: false,
     aboutCourse:
@@ -381,7 +385,8 @@ const coursesList: Course[] = [
     courseName: "MySQL Bootcamp",
     author: "Colt Steel",
     courseRating: "4.5",
-    courseImg: "card5.jpeg",
+    courseImg:
+      "https://res.cloudinary.com/learnopia/image/upload/v1722328858/card5_ftnjbx.jpg",
     coursePrice: 4499,
     isPaidCourse: true,
     aboutCourse:
@@ -520,7 +525,8 @@ const coursesList: Course[] = [
     courseName: "Appium Mobile Automation",
     author: "Ompraksh Chavan",
     courseRating: "4.7",
-    courseImg: "card6.jpeg",
+    courseImg:
+      "https://res.cloudinary.com/learnopia/image/upload/v1722328858/card6_udimtc.jpg",
     isPaidCourse: true,
     coursePrice: 4499,
     aboutCourse:
@@ -595,7 +601,8 @@ const coursesList: Course[] = [
     courseName: "How the Internet Works & the Web Development Process",
     author: "YouAccel Training",
     courseRating: "4.2",
-    courseImg: "card7.jpeg",
+    courseImg:
+      "https://res.cloudinary.com/learnopia/image/upload/v1722328859/card7_vsx8m8.jpg",
     coursePrice: 1299,
     isPaidCourse: true,
     aboutCourse:
@@ -609,7 +616,8 @@ const coursesList: Course[] = [
     courseName: "The Complete 2023 PHP Full Stack Web Developer Bootcamp",
     author: "Srini Vanamala",
     courseRating: "4.5",
-    courseImg: "card8.jpeg",
+    courseImg:
+      "https://res.cloudinary.com/learnopia/image/upload/v1722328859/card8_jobpvy.jpg",
     coursePrice: 5900,
     isPaidCourse: true,
     aboutCourse:
@@ -623,7 +631,8 @@ const coursesList: Course[] = [
     courseName: "Ultimate Web Designer & Web Developer Course",
     author: "Brad Hussey",
     courseRating: "4.6",
-    courseImg: "card13.jpeg",
+    courseImg:
+      "https://res.cloudinary.com/learnopia/image/upload/v1722328859/card13_wwsp2l.jpg",
     coursePrice: 3699,
     isPaidCourse: true,
     aboutCourse:
@@ -637,7 +646,8 @@ const coursesList: Course[] = [
     courseName: "The Complete Web Development Course - Build 15 Projects",
     author: "Development Island (UK)",
     courseRating: "4.4",
-    courseImg: "card16.jpeg",
+    courseImg:
+      "https://res.cloudinary.com/learnopia/image/upload/v1722328859/card16_fowe80.jpg",
     coursePrice: 3699,
     isPaidCourse: true,
     aboutCourse:
