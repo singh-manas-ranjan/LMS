@@ -31,17 +31,18 @@ const EnrollBtn = ({ course }: Props) => {
 
   const handleButtonClick = async () => {
     setEnrolled(!isEnrolled);
-    const { _id } = getUserInfoFromLocalStorage();
-    try {
-      const response = await setEnrolledCourses(_id, course._id);
-      if (response < 300) {
-        showToast("Success", "success", "Course enrolled successfully");
-      } else if (response === 409) {
-        showToast("Info", "info", "Already enrolled to this course.");
-      }
-    } catch (error) {
-      showToast("Error", "error", "Something went wrong");
-    }
+    showToast("Not Allowed", "info", "Contact Admin To Enroll");
+    // const { _id } = getUserInfoFromLocalStorage();
+    // try {
+    //   const response = await setEnrolledCourses(_id, course._id);
+    //   if (response < 300) {
+    //     showToast("Success", "success", "Course enrolled successfully");
+    //   } else if (response === 409) {
+    //     showToast("Info", "info", "Already enrolled to this course.");
+    //   }
+    // } catch (error) {
+    //   showToast("Error", "error", "Something went wrong");
+    // }
   };
   return (
     <Button
