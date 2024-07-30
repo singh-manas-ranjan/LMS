@@ -28,9 +28,10 @@ type TEnrollCourse = {
 type Props = {
   courses: TCourse[];
   studentId: string;
+  studentFirstName: string;
 };
 
-function EnrollModal({ courses, studentId }: Props) {
+function EnrollModal({ courses, studentId, studentFirstName }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [enrolledCourses, setCourses] = useState<TCourse[]>(courses);
 
@@ -44,6 +45,23 @@ function EnrollModal({ courses, studentId }: Props) {
     setCourses((prevCourses) => [...prevCourses, newCourse]);
   }
 
+  const showToast = async (
+    title: string,
+    description: string,
+    status: "success" | "error" | "info"
+  ) => {
+    setTimeout(() => {
+      toast({
+        title,
+        description,
+        status,
+        duration: 4000,
+        isClosable: true,
+        position: "top",
+      });
+    }, 500);
+  };
+
   async function onSubmit(e: TEnrollCourse) {
     const newCourse = AllAvailableCourses.find(
       (course) => course._id === e.courseId
@@ -51,10 +69,28 @@ function EnrollModal({ courses, studentId }: Props) {
     if (!newCourse) return;
     handleUpdateEnrolledCourse(newCourse);
     try {
-      setEnrolledCourses(studentId, e.courseId);
+      const status = await setEnrolledCourses(studentId, e.courseId);
+      if (status < 300) {
+        showToast(
+          "Enrolled Successfully",
+          `${studentFirstName} Enrolled To ${newCourse.courseName}`,
+          "success"
+        );
+      } else {
+        showToast(
+          "Error Enrolling",
+          `Failed to Enroll ${studentFirstName} to ${newCourse.courseName}`,
+          "error"
+        );
+      }
     } catch (error) {
       console.error(error);
       setCourses(courses);
+      showToast(
+        "Error Enrolling",
+        `Failed to Enroll ${studentFirstName} to ${newCourse.courseName}`,
+        "error"
+      );
     }
   }
 
@@ -129,3 +165,16 @@ function EnrollModal({ courses, studentId }: Props) {
 }
 
 export default React.memo(EnrollModal);
+function toast(arg0: {
+  title: string;
+  description: string;
+  status: string;
+  duration: number;
+  isClosable: boolean;
+  position: string;
+}) {
+  throw new Error("Function not implemented.");
+}
+function showSuccessToast(arg0: string, arg1: string, arg2: string) {
+  throw new Error("Function not implemented.");
+}

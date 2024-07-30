@@ -19,7 +19,6 @@ import Barchart from "../ui/dashboard/barchart/Barchart";
 import studentRankings from "../../../public/rankingData";
 import DashBoardCourses from "../ui/dashboard/dashboardCourses/DashBoardCourses";
 import { sxScrollbar } from "../../../public/scrollbarStyle";
-import { fetchCourses } from "@/actions/courses/actions";
 
 const main = {
   width: "100%",

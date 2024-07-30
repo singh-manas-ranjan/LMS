@@ -116,6 +116,7 @@ const StudentsList = () => {
                 <EnrollModal
                   courses={student.enrolledCourses}
                   studentId={student._id}
+                  studentFirstName={student.firstName}
                 />
               </Box>
               <Text
