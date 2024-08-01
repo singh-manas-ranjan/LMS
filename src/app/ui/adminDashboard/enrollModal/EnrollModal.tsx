@@ -167,16 +167,3 @@ function EnrollModal({ courses, studentId, studentFirstName }: Props) {
 }
 
 export default React.memo(EnrollModal);
-function toast(arg0: {
-  title: string;
-  description: string;
-  status: string;
-  duration: number;
-  isClosable: boolean;
-  position: string;
-}) {
-  throw new Error("Function not implemented.");
-}
-function showSuccessToast(arg0: string, arg1: string, arg2: string) {
-  throw new Error("Function not implemented.");
-}

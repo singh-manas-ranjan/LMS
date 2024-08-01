@@ -4,7 +4,7 @@ import { Box, Grid, Heading, Image } from "@chakra-ui/react";
 import UploadProfilePicBtn from "../UploadProfilePicBtn";
 import { getUserInfoFromLocalStorage, TUser } from "../../navbar/Navbar";
 
-const BriefProfileInfo = () => {
+const BriefProfileInfo = ({ children }: { children: React.ReactNode }) => {
   const [userInfo, setUserInfo] = useState<TUser>({} as TUser);
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const BriefProfileInfo = () => {
                 "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em",
             }}
           />
-          <UploadProfilePicBtn user="STUDENTS" />
+          {children}
         </Box>
         <Grid textAlign={"center"} rowGap={2} color={"#364A63"}>
           <Heading fontSize={{ base: "sm", lg: "md" }}>
@@ -71,4 +71,4 @@ const BriefProfileInfo = () => {
   );
 };
 
-export default BriefProfileInfo;
+export default React.memo(BriefProfileInfo);

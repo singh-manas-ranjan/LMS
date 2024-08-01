@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import socialLinksData from "../../../../../../public/socialLinksData";
-import EditPersonalInfo from "../editPersonalInfo/EditPersonalInfo";
 import ResetPassword from "../resetPassword/ResetPassword";
 import SocialLinks from "../socialLinks/SocialLinks";
 import TextEditor from "../textEditor/TextEditor";
@@ -20,7 +19,7 @@ import { sxScrollbar } from "../../../../../../public/scrollbarStyle";
 import PersonalInfo from "./PersonalInfo";
 import { getUserInfoFromLocalStorage } from "../../navbar/Navbar";
 
-const DetailedProfileInfo = () => {
+const DetailedProfileInfo = ({ children }: { children: React.ReactNode }) => {
   const [userInfo, setUserInfo] = useState<{ [key: string]: string } | null>(
     null
   );
@@ -99,7 +98,7 @@ const DetailedProfileInfo = () => {
                   >
                     Personal Information
                   </Heading>
-                  <EditPersonalInfo />
+                  {children}
                 </Box>
                 <Divider marginBlock={2} orientation="horizontal" />
                 <PersonalInfo userData={userInfo} />
@@ -133,4 +132,4 @@ const DetailedProfileInfo = () => {
   );
 };
 
-export default DetailedProfileInfo;
+export default React.memo(DetailedProfileInfo);

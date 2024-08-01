@@ -6,7 +6,6 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
-  Heading,
   VStack,
   Image,
   Text,
@@ -16,7 +15,6 @@ import React, { useEffect, useState } from "react";
 import EnrollModal from "../enrollModal/EnrollModal";
 import { TStudent } from "../../../../../public/studentInfo";
 import { fetchAllUsers } from "@/actions/users/action";
-import { TCourse } from "../../../../../public/courses";
 
 const textStyle = {
   fontSize: { base: "sm", xl: "md" },

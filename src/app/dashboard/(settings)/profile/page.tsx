@@ -3,6 +3,8 @@ import React from "react";
 import BriefProfileInfo from "@/app/ui/dashboard/profile/briefProfileInfo/BriefProfileInfo";
 import DetailedProfileInfo from "@/app/ui/dashboard/profile/detailedProfileInfo/DetailedProfileInfo";
 import { sxScrollbar } from "../../../../../public/scrollbarStyle";
+import EditPersonalInfo from "@/app/ui/dashboard/profile/editPersonalInfo/EditPersonalInfo";
+import UploadProfilePicBtn from "@/app/ui/dashboard/profile/UploadProfilePicBtn";
 
 const main = {
   width: "100%",
@@ -26,7 +28,9 @@ const Profile = () => {
         columnGap={{ md: 4 }}
       >
         <Box flex={2} borderRadius={6} w={"100%"} h={"100%"}>
-          <BriefProfileInfo />
+          <BriefProfileInfo>
+            <UploadProfilePicBtn user="STUDENTS" />
+          </BriefProfileInfo>
         </Box>
         <Box
           flex={{ base: 6, md: 4, lg: 6, xl: 8 }}
@@ -44,7 +48,9 @@ const Profile = () => {
             overflowY={"scroll"}
             sx={sxScrollbar}
           >
-            <DetailedProfileInfo />
+            <DetailedProfileInfo>
+              <EditPersonalInfo />
+            </DetailedProfileInfo>
           </Box>
         </Box>
       </Box>

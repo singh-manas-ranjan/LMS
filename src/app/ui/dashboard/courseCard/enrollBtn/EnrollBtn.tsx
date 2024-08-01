@@ -30,7 +30,7 @@ const EnrollBtn = ({ course }: Props) => {
   };
 
   const handleButtonClick = async () => {
-    setEnrolled(!isEnrolled);
+    // setEnrolled(!isEnrolled);
     showToast("Not Allowed", "info", "Contact Admin To Enroll");
     // const { _id } = getUserInfoFromLocalStorage();
     // try {
