@@ -23,8 +23,6 @@ const StudentsList = () => {
   const [students, setStudents] = useState<TStudent[]>([]);
 
   useEffect(() => {
-    console.log("fetching all students...");
-
     async function fetchAllStudents() {
       const studentsResponse = await fetchAllUsers("students");
       setStudents(studentsResponse);
@@ -76,6 +74,7 @@ const StudentsList = () => {
             display={"flex"}
             alignItems={"center"}
             paddingInline={{ sm: "0", md: "initial" }}
+            justifyContent={"center"}
           >
             <VStack
               spacing={0}
@@ -85,10 +84,19 @@ const StudentsList = () => {
             >
               <Text
                 sx={textStyle}
+                flex={1}
+                alignItems={"center"}
+                justifyContent={"center"}
+                fontSize={{ base: "xs", md: "sm" }}
+                display={{ base: "none", md: "flex" }}
               >{`${student.firstName} ${student.lastName}`}</Text>
               <Text
+                width={"120px"}
+                alignItems={"center"}
+                justifyContent={"center"}
                 fontSize={{ base: "xs", md: "sm" }}
                 display={{ md: "none" }}
+                overflow={"scroll"}
               >
                 {student.email}
               </Text>
@@ -96,14 +104,16 @@ const StudentsList = () => {
             <Box flex={10} display={"flex"} flexDirection={{ ms: "row" }}>
               <Text
                 flex={1}
+                alignItems={"center"}
                 justifyContent={"center"}
-                fontSize={{ base: "xs", md: "sm" }}
+                fontSize={{ base: "xs", lg: "sm" }}
                 display={{ base: "none", md: "flex" }}
               >
                 {student.email}
               </Text>
               <Text
                 flex={1}
+                alignItems={"center"}
                 justifyContent={"center"}
                 fontSize={{ base: "xs", lg: "sm" }}
                 display={{ base: "none", md: "flex" }}
@@ -120,6 +130,7 @@ const StudentsList = () => {
               <Text
                 flex={1}
                 justifyContent={"center"}
+                alignItems={"center"}
                 fontSize={{ base: "xs", md: "sm" }}
                 display={{ base: "none", xl: "flex" }}
               >

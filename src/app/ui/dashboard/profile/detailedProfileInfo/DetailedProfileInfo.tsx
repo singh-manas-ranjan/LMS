@@ -17,7 +17,7 @@ import SocialLinks from "../socialLinks/SocialLinks";
 import TextEditor from "../textEditor/TextEditor";
 import { sxScrollbar } from "../../../../../../public/scrollbarStyle";
 import PersonalInfo from "./PersonalInfo";
-import { getUserInfoFromLocalStorage } from "../../navbar/Navbar";
+import { getUserInfoFromLocalStorage } from "../../../navbar/Navbar";
 
 const DetailedProfileInfo = ({ children }: { children: React.ReactNode }) => {
   const [userInfo, setUserInfo] = useState<{ [key: string]: string } | null>(

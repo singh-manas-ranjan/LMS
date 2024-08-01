@@ -132,12 +132,11 @@ function EnrollModal({ courses, studentId, studentFirstName }: Props) {
               onSubmit={handleSubmit(onSubmit)}
               style={{
                 display: "flex",
-                columnGap: 20,
                 justifyContent: "space-between",
                 width: "100%",
               }}
             >
-              <Box>
+              <Box width={"70%"}>
                 <Select
                   placeholder="Enroll new course"
                   size={{ base: "xs", xl: "sm" }}
@@ -156,7 +155,7 @@ function EnrollModal({ courses, studentId, studentFirstName }: Props) {
                 onClick={onClose}
                 size={{ base: "xs", xl: "sm" }}
               >
-                Enroll
+                <Text p={2}>Enroll</Text>
               </Button>
             </form>
           </ModalFooter>

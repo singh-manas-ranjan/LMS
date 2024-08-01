@@ -16,7 +16,7 @@ import {
   getUserInfoFromLocalStorage,
   removeUserInfoFromLocalStorage,
   TUser,
-} from "../navbar/Navbar";
+} from "../../navbar/Navbar";
 
 const UploadProfilePicBtn = ({
   user,

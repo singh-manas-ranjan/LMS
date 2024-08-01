@@ -3,7 +3,7 @@ import { Button, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { TCourse } from "../../../../../../public/courses";
 import { setEnrolledCourses } from "@/actions/enrolledCourses/action";
-import { getUserInfoFromLocalStorage } from "../../navbar/Navbar";
+import { getUserInfoFromLocalStorage } from "../../../navbar/Navbar";
 
 interface Props {
   course: TCourse;

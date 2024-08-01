@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Grid, Heading, Image } from "@chakra-ui/react";
 import UploadProfilePicBtn from "../UploadProfilePicBtn";
-import { getUserInfoFromLocalStorage, TUser } from "../../navbar/Navbar";
+import { getUserInfoFromLocalStorage, TUser } from "../../../navbar/Navbar";
 
 const BriefProfileInfo = ({ children }: { children: React.ReactNode }) => {
   const [userInfo, setUserInfo] = useState<TUser>({} as TUser);

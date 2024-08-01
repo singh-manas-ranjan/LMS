@@ -4,7 +4,7 @@ import { Box, Heading, SimpleGrid, Spinner } from "@chakra-ui/react";
 import MyCoursesCard from "./myCoursesCard/MyCoursesCard";
 import { getEnrolledCourses } from "@/actions/enrolledCourses/action";
 import { TCourse } from "../../../../../public/courses";
-import { getUserInfoFromLocalStorage } from "../navbar/Navbar";
+import { getUserInfoFromLocalStorage } from "../../navbar/Navbar";
 
 const EnrolledCourses = () => {
   const [eCourses, setECourses] = useState<TCourse[]>([]);

@@ -1,7 +1,7 @@
 import { Box, Container, Flex } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
 import Sidebar from "../ui/dashboard/sidebar/Sidebar";
-import Navbar from "../ui/dashboard/navbar/Navbar";
+import Navbar from "../ui/navbar/Navbar";
 import sidebarLinks from "../../../public/sidebarLinks";
 
 interface Props {

@@ -1,6 +1,6 @@
 "use server";
 
-import { TUser } from "@/app/ui/dashboard/navbar/Navbar";
+import { TUser } from "@/app/ui/navbar/Navbar";
 import { TStudent } from "../../../public/studentInfo";
 
 async function fetchAllUsers(

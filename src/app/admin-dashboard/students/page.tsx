@@ -57,12 +57,16 @@ const AdminStudents = async () => {
                 justifyContent={"center"}
               >
                 <Text
+                  alignItems={"center"}
+                  justifyContent={"center"}
                   fontSize={{ base: "xs", md: "sm" }}
                   display={{ base: "none", md: "initial" }}
                 >
                   Name
                 </Text>
                 <Text
+                  alignItems={"center"}
+                  justifyContent={"center"}
                   fontSize={{ base: "xs", md: "sm" }}
                   display={{ md: "none" }}
                 >
@@ -72,6 +76,7 @@ const AdminStudents = async () => {
               <Box flex={10} display={"flex"} flexDirection={{ ms: "row" }}>
                 <Text
                   flex={1}
+                  alignItems={"center"}
                   justifyContent={"center"}
                   fontSize={{ base: "xs", md: "sm" }}
                   display={{ base: "none", md: "flex" }}
@@ -81,6 +86,7 @@ const AdminStudents = async () => {
                 <Text
                   flex={1}
                   justifyContent={"center"}
+                  alignItems={"center"}
                   fontSize={{ base: "xs", lg: "sm" }}
                   display={{ base: "none", md: "flex" }}
                 >
@@ -90,6 +96,7 @@ const AdminStudents = async () => {
                   flex={1}
                   display={"flex"}
                   justifyContent={"center"}
+                  alignItems={"center"}
                   fontSize={{ base: "xs", lg: "sm" }}
                 >
                   Enrolled
@@ -99,6 +106,7 @@ const AdminStudents = async () => {
                   justifyContent={"center"}
                   fontSize={{ base: "xs", md: "sm" }}
                   display={{ base: "none", xl: "flex" }}
+                  alignItems={"center"}
                 >
                   Address
                 </Text>
