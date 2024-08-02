@@ -13,7 +13,7 @@ async function fetchAllUsers(
     if (!response.ok) {
       throw new Error(`Unable to Fetch All Users: ${response.statusText}`);
     }
-    return await response.json();
+    return await response.json().then((data) => data.body);
   } catch (error) {
     console.error(`Error fetching users for ${userRole}:`, error);
     return [];

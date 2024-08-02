@@ -60,6 +60,7 @@ const StudentsList = () => {
           }
           direction={"row"}
           h={"60px"}
+          w={"100%"}
         >
           <CardHeader p={2.5} pl={4} display={{ base: "none", sm: "initial" }}>
             <Image
