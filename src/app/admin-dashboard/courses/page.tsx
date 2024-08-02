@@ -13,8 +13,6 @@ import {
 import React from "react";
 import { sxScrollbar } from "../../../../public/scrollbarStyle";
 import { TCourse } from "../../../../public/courses";
-import CourseCard from "@/app/ui/dashboard/courseCard/CourseCard";
-import EnrollBtn from "@/app/ui/dashboard/courseCard/enrollBtn/EnrollBtn";
 import { fetchAllCourses } from "@/actions/courses/actions";
 
 const main = {

@@ -14,7 +14,7 @@ const EnrolledCourses = () => {
     async function fetchEnrolledCourses() {
       try {
         const { _id } = getUserInfoFromLocalStorage();
-        const courses = await getEnrolledCourses(_id);
+        const courses = await getEnrolledCourses(_id || "");
         setECourses(courses);
         localStorage.setItem("enrolledCoursesList", JSON.stringify(courses));
         setLoading(false);

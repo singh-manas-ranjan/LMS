@@ -10,12 +10,12 @@ async function fetchAllUsers(
       `https://learnopia-backend.vercel.app/api/v1/${userRole}`
     );
 
-    return await response
-      .json()
-      .then((res) => res.body)
-      .catch((err) => console.log(err));
+    if (!response.ok) {
+      throw new Error(`Unable to Fetch All Users: ${response.statusText}`);
+    }
+    return await response.json();
   } catch (error) {
-    console.log(`Error!! fetchAllUsers action${error}`);
+    console.error(`Error fetching users for ${userRole}:`, error);
     return [];
   }
 }

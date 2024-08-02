@@ -3,19 +3,39 @@
 import { TCourse } from "../../../public/courses";
 
 export const fetchCourseById = async (courseId: string): Promise<TCourse> => {
-  const response = await fetch(
-    // `http://localhost:3131/api/v1/courses/${courseId}`
-    `https://learnopia-backend.vercel.app/api/v1/courses/${courseId}`
-  );
-  return await response.json().then((data) => data.body);
+  try {
+    const response = await fetch(
+      `http://localhost:3131/api/v1/courses/${courseId}`
+      // `https://learnopia-backend.vercel.app/api/v1/courses/${courseId}`
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `HTTP error! Status: ${response.status}, Message: ${errorText}`
+      );
+    }
+
+    const data = await response.json();
+
+    return data.body as TCourse;
+  } catch (error) {
+    console.error("Error fetching course by ID:", error);
+    throw error;
+  }
 };
 
 export async function fetchAllCourses(): Promise<TCourse[]> {
-  // const courses: TCourse[] = await fetch("http://localhost:3131/api/v1/courses")
-  const courses: TCourse[] = await fetch(
-    "https://learnopia-backend.vercel.app/api/v1/courses"
-  )
-    .then((res) => res.json())
-    .then((data) => data.body);
-  return courses;
+  try {
+    const response = await fetch(
+      "https://learnopia-backend.vercel.app/api/v1/courses"
+    );
+    if (!response.ok) {
+      throw new Error(`Failed to fetch all courses: ${response.statusText}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching courses:", error);
+    return [];
+  }
 }
