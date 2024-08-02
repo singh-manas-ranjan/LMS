@@ -96,7 +96,8 @@ const EditPersonalInfo = ({
     const { firstName, lastName, email, phone, qualification, gender } = e;
     try {
       const response = await fetch(
-        `http://localhost:3131/api/v1/students/${userId}`,
+        // `http://localhost:3131/api/v1/students/${userId}`,
+        `https://learnopia-backend.vercel.app/api/v1/students/${userId}`,
         {
           method: "PATCH",
           headers: {
