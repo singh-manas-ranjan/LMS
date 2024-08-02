@@ -10,33 +10,48 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { use, useCallback, useEffect, useState } from "react";
 import socialLinksData from "../../../../../../public/socialLinksData";
 import ResetPassword from "../resetPassword/ResetPassword";
 import SocialLinks from "../socialLinks/SocialLinks";
 import TextEditor from "../textEditor/TextEditor";
 import { sxScrollbar } from "../../../../../../public/scrollbarStyle";
 import PersonalInfo from "./PersonalInfo";
-import { getUserInfoFromLocalStorage } from "../../../navbar/Navbar";
+import { getUserInfoFromLocalStorage, TUser } from "../../../navbar/Navbar";
+import EditPersonalInfo from "../editPersonalInfo/EditPersonalInfo";
 
-const DetailedProfileInfo = ({ children }: { children: React.ReactNode }) => {
-  const [userInfo, setUserInfo] = useState<{ [key: string]: string } | null>(
-    null
-  );
+const DetailedProfileInfo = () => {
+  const [userInfo, setUserInfo] = useState<TUser>({} as TUser);
+  const [userId, setUserId] = useState<string>("");
+
   useEffect(() => {
     const info = getUserInfoFromLocalStorage();
-    const requiredFields = [
-      "firstName",
-      "lastName",
-      "email",
-      "phone",
-      "address",
-    ];
-    const filteredInfo = Object.entries(info).filter((entry) =>
-      requiredFields.includes(entry[0])
-    );
-    setUserInfo(Object.fromEntries(filteredInfo));
+    setUserId(info._id || "");
+    const {
+      firstName,
+      lastName,
+      email,
+      phone,
+      gender,
+      qualification,
+      address,
+    } = info;
+    setUserInfo({
+      firstName,
+      lastName,
+      email,
+      phone,
+      gender,
+      qualification,
+      address,
+    } as TUser);
   }, []);
+
+  const handleNewUserInfo = useCallback(
+    (newUserInfo: TUser) => setUserInfo(newUserInfo),
+    []
+  );
+
   return (
     <Tabs w={"100%"} h={"100%"}>
       <TabList color={"#364A63"}>
@@ -98,7 +113,11 @@ const DetailedProfileInfo = ({ children }: { children: React.ReactNode }) => {
                   >
                     Personal Information
                   </Heading>
-                  {children}
+                  <EditPersonalInfo
+                    userId={userId}
+                    userInfo={userInfo}
+                    handleUpdateUserInfo={handleNewUserInfo}
+                  />
                 </Box>
                 <Divider marginBlock={2} orientation="horizontal" />
                 <PersonalInfo userData={userInfo} />

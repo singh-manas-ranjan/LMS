@@ -23,6 +23,7 @@ import {
   InputLeftElement,
   Text,
   Select,
+  useToast,
 } from "@chakra-ui/react";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -35,41 +36,101 @@ import { FaMapLocation } from "react-icons/fa6";
 import { FaStreetView } from "react-icons/fa6";
 import { GiPathDistance } from "react-icons/gi";
 import { TStudentsInfo } from "../../../../../../public/studentInfo";
-
-interface Props {
-  studentPersonalInfo: TStudentsInfo;
-}
-
-type TFormData = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  dob: string;
-  gender: string;
-  qualification: string;
-  addressLine1: string;
-  addressLine2: string;
-  state: string;
-  country: string;
-};
+import {
+  addUserInfoToLocalStorage,
+  getUserInfoFromLocalStorage,
+  removeUserInfoFromLocalStorage,
+  TAddress,
+  TUser,
+} from "@/app/ui/navbar/Navbar";
 
 const errorText = {
   fontSize: "xs",
   color: "red.500",
 };
 
-const EditPersonalInfo = () => {
+const EditPersonalInfo = ({
+  userInfo,
+  userId,
+  handleUpdateUserInfo,
+}: {
+  userInfo: TUser;
+  userId: string;
+  handleUpdateUserInfo: (newUserData: TUser) => void;
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
 
+  const displayToast = (
+    title: string,
+    status: "success" | "error" | "info",
+    description: string
+  ) => {
+    toast({
+      title,
+      status,
+      description,
+      duration: 4000,
+      isClosable: true,
+      position: "top",
+    });
+  };
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<TFormData>();
+  } = useForm<TUser>({
+    values: userInfo,
+  });
 
-  const onSubmit = (e: TFormData) => {
+  const {
+    register: addressRegister,
+    handleSubmit: addressHandleSubmit,
+    reset: addressReset,
+    formState: { errors: addressErrors },
+  } = useForm<TAddress>({});
+
+  const onSubmit = async (e: TUser) => {
+    onClose();
+    const { firstName, lastName, email, phone, qualification, gender } = e;
+    try {
+      const response = await fetch(
+        `http://localhost:3131/api/v1/students/${userId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            phone,
+            qualification,
+            gender,
+          }),
+        }
+      );
+      if (response.ok) {
+        displayToast(
+          "Success",
+          "success",
+          "Student Information Updated Successfully"
+        );
+        const user = getUserInfoFromLocalStorage();
+        removeUserInfoFromLocalStorage();
+        addUserInfoToLocalStorage({ ...user, ...e });
+        handleUpdateUserInfo(e);
+      } else {
+        throw new Error(response.statusText);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onAddressSubmit = (e: TAddress) => {
     console.log(e);
   };
 
@@ -113,7 +174,7 @@ const EditPersonalInfo = () => {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <form>
+                  <form onSubmit={handleSubmit(onSubmit)}>
                     <Box
                       display={"flex"}
                       flexDir={{ base: "column", md: "row" }}
@@ -167,32 +228,7 @@ const EditPersonalInfo = () => {
                         )}
                       </FormControl>
                     </Box>
-                    <FormControl mt={5}>
-                      <FormLabel fontSize={"sm"}>Email</FormLabel>
-                      <InputGroup size={"sm"}>
-                        <InputLeftElement>
-                          <MdAttachEmail color="grey" />
-                        </InputLeftElement>
-                        <Input
-                          {...register("email", {
-                            required: {
-                              value: true,
-                              message: "Email cannot be empty",
-                            },
-                          })}
-                          type="email"
-                          size={"sm"}
-                          placeholder="Email"
-                        />
-                      </InputGroup>
-                      {errors.email ? (
-                        <Text sx={errorText}>{errors.email?.message}</Text>
-                      ) : (
-                        <FormHelperText fontSize={"xs"}>
-                          We&apos;ll never share your email.
-                        </FormHelperText>
-                      )}
-                    </FormControl>
+
                     <Box
                       display={"flex"}
                       flexDir={{ base: "column", md: "row" }}
@@ -200,6 +236,32 @@ const EditPersonalInfo = () => {
                       rowGap={5}
                       mt={5}
                     >
+                      <FormControl>
+                        <FormLabel fontSize={"sm"}>Email</FormLabel>
+                        <InputGroup size={"sm"}>
+                          <InputLeftElement>
+                            <MdAttachEmail color="grey" />
+                          </InputLeftElement>
+                          <Input
+                            {...register("email", {
+                              required: {
+                                value: true,
+                                message: "Email cannot be empty",
+                              },
+                            })}
+                            type="email"
+                            size={"sm"}
+                            placeholder="Email"
+                          />
+                        </InputGroup>
+                        {errors.email ? (
+                          <Text sx={errorText}>{errors.email?.message}</Text>
+                        ) : (
+                          <FormHelperText fontSize={"xs"}>
+                            We&apos;ll never share your email.
+                          </FormHelperText>
+                        )}
+                      </FormControl>
                       <FormControl>
                         <FormLabel fontSize={"sm"}>Phone</FormLabel>
                         <InputGroup size={"sm"}>
@@ -214,10 +276,6 @@ const EditPersonalInfo = () => {
                           />
                         </InputGroup>
                       </FormControl>
-                      <FormControl>
-                        <FormLabel fontSize={"sm"}>Date of Birth</FormLabel>
-                        <Input type="date" size={"sm"} cursor={"pointer"} />
-                      </FormControl>
                     </Box>
                     <Box
                       mt={5}
@@ -229,36 +287,77 @@ const EditPersonalInfo = () => {
                       <FormControl>
                         <FormLabel fontSize={"sm"}>Gender</FormLabel>
                         <Select
-                          {...register("gender")}
+                          {...register("gender", {
+                            required: {
+                              value: true,
+                              message: "Gender is required",
+                            },
+                          })}
                           placeholder="Select Gender"
                           size={"sm"}
                           cursor={"pointer"}
                           variant={"filled"}
                         >
-                          <option value="male">Male</option>
-                          <option value="female">Female</option>
-                          <option value="other">Other</option>
+                          <option value="M">Male</option>
+                          <option value="F">Female</option>
+                          <option value="O">Other</option>
                         </Select>
+                        {errors.gender && (
+                          <Text sx={errorText}>{errors.gender?.message}</Text>
+                        )}
                       </FormControl>
                       <FormControl>
                         <FormLabel fontSize={"sm"}>Qualification</FormLabel>
                         <Select
-                          {...register("qualification")}
+                          {...register("qualification", {
+                            required: {
+                              value: true,
+                              message: "Qualification is required",
+                            },
+                          })}
                           placeholder="Select Qualification"
                           size={"sm"}
                           variant={"filled"}
                           cursor={"pointer"}
                         >
-                          <option value="ug">Under Graduate</option>
-                          <option value="g">Graduate</option>
-                          <option value="pg">Post Graduate</option>
+                          <option value="X">Secondary</option>
+                          <option value="XII">Senior Secondary</option>
+                          <option value="UG">Under Graduate</option>
+                          <option value="G">Graduate</option>
+                          <option value="PG">Post Graduate</option>
                         </Select>
+                        {errors.qualification && (
+                          <Text sx={errorText}>
+                            {errors.qualification?.message}
+                          </Text>
+                        )}
                       </FormControl>
                     </Box>
+                    <ModalFooter pr={0} pb={2} pt={10}>
+                      <Button
+                        colorScheme="teal"
+                        size={"sm"}
+                        width={"30%"}
+                        type="reset"
+                        mr={10}
+                        onClick={() => onReset()}
+                      >
+                        Reset
+                      </Button>
+                      <Button
+                        type="submit"
+                        colorScheme="blue"
+                        size={"sm"}
+                        width={"30%"}
+                        onSubmit={() => onSubmit}
+                      >
+                        Submit
+                      </Button>
+                    </ModalFooter>
                   </form>
                 </TabPanel>
                 <TabPanel>
-                  <form>
+                  <form onSubmit={addressHandleSubmit(onAddressSubmit)}>
                     <Box
                       display={"flex"}
                       flexDir={{ base: "column", md: "row" }}
@@ -272,7 +371,7 @@ const EditPersonalInfo = () => {
                             <GiPathDistance color="grey" />
                           </InputLeftElement>
                           <Input
-                            {...register("addressLine1", {
+                            {...addressRegister("addressLine1", {
                               required: {
                                 value: true,
                                 message: "Address Line 1 cannot be empty",
@@ -283,9 +382,9 @@ const EditPersonalInfo = () => {
                             placeholder="2337 1st Main"
                           />
                         </InputGroup>
-                        {errors.addressLine1 && (
+                        {addressErrors.addressLine1 && (
                           <Text sx={errorText}>
-                            {errors.addressLine1?.message}
+                            {addressErrors.addressLine1?.message}
                           </Text>
                         )}
                       </FormControl>
@@ -296,7 +395,7 @@ const EditPersonalInfo = () => {
                             <FaStreetView color="grey" />
                           </InputLeftElement>
                           <Input
-                            {...register("addressLine2", {
+                            {...addressRegister("addressLine2", {
                               required: {
                                 value: true,
                                 message: "Address Line 2 cannot be empty",
@@ -307,9 +406,9 @@ const EditPersonalInfo = () => {
                             placeholder="13th Lane"
                           />
                         </InputGroup>
-                        {errors.addressLine2 && (
+                        {addressErrors.addressLine2 && (
                           <Text sx={errorText}>
-                            {errors.addressLine2?.message}
+                            {addressErrors.addressLine2?.message}
                           </Text>
                         )}
                       </FormControl>
@@ -329,7 +428,7 @@ const EditPersonalInfo = () => {
                             <FaMapLocation color="grey" />
                           </InputLeftElement>
                           <Input
-                            {...register("state", {
+                            {...addressRegister("state", {
                               required: {
                                 value: true,
                                 message: "State cannot be empty",
@@ -340,8 +439,10 @@ const EditPersonalInfo = () => {
                             placeholder="Bengaluru"
                           />
                         </InputGroup>
-                        {errors.state && (
-                          <Text sx={errorText}>{errors.state?.message}</Text>
+                        {addressErrors.state && (
+                          <Text sx={errorText}>
+                            {addressErrors.state?.message}
+                          </Text>
                         )}
                       </FormControl>
                       <FormControl>
@@ -351,7 +452,7 @@ const EditPersonalInfo = () => {
                             <BsGlobeCentralSouthAsia color="grey" />
                           </InputLeftElement>
                           <Input
-                            {...register("country", {
+                            {...addressRegister("country", {
                               required: {
                                 value: true,
                                 message: "Country cannot be empty",
@@ -362,8 +463,10 @@ const EditPersonalInfo = () => {
                             placeholder="INDIA"
                           />
                         </InputGroup>
-                        {errors.country && (
-                          <Text sx={errorText}>{errors.country?.message}</Text>
+                        {addressErrors.country && (
+                          <Text sx={errorText}>
+                            {addressErrors.country?.message}
+                          </Text>
                         )}
                       </FormControl>
                     </Box>
@@ -372,28 +475,6 @@ const EditPersonalInfo = () => {
               </TabPanels>
             </Tabs>
           </ModalBody>
-
-          <ModalFooter>
-            <Button
-              colorScheme="teal"
-              size={"sm"}
-              width={"30%"}
-              type="reset"
-              mr={10}
-              onClick={() => onReset()}
-            >
-              Reset
-            </Button>
-            <Button
-              type="submit"
-              colorScheme="blue"
-              size={"sm"}
-              width={"30%"}
-              onClick={onClose}
-            >
-              Submit
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

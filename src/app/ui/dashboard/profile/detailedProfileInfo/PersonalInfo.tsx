@@ -1,13 +1,11 @@
 import { Heading, Text, Box, Flex, Skeleton, Stack } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 interface Props {
-  userData: { [key: string]: string } | null;
+  userData: { [key: string]: string };
 }
 
 const PersonalInfo = ({ userData }: Props) => {
-  const keys = ["First Name", "Last Name", "Email", "Phone", "Address"];
-
   if (!userData) {
     return (
       <Stack>
@@ -44,7 +42,11 @@ const PersonalInfo = ({ userData }: Props) => {
             alignItems={"center"}
             color={"#364A63"}
           >
-            {`${keys[idx]} `} <span>:</span>
+            {`${entry[0]
+              .charAt(0)
+              .toUpperCase()
+              .concat(entry[0].substring(1).toLocaleLowerCase())} `}{" "}
+            <span>:</span>
           </Heading>
           <Text
             fontSize={{

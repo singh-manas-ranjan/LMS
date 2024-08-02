@@ -48,9 +48,7 @@ const Profile = () => {
             overflowY={"scroll"}
             sx={sxScrollbar}
           >
-            <DetailedProfileInfo>
-              <EditPersonalInfo />
-            </DetailedProfileInfo>
+            <DetailedProfileInfo />
           </Box>
         </Box>
       </Box>

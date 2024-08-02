@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormHelperText,
   FormLabel,
   Input,
   InputGroup,
@@ -49,7 +50,7 @@ const formGroupBox = {
   justifyContent: "space-between",
   columnGap: 5,
   rowGap: 5,
-  alignItems: "center",
+  alignItems: "top",
 };
 
 type Props = {
@@ -222,9 +223,15 @@ const SignUpForm = ({ role, onClose }: Props) => {
               placeholder="example@email.com"
             />
           </InputGroup>
-          <Text sx={errorMsg}>{errors.email?.message}</Text>
+          {errors.email ? (
+            <Text sx={errorMsg}>{errors.email?.message}</Text>
+          ) : (
+            <FormHelperText fontSize={"xs"}>
+              We&apos;ll never share your email.
+            </FormHelperText>
+          )}
         </FormControl>
-        <FormControl>
+        {/* <FormControl>
           <FormLabel fontSize={"sm"}>Phone</FormLabel>
           <InputGroup size={"sm"}>
             <InputLeftElement>
@@ -241,7 +248,29 @@ const SignUpForm = ({ role, onClose }: Props) => {
               size={"sm"}
             />
           </InputGroup>
-          <Text sx={errorMsg}>{errors.email?.message}</Text>
+          <Text sx={errorMsg}>{errors.phone?.message}</Text>
+        </FormControl> */}
+        <FormControl>
+          <FormLabel htmlFor="lastName" sx={formLabel}>
+            Phone
+          </FormLabel>
+          <InputGroup size={"sm"}>
+            <InputLeftElement>
+              <MdLocalPhone size={15} color="grey" />
+            </InputLeftElement>
+            <Input
+              {...register("phone", {
+                required: { value: true, message: "Phone No. is required." },
+                minLength: { value: 10, message: "Enter valid phone number" },
+                maxLength: { value: 15, message: "Enter valid phone number." },
+              })}
+              placeholder="Phone number"
+              type="tel"
+              sx={inputField}
+              size={{ base: "sm", lg: "md" }}
+            />
+          </InputGroup>
+          <Text sx={errorMsg}>{errors.phone?.message}</Text>
         </FormControl>
       </Box>
       <Box sx={formGroupBox} mt={5}>

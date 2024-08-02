@@ -6,7 +6,7 @@ import OrderByBtn from "@/app/ui/dashboard/orderByBtn/OrderByBtn";
 import orderByBtns from "../../../../../public/orderByBtns";
 import { sxScrollbar } from "../../../../../public/scrollbarStyle";
 import { TCourse } from "../../../../../public/courses";
-import { fetchCourses } from "@/actions/courses/actions";
+import { fetchAllCourses } from "@/actions/courses/actions";
 
 const main = {
   width: "100%",
@@ -25,7 +25,7 @@ const Courses = () => {
   useEffect(() => {
     async function getCourses() {
       try {
-        setCoursesList(await fetchCourses());
+        setCoursesList(await fetchAllCourses());
       } catch (error) {
         console.error("Error fetching courses:", error);
       }

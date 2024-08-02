@@ -6,13 +6,13 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import DashboardCoursesCard from "./DashboardCoursesCard";
 import { TCourse } from "../../../../../public/courses";
-import { fetchCourses } from "@/actions/courses/actions";
+import { fetchAllCourses } from "@/actions/courses/actions";
 
 const DashBoardCourses = () => {
   const [courses, setCourses] = useState<TCourse[]>([]);
   useEffect(() => {
     async function getCourses() {
-      setCourses(await fetchCourses());
+      setCourses(await fetchAllCourses());
     }
     getCourses();
   }, []);
