@@ -151,7 +151,7 @@ const BannerCarousel = () => {
         position={"relative"}
         overflow={"hidden"}
       >
-        <Flex p={"1rem"} color={"#2D2F31"} w={"100%"} h={"100%"}>
+        <Flex p={{ base: "1rem" }} color={"#2D2F31"} w={"100%"} h={"100%"}>
           <Flex
             flexDirection={"column"}
             w={{ base: "100%", lg: "70%" }}
@@ -161,23 +161,19 @@ const BannerCarousel = () => {
             rowGap={5}
           >
             <Grid rowGap={3}>
-              <Heading fontSize={{ base: "2xl", lg: "2xl", xl: "3xl" }}>
+              <Heading fontSize={{ base: "md", md: "2xl" }}>
                 Revolutionize Your Teaching with Interactive Lesson Plans!
               </Heading>
               <Text
-                lineHeight={{ sm: "1.3rem", md: "1.7rem" }}
-                fontSize={{ base: "sm", md: "md" }}
+                lineHeight={{ sm: "xs", md: "sm" }}
+                fontSize={{ base: "xs", md: "md" }}
               >
-                Introducing Interactive Lesson Plans: Revolutionize Your
-                Classroom! At Learnopia, we&quot;re excited to unveil our latest
-                innovation: Interactive Lesson Plans! This cutting-edge feature
-                empowers you to design dynamic and responsive lessons that adapt
-                seamlessly to your students&quot; needs. Integrate effortlessly
-                with your existing resources and boost classroom engagement to
-                new heights. Dive into our tutorials and best practices to
-                maximize the impact of this tool and invigorate your teaching
-                approach. Explore Interactive Lesson Plans and elevate your
-                educational experience!
+                Introducing Interactive Lesson Plans from Learnopia! Transform
+                your classroom with our innovative tool, designed to create
+                dynamic, responsive lessons tailored to your students&apos;
+                needs. Easily integrate with your current resources and enhance
+                engagement. Check out our tutorials to make the most of this
+                feature and elevate your teaching!
               </Text>
             </Grid>
             <Button
@@ -187,6 +183,7 @@ const BannerCarousel = () => {
               justifyContent={"center"}
               columnGap={2}
               color={"#2D89BA"}
+              size={{ base: "sm", md: "md" }}
             >
               Explore More <FaAngleRight size={18} />
             </Button>
@@ -225,22 +222,19 @@ const BannerCarousel = () => {
             rowGap={5}
           >
             <Grid rowGap={3}>
-              <Heading fontSize={{ base: "2xl", lg: "2xl", xl: "3xl" }}>
+              <Heading fontSize={{ base: "md", md: "2xl" }}>
                 Elevate Your Teaching Journey with Learnopia!
               </Heading>
               <Text
-                lineHeight={{ sm: "1.3rem", md: "1.7rem" }}
-                fontSize={{ base: "sm", md: "md" }}
+                lineHeight={{ sm: "xs", md: "sm" }}
+                fontSize={{ base: "xs", md: "md" }}
               >
-                Maximize Your Impact with Learnopia! As a valued member of our
-                instructor community, you have access to a wealth of interactive
-                tools and resources designed to elevate your teaching. Take
-                advantage of exclusive workshops and certifications to further
-                enhance your skills and stay ahead in your field. Engage with
-                our vibrant network of fellow educators to share ideas and
-                collaborate. Continue to empower your students and advance your
-                professional journey with us. Explore new features and
-                opportunities today.
+                Maximize Your Impact with Learnopia! As a valued instructor, you
+                have access to interactive tools, exclusive workshops, and
+                certifications to boost your skills. Connect with our community
+                of educators, share ideas, and stay ahead in your field. Explore
+                new features and opportunities to enhance your teaching and
+                professional growth today.
               </Text>
             </Grid>
             <Button
@@ -250,6 +244,7 @@ const BannerCarousel = () => {
               justifyContent={"center"}
               columnGap={2}
               color={"#2D89BA"}
+              size={{ base: "sm", md: "md" }}
             >
               Explore More <FaAngleRight size={18} />
             </Button>

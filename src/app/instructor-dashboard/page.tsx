@@ -205,7 +205,7 @@ const InstructorDashboard = async () => {
                 justifyContent={{ base: "space-between" }}
                 alignItems={{ base: "center", sm: "baseline" }}
               >
-                <Heading fontSize={{ base: "sm" }} color={"#2D2F31"}>
+                <Heading size={{ base: "sm" }} color={"#2D2F31"}>
                   Student&apos;s Feedback
                 </Heading>
                 <Link color={"#2D89BA"} fontSize={{ base: "sm" }}>
@@ -322,7 +322,7 @@ const InstructorDashboard = async () => {
                 justifyContent={{ base: "space-between" }}
                 alignItems={{ base: "center", sm: "baseline" }}
               >
-                <Heading fontSize={{ base: "sm" }} color={"#2D2F31"}>
+                <Heading size={{ base: "sm" }} color={"#2D2F31"}>
                   Tasks
                 </Heading>
                 <Link color={"#2D89BA"} fontSize={{ base: "sm" }}>

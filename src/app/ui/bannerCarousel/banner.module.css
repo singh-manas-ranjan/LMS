@@ -6,7 +6,7 @@
     rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
 }
 .carouselItem {
-  padding-bottom: 0;
+  padding-bottom: 0.5rem;
   margin-block: 0;
   border-radius: 8px;
 }
