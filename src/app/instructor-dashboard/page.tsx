@@ -175,7 +175,7 @@ const InstructorDashboard = async () => {
                 <Heading size={{ base: "sm" }} color={"#2D2F31"}>
                   My Courses
                 </Heading>
-                <Link color={"#2D89BA"}>View All</Link>
+                <Link color={"#2D89BA"} fontSize={{base:"sm"}}>View All</Link>
               </CardHeader>
               <CardBody
                 display={"flex"}
