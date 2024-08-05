@@ -1,19 +1,17 @@
 "use server";
 
-import { TStudent } from "../../../public/studentInfo";
+import { TUser } from "@/app/ui/navbar/Navbar";
+import axios from "axios";
 
 async function fetchAllUsers(
   userRole: "students" | "instructors"
-): Promise<TStudent[]> {
+): Promise<TUser[]> {
   try {
-    const response = await fetch(
-      `https://learnopia-backend.vercel.app/api/v1/${userRole}`
-    );
-
-    if (!response.ok) {
-      throw new Error(`Unable to Fetch All Users: ${response.statusText}`);
-    }
-    return await response.json().then((data) => data.body);
+    const users: TUser[] = await axios
+      // .get(`http://localhost:3131/api/v1/${userRole}`)
+      .get(`https://learnopia-backend.vercel.app/api/v1/${userRole}`)
+      .then((res) => res.data.body);
+    return users;
   } catch (error) {
     console.error(`Error fetching users for ${userRole}:`, error);
     return [];

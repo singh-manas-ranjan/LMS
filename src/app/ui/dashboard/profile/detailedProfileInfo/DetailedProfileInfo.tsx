@@ -10,7 +10,7 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
-import React, { use, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import socialLinksData from "../../../../../../public/socialLinksData";
 import ResetPassword from "../resetPassword/ResetPassword";
 import SocialLinks from "../socialLinks/SocialLinks";
@@ -20,13 +20,52 @@ import PersonalInfo from "./PersonalInfo";
 import { getUserInfoFromLocalStorage, TUser } from "../../../navbar/Navbar";
 import EditPersonalInfo from "../editPersonalInfo/EditPersonalInfo";
 
+export type TUserInfo = {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  gender: string;
+  qualification: string;
+  address: string;
+};
+
+const getGender = (gender: string): string => {
+  switch (gender) {
+    case "M":
+      return "Male";
+    case "F":
+      return "Female";
+    case "O":
+      return "Other";
+    default:
+      return "-NA-";
+  }
+};
+
+const getQualification = (qualification: string): string => {
+  switch (qualification) {
+    case "X":
+      return "Secondary";
+    case "XII":
+      return "Senior Secondary";
+    case "UG":
+      return "Under-Graduate";
+    case "PG":
+      return "Post-Graduate";
+    default:
+      return "-NA-";
+  }
+};
+
 const DetailedProfileInfo = () => {
-  const [userInfo, setUserInfo] = useState<TUser>({} as TUser);
-  const [userId, setUserId] = useState<string>("");
+  const [userInfo, setUserInfo] = useState<TUserInfo>({} as TUserInfo);
+  const [user, setUser] = useState<TUser>({} as TUser);
 
   useEffect(() => {
     const info = getUserInfoFromLocalStorage();
-    setUserId(info._id || "");
+    setUser(info);
     const {
       firstName,
       lastName,
@@ -41,27 +80,32 @@ const DetailedProfileInfo = () => {
       lastName,
       email,
       phone,
-      gender,
-      qualification,
+      gender: getGender(gender),
+      qualification: getQualification(qualification),
       address,
-    } as TUser);
+    } as TUserInfo);
   }, []);
 
   const handleNewUserInfo = useCallback(
-    (newUserInfo: TUser) => setUserInfo(newUserInfo),
+    (newUserInfo: TUser) =>
+      setUserInfo({
+        ...newUserInfo,
+        gender: getGender(newUserInfo["gender"]),
+        qualification: getQualification(newUserInfo["qualification"]),
+      } as TUserInfo),
     []
   );
 
   return (
     <Tabs w={"100%"} h={"100%"}>
       <TabList color={"#364A63"}>
-        <Tab p={3} fontSize={{ base: "sm", lg: "1rem" }}>
+        <Tab p={3} fontSize={{ base: "sm" }}>
           Profile
         </Tab>
-        <Tab p={3} fontSize={{ base: "sm", lg: "1rem" }}>
+        <Tab p={3} fontSize={{ base: "sm" }}>
           Password
         </Tab>
-        <Tab p={3} fontSize={{ base: "sm", lg: "1rem" }}>
+        <Tab p={3} fontSize={{ base: "sm" }}>
           Social Links
         </Tab>
       </TabList>
@@ -107,15 +151,12 @@ const DetailedProfileInfo = () => {
                   width={"100%"}
                   h={"fit-content"}
                 >
-                  <Heading
-                    fontSize={{ base: "md", lg: "lg" }}
-                    color={"#364A63"}
-                  >
+                  <Heading fontSize={{ base: "md" }} color={"#364A63"}>
                     Personal Information
                   </Heading>
                   <EditPersonalInfo
-                    userId={userId}
-                    userInfo={userInfo}
+                    userId={user._id ?? ""}
+                    userInfo={user}
                     handleUpdateUserInfo={handleNewUserInfo}
                   />
                 </Box>

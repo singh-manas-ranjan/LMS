@@ -18,6 +18,7 @@ import { FaUsers } from "react-icons/fa6";
 import { BiSolidMessageDetail } from "react-icons/bi";
 import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { FaTrophy } from "react-icons/fa";
+import { FaChalkboardTeacher } from "react-icons/fa";
 
 interface Props {
   sideLink: NavLinkType;
@@ -45,7 +46,7 @@ export const getIcon = (iconName: string): JSX.Element | null => {
     case "settings":
       return <IoMdSettings />;
     case "person":
-      return <IoPerson />;
+      return <FaChalkboardTeacher />;
     case "multiPersons":
       return <FaUsers />;
     case "message":

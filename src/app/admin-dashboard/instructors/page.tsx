@@ -1,17 +1,16 @@
 import {
   Box,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
   Flex,
   Heading,
-  VStack,
-  Text,
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+  Button,
 } from "@chakra-ui/react";
 import React from "react";
 import { sxScrollbar } from "../../../../public/scrollbarStyle";
-import StudentsList from "@/app/ui/adminDashboard/students/StudentsList";
+import UsersList from "@/app/ui/adminDashboard/users/UsersList";
 
 const main = {
   width: "100%",
@@ -28,106 +27,58 @@ const AdminInstructor = async () => {
   return (
     <Box as="main" sx={main} rowGap={5} overflow={"hidden"}>
       <Flex justifyContent={"space-between"} p={".5rem"} alignItems={"center"}>
-        <Heading size={{ base: "sm", sm: "md" }} pl={".5rem"}>
-          Instructors
-        </Heading>
+        <Heading size={{ base: "sm", sm: "md" }}>Instructors</Heading>
         <Flex></Flex>
       </Flex>
-      <Box w={"100%"} h={"100%"}>
-        <Box display={"grid"} rowGap={5} p={".5rem"}>
-          <Card color="#364A63" boxShadow={"none"} direction={"row"} h={"60px"}>
-            <CardHeader
-              p={2.5}
-              pl={4}
-              display={{ base: "none", sm: "flex" }}
-              justifyContent={"center"}
-              alignItems={"center"}
-            >
-              <Text fontSize={{ base: "xs", md: "sm" }}>Avatar</Text>
-            </CardHeader>
-            <CardBody
-              display={"flex"}
-              alignItems={"center"}
-              paddingInline={{ sm: "0", md: "initial" }}
-            >
-              <VStack
-                spacing={0}
-                flex={{ base: "100px", sm: "120px", lg: 2, xl: 2 }}
-                alignItems={{ base: "start", md: "center" }}
-                justifyContent={"center"}
-              >
-                <Text
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                  fontSize={{ base: "xs", md: "sm" }}
-                  display={{ base: "none", md: "initial" }}
-                >
-                  Name
-                </Text>
-                <Text
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                  fontSize={{ base: "xs", md: "sm" }}
-                  display={{ md: "none" }}
-                >
-                  Name & Email
-                </Text>
-              </VStack>
-              <Box flex={10} display={"flex"} flexDirection={{ ms: "row" }}>
-                <Text
-                  flex={1}
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                  fontSize={{ base: "xs", md: "sm" }}
-                  display={{ base: "none", md: "flex" }}
-                >
-                  Email
-                </Text>
-                <Text
-                  flex={1}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                  fontSize={{ base: "xs", lg: "sm" }}
-                  display={{ base: "none", md: "flex" }}
-                >
-                  Phone
-                </Text>
-                <Text
-                  flex={1}
-                  display={"flex"}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                  fontSize={{ base: "xs", lg: "sm" }}
-                >
-                  Enrolled
-                </Text>
-                <Text
-                  flex={1}
-                  justifyContent={"center"}
-                  fontSize={{ base: "xs", md: "sm" }}
-                  display={{ base: "none", xl: "flex" }}
-                  alignItems={"center"}
-                >
-                  Address
-                </Text>
-              </Box>
-            </CardBody>
-            <CardFooter flexDir={{ sm: "column" }} p={0} pr={5}>
-              <Text
-                flex={1}
-                fontSize={{ base: "xs", md: "sm" }}
-                display={"flex"}
-                justifyContent={"center"}
-                alignItems={"center"}
-                paddingInline={1}
-              >
-                Status
-              </Text>
-            </CardFooter>
-          </Card>
+      <Box
+        w={"100%"}
+        h={"100%"}
+        columnGap={5}
+        display={"flex"}
+        flexDirection={{ base: "column", md: "row" }}
+      >
+        <Box
+          flex={{ base: 0.5, sm: 0.6, md: 1.5, lg: 1 }}
+          p={{ base: 3, lg: 0 }}
+          w={"100%"}
+        >
+          <Box width={{ base: "100%" }} paddingInline={{ md: 2 }}>
+            <FormControl w={"100%"}>
+              <FormLabel fontSize={"sm"}>Search Filter</FormLabel>
+              <Input
+                type="text"
+                size={"sm"}
+                placeholder="search"
+                borderRadius={4}
+              />
+            </FormControl>
+            <FormControl mt={3}>
+              <FormLabel fontSize={"sm"}>Location</FormLabel>
+              <Select size={"sm"} placeholder="Select location">
+                <option>Bengaluru</option>
+              </Select>
+            </FormControl>
+            <FormControl mt={3}>
+              <FormLabel fontSize={"sm"}>Courses</FormLabel>
+              <Select size={"sm"} placeholder="Select course">
+                <option>JavaScript</option>
+              </Select>
+            </FormControl>
+            <FormControl mt={5} display={"grid"}>
+              <Button colorScheme="teal" size={"sm"}>
+                Search
+              </Button>
+            </FormControl>
+          </Box>
         </Box>
-        <Box overflowY={"scroll"} w={"100%"} h={"100%"} sx={sxScrollbar}>
-          <StudentsList />
+        <Box
+          flex={4}
+          overflowY={"scroll"}
+          w={"100%"}
+          h={"100%"}
+          sx={sxScrollbar}
+        >
+          <UsersList userRole="instructors" />
         </Box>
       </Box>
     </Box>

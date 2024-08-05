@@ -28,13 +28,8 @@ const ResetPassword = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormControl color={"#364A63"}>
-        <FormLabel fontSize={{ base: "sm", lg: "md" }}>
-          Current Password
-        </FormLabel>
-        <InputGroup
-          {...register("currentPassword")}
-          size={{ base: "sm", lg: "md" }}
-        >
+        <FormLabel fontSize={{ base: "sm" }}>Current Password</FormLabel>
+        <InputGroup {...register("currentPassword")} size={{ base: "sm" }}>
           <Input
             type="password"
             placeholder="Current Password"
@@ -43,11 +38,8 @@ const ResetPassword = () => {
         </InputGroup>
       </FormControl>
       <FormControl mt={5} color={"#364A63"}>
-        <FormLabel fontSize={{ base: "sm", lg: "md" }}>New Password</FormLabel>
-        <InputGroup
-          {...register("newPassword")}
-          size={{ base: "sm", lg: "md" }}
-        >
+        <FormLabel fontSize={{ base: "sm" }}>New Password</FormLabel>
+        <InputGroup {...register("newPassword")} size={{ base: "sm" }}>
           <Input
             type="password"
             placeholder="New Password"
@@ -56,13 +48,8 @@ const ResetPassword = () => {
         </InputGroup>
       </FormControl>
       <FormControl mt={5} color={"#364A63"}>
-        <FormLabel fontSize={{ base: "sm", lg: "md" }}>
-          Confirm Password
-        </FormLabel>
-        <InputGroup
-          {...register("confirmPassword")}
-          size={{ base: "sm", lg: "md" }}
-        >
+        <FormLabel fontSize={{ base: "sm" }}>Confirm Password</FormLabel>
+        <InputGroup {...register("confirmPassword")} size={{ base: "sm" }}>
           <Input
             type="password"
             placeholder="Confirm Password"

@@ -33,6 +33,8 @@ const Courses = () => {
     getCourses();
   }, []);
 
+  console.log(coursesList);
+
   const [filterBy, setFilter] = useState("all");
   const [sortBy, setSortBy] = useState("default");
 

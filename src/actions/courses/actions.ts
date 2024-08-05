@@ -25,15 +25,20 @@ export const fetchCourseById = async (courseId: string): Promise<TCourse> => {
   }
 };
 
+import axios from "axios";
+
 export const fetchAllCourses = async (): Promise<TCourse[]> => {
   try {
-    const response = await fetch(
+    // const response = await axios.get("http://localhost:3131/api/v1/courses");
+    const response = await axios.get(
       "https://learnopia-backend.vercel.app/api/v1/courses"
     );
-    if (!response.ok) {
-      throw new Error(`Failed to fetch all courses: ${response.statusText}`);
+
+    if (!response.data) {
+      throw new Error("Failed to fetch all courses: No data in response");
     }
-    return await response.json().then((data) => data.body);
+
+    return response.data.body;
   } catch (error) {
     console.error("Error fetching courses:", error);
     return [];

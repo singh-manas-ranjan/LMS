@@ -35,7 +35,6 @@ import { BsGlobeCentralSouthAsia } from "react-icons/bs";
 import { FaMapLocation } from "react-icons/fa6";
 import { FaStreetView } from "react-icons/fa6";
 import { GiPathDistance } from "react-icons/gi";
-import { TStudentsInfo } from "../../../../../../public/studentInfo";
 import {
   addUserInfoToLocalStorage,
   getUserInfoFromLocalStorage,
@@ -93,7 +92,18 @@ const EditPersonalInfo = ({
 
   const onSubmit = async (e: TUser) => {
     onClose();
-    const { firstName, lastName, email, phone, qualification, gender } = e;
+    const {
+      _id,
+      firstName,
+      lastName,
+      email,
+      phone,
+      qualification,
+      gender,
+      role,
+      avatar,
+      enrolledCourses,
+    } = e;
     try {
       const response = await fetch(
         // `http://localhost:3131/api/v1/students/${userId}`,
@@ -121,8 +131,28 @@ const EditPersonalInfo = ({
         );
         const user = getUserInfoFromLocalStorage();
         removeUserInfoFromLocalStorage();
-        addUserInfoToLocalStorage({ ...user, ...e });
-        handleUpdateUserInfo(e);
+        addUserInfoToLocalStorage({
+          _id,
+          firstName,
+          lastName,
+          email,
+          phone,
+          gender,
+          role,
+          avatar,
+          enrolledCourses,
+        } as TUser);
+        handleUpdateUserInfo({
+          _id,
+          firstName,
+          lastName,
+          email,
+          phone,
+          gender,
+          role,
+          avatar,
+          enrolledCourses,
+        } as TUser);
       } else {
         throw new Error(response.statusText);
       }
@@ -324,7 +354,6 @@ const EditPersonalInfo = ({
                           <option value="X">Secondary</option>
                           <option value="XII">Senior Secondary</option>
                           <option value="UG">Under Graduate</option>
-                          <option value="G">Graduate</option>
                           <option value="PG">Post Graduate</option>
                         </Select>
                         {errors.qualification && (

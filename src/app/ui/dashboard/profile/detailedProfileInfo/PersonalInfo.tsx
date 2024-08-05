@@ -1,8 +1,10 @@
+import { TUser } from "@/app/ui/navbar/Navbar";
 import { Heading, Text, Box, Flex, Skeleton, Stack } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { TUserInfo } from "./DetailedProfileInfo";
 
 interface Props {
-  userData: { [key: string]: string };
+  userData: TUserInfo;
 }
 
 const PersonalInfo = ({ userData }: Props) => {
@@ -35,8 +37,8 @@ const PersonalInfo = ({ userData }: Props) => {
           alignItems={"center"}
         >
           <Heading
-            fontSize={{ base: ".8rem", sm: "sm", lg: "md" }}
-            width={{ base: "30%", lg: "20%" }}
+            fontSize={{ base: ".8rem", sm: "sm" }}
+            width={{ base: "35%", lg: "20%" }}
             display={"flex"}
             justifyContent={"space-between"}
             alignItems={"center"}
@@ -52,14 +54,14 @@ const PersonalInfo = ({ userData }: Props) => {
             fontSize={{
               base: ".7rem",
               sm: ".8rem",
-              lg: "md",
+              lg: "sm",
             }}
-            width={{ base: "65%", lg: "70%" }}
+            width={{ base: "60%", lg: "70%" }}
             display={"flex"}
             alignItems={"center"}
             color={"#364A63"}
           >
-            {entry[1]}
+            {entry[1] === "" ? "-NA-" : entry[1]}
           </Text>
         </Box>
       ))}

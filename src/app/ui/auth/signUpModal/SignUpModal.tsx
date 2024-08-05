@@ -55,10 +55,10 @@ const SignUpModal = () => {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <SignUpForm role="STUDENTS" onClose={onClose} />
+                  <SignUpForm role="students" onClose={onClose} />
                 </TabPanel>
                 <TabPanel>
-                  <SignUpForm role="INSTRUCTOR" onClose={onClose} />
+                  <SignUpForm role="instructors" onClose={onClose} />
                 </TabPanel>
               </TabPanels>
             </Tabs>

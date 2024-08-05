@@ -45,7 +45,7 @@ const DashBoardCourses = () => {
     },
   };
 
-  if (courses.length === 0) {
+  if (courses?.length === 0) {
     return (
       <Box
         width={"100%"}
@@ -74,14 +74,15 @@ const DashBoardCourses = () => {
         className={styles.carousel}
         removeArrowOnDeviceType={["tablet", "mobile"]}
       >
-        {courses
-          .filter((course) => Number(course.courseRating) >= 4.5)
-          .sort((a, b) => {
-            return Number(b.courseRating) - Number(a.courseRating);
-          })
-          .map((course, idx) => (
-            <DashboardCoursesCard key={idx} course={course} />
-          ))}
+        {Array.isArray(courses) &&
+          courses
+            .filter((course) => Number(course.courseRating) >= 4.5)
+            .sort((a, b) => {
+              return Number(b.courseRating) - Number(a.courseRating);
+            })
+            .map((course, idx) => (
+              <DashboardCoursesCard key={idx} course={course} />
+            ))}
       </Carousel>
     </Box>
   );

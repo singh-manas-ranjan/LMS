@@ -13,7 +13,11 @@ const HamMenu = ({ isMenuOpen }: { isMenuOpen: boolean }) => {
     dispatch(openMenuClick(!isOpen));
   };
   return (
-    <Flex height={"fit-content"} alignItems={"center"}>
+    <Flex
+      height={"fit-content"}
+      alignItems={"center"}
+      justifyContent={"center"}
+    >
       <Button
         bg={"#EFF8FF"}
         color={"#044F63"}

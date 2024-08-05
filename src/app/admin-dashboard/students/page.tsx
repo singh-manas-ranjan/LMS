@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { sxScrollbar } from "../../../../public/scrollbarStyle";
-import StudentsList from "@/app/ui/adminDashboard/students/StudentsList";
+import UsersList from "@/app/ui/adminDashboard/users/UsersList";
 
 const main = {
   width: "100%",
@@ -127,7 +127,7 @@ const AdminStudents = async () => {
           </Card>
         </Box>
         <Box overflowY={"scroll"} w={"100%"} h={"100%"} sx={sxScrollbar}>
-          <StudentsList />
+          <UsersList userRole="students" />
         </Box>
       </Box>
     </Box>

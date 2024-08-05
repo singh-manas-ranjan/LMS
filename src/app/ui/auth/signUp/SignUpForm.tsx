@@ -54,7 +54,7 @@ const formGroupBox = {
 };
 
 type Props = {
-  role: "INSTRUCTOR" | "STUDENTS";
+  role: "instructors" | "students";
   onClose: () => void;
 };
 
@@ -104,8 +104,8 @@ const SignUpForm = ({ role, onClose }: Props) => {
 
     try {
       const response = await axios.post(
-        `https://learnopia-backend.vercel.app/api/v1/${role.toLowerCase()}/register`,
-        // `http://localhost:3131/api/v1/${role.toLowerCase()}/register`,
+        `https://learnopia-backend.vercel.app/api/v1/${role}/register`,
+        // `http://localhost:3131/api/v1/${role}/register`,
         data
       );
 

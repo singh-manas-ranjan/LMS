@@ -34,7 +34,7 @@ import { addCourses } from "@/lib/features/courses/coursesSlice";
 const nav = {
   bg: "#fff",
   height: { base: "5rem" },
-  borderRadius: "4px",
+  // borderRadius: "4px",
   alignItems: "center",
   justifyContent: "space-between",
   padding: "1rem",
@@ -103,6 +103,7 @@ export type TUser = {
   role: string;
   avatar: string;
   address?: string;
+  enrolledCourses?: TCourse[];
 };
 
 export function getUserInfoFromLocalStorage() {
@@ -163,7 +164,11 @@ const Navbar = ({ navLinks }: Props) => {
   };
 
   return (
-    <Flex sx={nav} position={"relative"}>
+    <Flex
+      sx={nav}
+      position={"relative"}
+      style={{ boxShadow: "0 4px 2px -2px rgba(0,0,0,.2)" }}
+    >
       <Text display={{ base: "none", sm: "flex" }} color={"#044F63"}>
         Welcome Back{" "}
         <FaHandsClapping color="orange" style={{ marginLeft: ".5rem" }} />{" "}

@@ -1,4 +1,3 @@
-"use client";
 import {
   Badge,
   Box,
@@ -9,49 +8,36 @@ import {
   VStack,
   Image,
   Text,
-  Spinner,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import EnrollModal from "../enrollModal/EnrollModal";
-import { TStudent } from "../../../../../public/studentInfo";
 import { fetchAllUsers } from "@/actions/users/action";
+import InstructorCard from "../../dashboard/instructorDashboard/InstructorCard";
+import { TUser } from "../../navbar/Navbar";
 
 const textStyle = {
-  fontSize: { base: "sm", xl: "md" },
+  fontSize: { base: "xs", xl: "sm" },
 };
-const StudentsList = () => {
-  const [students, setStudents] = useState<TStudent[]>([]);
+const UsersList = async ({
+  userRole,
+}: {
+  userRole: "students" | "instructors";
+}) => {
+  const users: TUser[] = await fetchAllUsers(userRole);
 
-  useEffect(() => {
-    async function fetchAllStudents() {
-      const studentsResponse = await fetchAllUsers("students");
-      setStudents(studentsResponse);
-    }
-    fetchAllStudents();
-  }, []);
-
-  if (students.length === 0) {
+  if (userRole === "instructors") {
     return (
-      <Box
-        width={"100%"}
-        display={"grid"}
-        height={"100%"}
-        placeItems={"center"}
-      >
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          color="blue.500"
-          emptyColor="gray.200"
-          size="xl"
-        />
+      <Box display={"grid"} rowGap={5} p={".5rem"}>
+        {users.map((user, idx) => (
+          <InstructorCard key={idx} instructor={user} />
+        ))}
       </Box>
     );
   }
 
   return (
     <Box display={"grid"} rowGap={5} p={".5rem"}>
-      {students.map((student) => (
+      {users.map((student) => (
         <Card
           key={student._id}
           color="teal"
@@ -78,7 +64,7 @@ const StudentsList = () => {
             justifyContent={"center"}
           >
             <VStack
-              spacing={0}
+              spacing={1.5}
               flex={{ base: "100px", sm: "120px", lg: 2, xl: 2 }}
               alignItems={{ base: "start", md: "center" }}
               justifyContent={"center"}
@@ -89,7 +75,6 @@ const StudentsList = () => {
                 alignItems={"center"}
                 justifyContent={"center"}
                 fontSize={{ base: "xs", md: "sm" }}
-                display={{ base: "none", md: "flex" }}
               >{`${student.firstName} ${student.lastName}`}</Text>
               <Text
                 width={"120px"}
@@ -123,8 +108,8 @@ const StudentsList = () => {
               </Text>
               <Box flex={1} display={"flex"} justifyContent={"center"}>
                 <EnrollModal
-                  courses={student.enrolledCourses}
-                  studentId={student._id}
+                  courses={student.enrolledCourses ?? []}
+                  studentId={student._id ?? ""}
                   studentFirstName={student.firstName}
                 />
               </Box>
@@ -160,4 +145,4 @@ const StudentsList = () => {
   );
 };
 
-export default React.memo(StudentsList);
+export default UsersList;

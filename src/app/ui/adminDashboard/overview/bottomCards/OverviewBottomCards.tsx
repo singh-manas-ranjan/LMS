@@ -23,7 +23,7 @@ type TPopularTasks = {
   name: string;
   participants: number;
 };
-const popularTasks: TPopularTasks[] = [
+export const popularTasks: TPopularTasks[] = [
   { name: "Build LMS", participants: 15 },
   { name: "Build Weather App", participants: 5 },
   { name: "Build E-Commerce", participants: 20 },
