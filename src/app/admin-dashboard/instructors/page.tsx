@@ -18,7 +18,7 @@ const main = {
   borderRadius: "4px",
   display: "flex",
   flexDirection: "column",
-  padding: "1rem",
+  padding: { base: "1rem", lg: "1rem 2rem 1rem 2rem" },
   bg: "#ffffff",
   color: "#364A63",
 };
@@ -33,7 +33,7 @@ const AdminInstructor = async () => {
       <Box
         w={"100%"}
         h={"100%"}
-        columnGap={5}
+        columnGap={{ md: 5, lg: 10 }}
         display={"flex"}
         flexDirection={{ base: "column", md: "row" }}
       >

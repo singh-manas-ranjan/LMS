@@ -13,15 +13,13 @@ import {
   Text,
   WrapItem,
   Avatar,
-  Button,
 } from "@chakra-ui/react";
 import React from "react";
 import BannerCarousel from "../ui/bannerCarousel/BannerCarousel";
-import NextLink from "next/link";
 import { popularTasks } from "../ui/adminDashboard/overview/bottomCards/OverviewBottomCards";
 import studentRankings, { TStudentRankings } from "../../../public/rankingData";
-import { sxScrollbar } from "../../../public/scrollbarStyle";
-import TextEditor from "../ui/dashboard/profile/textEditor/TextEditor";
+import InstructorDashboardCourses from "../ui/instructorDashboard/InstructorDashboardCourses";
+import NextLink from "next/link";
 
 const main = {
   width: "100%",
@@ -89,13 +87,15 @@ const InstructorDashboard = async () => {
           >
             <Box
               display={"flex"}
-              flexDir={"column"}
+              flexDir={{ base: "column", sm: "row", xl: "column" }}
               width={"100%"}
               p={".5rem"}
               h={"100%"}
               justifyContent={"space-between"}
+              columnGap={5}
+              rowGap={5}
             >
-              <Box width={"100%"} h={"47%"}>
+              <Box width={"100%"} h={{ xl: "47%" }}>
                 <Card
                   h={"100%"}
                   boxShadow={
@@ -119,7 +119,7 @@ const InstructorDashboard = async () => {
                   ></CardBody>
                 </Card>
               </Box>
-              <Box width={"100%"} h={"47%"}>
+              <Box width={"100%"} h={{ xl: "47%" }}>
                 <Card
                   h={"100%"}
                   boxShadow={
@@ -175,14 +175,21 @@ const InstructorDashboard = async () => {
                 <Heading size={{ base: "sm" }} color={"#2D2F31"}>
                   My Courses
                 </Heading>
-                <Link color={"#2D89BA"} fontSize={{base:"sm"}}>View All</Link>
+                <NextLink href="/instructor-dashboard/courses">
+                  <Link color={"#2D89BA"} fontSize={{ base: "sm" }}>
+                    View All
+                  </Link>
+                </NextLink>
               </CardHeader>
               <CardBody
                 display={"flex"}
                 flexDirection={"column"}
                 rowGap={2}
                 paddingTop={0}
-              ></CardBody>
+                paddingInline={{ base: 0, md: "1rem" }}
+              >
+                <InstructorDashboardCourses />
+              </CardBody>
             </Card>
           </Box>
         </Flex>
@@ -270,10 +277,7 @@ const InstructorDashboard = async () => {
                                         width={"100%"}
                                       >
                                         <Text
-                                          fontSize={{
-                                            base: "sm",
-                                            xl: "md",
-                                          }}
+                                          fontSize={{ base: "xs", md: "sm" }}
                                         >
                                           {review.student.name}
                                         </Text>
@@ -345,7 +349,7 @@ const InstructorDashboard = async () => {
                             <Box as="span" flex="1" textAlign="left">
                               <WrapItem>
                                 <Grid m={2}>
-                                  <Text fontSize={{ base: "sm", xl: "md" }}>
+                                  <Text fontSize={{ base: "xs", md: "sm" }}>
                                     {task.name}
                                   </Text>
                                   <Text
