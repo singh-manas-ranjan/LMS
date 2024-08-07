@@ -21,7 +21,7 @@ export const fetchInstructorCourses = async (
   try {
     const response = await axios.get(
       // `http://localhost:3131/api/v1/instructors/courses/${id}`
-      `https://learnopia-backend.vercel.app/api/v1/courses/${id}`
+      `https://learnopia-backend.vercel.app/api/v1/instructors/courses/${id}`
     );
 
     if (!response.data) {
