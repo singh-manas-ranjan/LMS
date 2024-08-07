@@ -9,8 +9,8 @@ import {
   Button,
 } from "@chakra-ui/react";
 import React from "react";
-import { TUser } from "../../navbar/Navbar";
 import NextLink from "next/link";
+import { TUser } from "../navbar/Navbar";
 
 const textStyle = {
   fontSize: { base: "xs", md: "sm" },

@@ -24,9 +24,7 @@ const main = {
   padding: "1rem",
   overflow: "hidden",
 };
-const textStyle = {
-  fontSize: { base: "xs", md: "sm" },
-};
+
 const Instructors = async () => {
   const instructors = await fetchAllUsers("instructors");
 

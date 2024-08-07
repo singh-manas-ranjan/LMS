@@ -63,7 +63,7 @@ const UploadProfilePicBtn = ({
         placeItems={"center"}
         boxSize={10}
         borderRadius={"50%"}
-        bg={"#E5E9F2"}
+        bg={"#E5E9F28C"}
         _hover={{ bg: "#97CAF0" }}
       >
         <FaCameraRetro />
@@ -93,7 +93,7 @@ const UploadProfilePicBtn = ({
                 type="file"
                 name="avatar"
                 style={{ width: "100%" }}
-                accept="image/jpeg, image/png"
+                accept="image/jpeg, image/png , image/jpg"
               />
               <Button type="submit" mt={3} size={"sm"} colorScheme="teal">
                 Submit

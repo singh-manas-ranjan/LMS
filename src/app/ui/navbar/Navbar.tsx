@@ -92,6 +92,12 @@ export type TAddress = {
   country: string;
 };
 
+export type TEducation = {
+  degree: string;
+  institution: string;
+  passingYear: string;
+};
+
 export type TUser = {
   _id?: string;
   firstName: string;
@@ -102,7 +108,12 @@ export type TUser = {
   qualification: string;
   role: string;
   avatar: string;
+  aboutMe?: string;
+  domain?: string;
   address?: string;
+  services?: string[];
+  languages?: string[];
+  education?: TEducation[];
   enrolledCourses?: TCourse[];
 };
 
@@ -196,8 +207,8 @@ const Navbar = ({ navLinks }: Props) => {
                 src={userInfo.avatar ?? "/avatar.svg"}
                 width={30}
                 height={30}
+                style={{ borderRadius: "2px" }}
                 alt=""
-                style={{ borderRadius: "50%" }}
               />{" "}
               {minWidth600 && <Text>{userInfo.firstName}</Text>}
             </Box>

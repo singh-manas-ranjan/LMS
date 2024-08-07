@@ -27,7 +27,6 @@ export const fetchInstructorCourses = async (
     if (!response.data) {
       throw new Error("Failed to fetch all courses: No data in response");
     }
-
     return response.data.body;
   } catch (error) {
     console.error("Error fetching courses:", error);
