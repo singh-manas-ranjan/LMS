@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import studentRankings from "../../../../../../public/rankingData";
+import { sxScrollbar } from "../../../../../../public/scrollbarStyle";
 
 const headings = ["Students enrolled", "Popular tasks", "Group progress"];
 
@@ -56,6 +57,7 @@ const OverviewBottomCards = () => {
       gridTemplateColumns={{ base: "repeat(1, 1fr)", md: "repeat(3, 1fr )" }}
       columnGap={5}
       overflowY={{ sm: "scroll", md: "unset" }}
+      sx={sxScrollbar}
       rowGap={5}
     >
       {/* {headings.map((card, idx) => ( */}
@@ -75,7 +77,7 @@ const OverviewBottomCards = () => {
         </CardHeader>
         <CardBody height={"fit-content"} pt={0}>
           <Box h={"250px"} w={"100%"}>
-            <Accordion h={"100%"} overflowY={"scroll"}>
+            <Accordion h={"100%"} overflowY={"scroll"} sx={sxScrollbar}>
               {studentRankings.map((student, idx) => (
                 <AccordionItem key={idx}>
                   <Text>
@@ -156,7 +158,7 @@ const OverviewBottomCards = () => {
         </CardHeader>
         <CardBody height={"fit-content"} pt={0}>
           <Box h={"250px"} w={"100%"}>
-            <Accordion h={"100%"} overflowY={"scroll"}>
+            <Accordion h={"100%"} overflowY={"scroll"} sx={sxScrollbar}>
               {popularTasks.map((task, idx) => (
                 <AccordionItem key={idx}>
                   <Text>
@@ -202,7 +204,7 @@ const OverviewBottomCards = () => {
         </CardHeader>
         <CardBody height={"fit-content"} pt={0}>
           <Box h={"250px"} w={"100%"}>
-            <Accordion h={"100%"} overflowY={"scroll"}>
+            <Accordion h={"100%"} overflowY={"scroll"} sx={sxScrollbar}>
               {groups.map((group, idx) => (
                 <AccordionItem key={idx}>
                   <Text>

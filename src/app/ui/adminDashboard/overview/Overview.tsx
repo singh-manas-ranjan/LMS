@@ -25,6 +25,7 @@ import OverviewBottomCards from "./bottomCards/OverviewBottomCards";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import allStats from "../../../../../public/adminDashboardStats";
+import { sxScrollbar } from "../../../../../public/scrollbarStyle";
 
 const getIcon = (iconName: string): JSX.Element | null => {
   switch (iconName) {
@@ -109,6 +110,7 @@ const Overview = () => {
         width={"100%"}
         height={"100%"}
         overflowY={"scroll"}
+        sx={sxScrollbar}
         rowGap={3}
       >
         <Box
