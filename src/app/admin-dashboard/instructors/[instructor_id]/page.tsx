@@ -8,6 +8,11 @@ import {
   CardBody,
   Grid,
   Text,
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
 } from "@chakra-ui/react";
 import React from "react";
 import { sxScrollbar } from "../../../../../public/scrollbarStyle";
@@ -32,6 +37,17 @@ const main = {
 const textStyle = {
   fontSize: { base: "xs", xl: "sm" },
 };
+
+type TAvailable = {
+  day: string;
+};
+
+const availableTimings: TAvailable[] = [
+  { day: "Monday" },
+  { day: "Wednesday" },
+  { day: "Thursday" },
+  { day: "Saturday" },
+];
 
 const AdminInstructorDetail = async ({
   params,
@@ -198,7 +214,6 @@ const AdminInstructorDetail = async ({
                 </Text>
               </CardBody>
             </Card>
-
             <Card
               boxShadow={
                 "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
@@ -221,7 +236,66 @@ const AdminInstructorDetail = async ({
                 flexDirection={"column"}
                 rowGap={1}
                 p={3}
-              ></CardBody>
+                paddingInline={0}
+              >
+                <Accordion
+                  allowToggle
+                  display={"flex"}
+                  flexDir={"column"}
+                  rowGap={3}
+                >
+                  {availableTimings.map((avail, idx) => (
+                    <AccordionItem
+                      key={idx}
+                      borderRadius={4}
+                      bgColor={"#F4F3F3"}
+                    >
+                      <Text>
+                        <AccordionButton borderRadius={4}>
+                          <Box as="span" flex="1" textAlign="left">
+                            <Text
+                              fontSize={{ base: "sm", xl: "md" }}
+                              color="#044F63"
+                            >
+                              {avail.day}
+                            </Text>
+                          </Box>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </Text>
+                      <AccordionPanel pb={4}></AccordionPanel>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </CardBody>
+            </Card>
+            <Card
+              boxShadow={
+                "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
+              }
+              w={"100%"}
+              p={{ base: 3, sm: 5 }}
+            >
+              <CardHeader
+                color="#044F63"
+                p={4}
+                borderRadius={4}
+                bgColor={"#F4F3F3"}
+              >
+                <Heading size={{ base: "sm", xl: "md" }}>Feedback</Heading>
+              </CardHeader>
+              <CardBody
+                display={"flex"}
+                flexDirection={"column"}
+                rowGap={1}
+                p={3}
+              >
+                <Text fontSize={{ base: "xs", lg: "sm" }} color={"#77838F"}>
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Minima eligendi qui expedita modi ex est quo illum inventore
+                  ad ipsa!
+                </Text>
+              </CardBody>
             </Card>
           </Box>
           <Box

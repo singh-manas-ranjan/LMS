@@ -12,8 +12,8 @@ import {
 import React from "react";
 import EnrollModal from "../enrollModal/EnrollModal";
 import { fetchAllUsers } from "@/actions/users/action";
-import InstructorCard from "../../dashboard/instructorDashboard/InstructorCard";
 import { TUser } from "../../navbar/Navbar";
+import InstructorCard from "../../instructorDashboard/InstructorCard";
 
 const textStyle = {
   fontSize: { base: "xs", xl: "sm" },
