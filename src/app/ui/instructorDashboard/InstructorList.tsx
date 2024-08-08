@@ -4,14 +4,15 @@ import {
   CardFooter,
   Text,
   Image,
-  Button,
   Card,
   CardBody,
   CardHeader,
   Link,
+  Button,
 } from "@chakra-ui/react";
-import React from "react";
-import { TUser } from "../navbar/Navbar";
+import React, { useEffect, useState } from "react";
+import { getUserInfoFromLocalStorage, TUser } from "../navbar/Navbar";
+import NextLink from "next/link";
 
 type Props = {
   instructors: TUser[];
@@ -21,6 +22,12 @@ const textStyle = {
   fontSize: { base: "xs", md: "sm" },
 };
 const InstructorList = ({ instructors }: Props) => {
+  const [instructorId, setInstructorId] = useState("");
+  useEffect(() => {
+    const instructor = getUserInfoFromLocalStorage();
+    setInstructorId(instructor._id ?? "");
+  }, []);
+
   return (
     <Box display={"grid"} rowGap={5} p={".5rem"}>
       {Array.isArray(instructors) &&
@@ -47,10 +54,14 @@ const InstructorList = ({ instructors }: Props) => {
               <Image
                 src={instructor.avatar}
                 alt={instructor.firstName}
-                borderRadius={"50%"}
+                // borderRadius={"50%"}
                 w={"100%"}
                 h={"100%"}
                 minW={"0px"}
+                borderRadius={6}
+                boxShadow={
+                  "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
+                }
               />
             </CardHeader>
             <CardBody
@@ -88,7 +99,15 @@ const InstructorList = ({ instructors }: Props) => {
                 justifyContent={{ base: "center" }}
                 alignItems={"center"}
                 pr={{ md: 5 }}
-              ></Box>
+              >
+                {instructor._id === instructorId && (
+                  <NextLink href={"/instructor-dashboard/profile"}>
+                    <Button as={"a"} size={"sm"} colorScheme="teal">
+                      Profile
+                    </Button>
+                  </NextLink>
+                )}
+              </Box>
             </CardFooter>
           </Card>
         ))}

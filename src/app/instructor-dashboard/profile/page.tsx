@@ -1,5 +1,4 @@
 "use client";
-import { fetchInstructorById } from "@/actions/instructor/action";
 import {
   Box,
   Heading,
@@ -19,16 +18,17 @@ import {
   SkeletonText,
   Stack,
   Button,
-  useDisclosure,
   HStack,
-  VStack,
   WrapItem,
+  Flex,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { sxScrollbar } from "../../../../public/scrollbarStyle";
 import { getUserInfoFromLocalStorage, TUser } from "@/app/ui/navbar/Navbar";
-import { BiSolidEdit } from "react-icons/bi";
 import UploadProfilePicBtn from "@/app/ui/dashboard/profile/UploadProfilePicBtn";
+import { BookAIcon, MailCheckIcon, MapIcon, MedalIcon } from "lucide-react";
+import InstructorProfileEditForm from "@/app/ui/instructorDashboard/InstructorProfileEditForm";
+import { RiVerifiedBadgeFill } from "react-icons/ri";
 
 const main = {
   width: "100%",
@@ -72,13 +72,16 @@ const timings = [
 const InstructorProfile = () => {
   const [instructor, setInstructor] = useState({} as TUser);
   const [loading, setLoading] = useState(true);
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     const instructor = getUserInfoFromLocalStorage();
     setInstructor(instructor);
     setLoading(false);
   }, []);
+
+  function handleUpdateInstructor(newInstructor: TUser) {
+    setInstructor(newInstructor);
+  }
 
   return (
     <Box as="main" sx={main} overflow={"hidden"}>
@@ -93,18 +96,11 @@ const InstructorProfile = () => {
         <Text fontSize={"xs"} color="#044F63">
           Update
         </Text>
-        <Button
-          onClick={onOpen}
-          display={"grid"}
-          placeItems={"center"}
-          boxSize={10}
-          borderRadius={"50%"}
-          bgColor={"#F4F3F3"}
-          transition={".3s ease-in-out"}
-          _hover={{ bg: "#E2E8F0" }}
-        >
-          <BiSolidEdit style={{ borderRadius: "50%" }} color="#364A63" />
-        </Button>
+        <InstructorProfileEditForm
+          userId={instructor?._id ?? ""}
+          userInfo={instructor}
+          handleUpdateInstructor={handleUpdateInstructor}
+        />
       </Box>
       <Box
         w={"100%"}
@@ -152,7 +148,7 @@ const InstructorProfile = () => {
                   src={instructor.avatar ?? "/avatar.svg"}
                   alt={instructor.firstName}
                   h={{ base: "80%", md: "100%" }}
-                  w={"100%"}
+                  w={"auto"}
                   borderRadius={6}
                   //   outline={"5px solid"}
                   //   outlineColor={
@@ -166,7 +162,7 @@ const InstructorProfile = () => {
                 <Box
                   position={"relative"}
                   top={{ base: "30%", md: "40%" }}
-                  right={{ base: "1rem" }}
+                  right={{ base: ".5rem", sm: "1rem" }}
                   display={"grid"}
                   placeItems={"center"}
                 >
@@ -190,18 +186,59 @@ const InstructorProfile = () => {
                   display={"flex"}
                   justifyContent={"center"}
                   flexDir={"column"}
+                  rowGap={{ md: 1 }}
                 >
-                  <Heading size={{ base: "xs", md: "sm", lg: "md" }}>
+                  <Heading
+                    size={{ base: "xs", md: "md" }}
+                    display={"flex"}
+                    columnGap={2}
+                    width={"100%"}
+                    justifyContent={{ base: "end", md: "initial" }}
+                  >
                     {`${instructor.firstName} ${instructor.lastName}`}
+                    <RiVerifiedBadgeFill size={20} color="green" />
                   </Heading>
-                  <Grid color={"#77838F"} rowGap={{ base: 1 }} mt={1}>
-                    <Text fontSize={{ base: "xs", md: "sm" }}>
-                      {instructor.domain}
-                    </Text>
-                    <Text fontSize={{ base: "xs", md: "sm" }}>
-                      {instructor.address}
-                    </Text>
-                  </Grid>
+                  <Flex
+                    flexDirection={"column"}
+                    alignItems={{ base: "end", md: "initial" }}
+                    color={"#77838F"}
+                    rowGap={{ base: 1 }}
+                    mt={1}
+                  >
+                    <Box display={"flex"} columnGap={2}>
+                      <Box display={{ base: "none", md: "flex" }}>
+                        <BookAIcon size={18} />
+                      </Box>
+                      <Text
+                        fontSize={{ base: "xs", lg: "sm" }}
+                        display={"flex"}
+                      >
+                        {instructor.domain}
+                      </Text>
+                    </Box>
+                    <Box display={"flex"} columnGap={2}>
+                      <Box display={{ base: "none", md: "flex" }}>
+                        <MailCheckIcon size={18} />
+                      </Box>
+                      <Text
+                        fontSize={{ base: "xs", lg: "sm" }}
+                        display={"flex"}
+                      >
+                        {instructor.email}
+                      </Text>
+                    </Box>
+                    <Box display={{ base: "none", sm: "flex" }} columnGap={2}>
+                      <Box display={{ base: "none", md: "flex" }}>
+                        <MapIcon size={18} />
+                      </Box>
+                      <Text
+                        fontSize={{ base: "xs", lg: "sm" }}
+                        display={"flex"}
+                      >
+                        {instructor.address}
+                      </Text>
+                    </Box>
+                  </Flex>
                 </Box>
               </CardBody>
             </Card>
@@ -307,7 +344,7 @@ const InstructorProfile = () => {
                     {instructor?.education?.map((education, idx) => (
                       <AccordionItem key={idx}>
                         <Text>
-                          <AccordionButton>
+                          <AccordionButton cursor={"default"}>
                             <Box as="span" flex="1" textAlign="left">
                               <WrapItem
                                 display={"flex"}
@@ -317,16 +354,16 @@ const InstructorProfile = () => {
                               >
                                 <Grid>
                                   <Text
-                                    fontSize={{ base: "xs" }}
+                                    fontSize={{ base: "xs", md: "sm" }}
                                     color="#044F63"
                                   >
                                     {education.degree}
                                   </Text>
-                                  <Text fontSize={".6rem"} color={"#77838F"}>
+                                  <Text fontSize={".7rem"} color={"#77838F"}>
                                     {education.institution}
                                   </Text>
                                 </Grid>
-                                <Text fontSize={".6rem"} color={"#77838F"}>
+                                <Text fontSize={".7rem"} color={"#77838F"}>
                                   {education.passingYear}
                                 </Text>
                               </WrapItem>
@@ -376,12 +413,41 @@ const InstructorProfile = () => {
                   flexDirection={"column"}
                   rowGap={1}
                   p={3}
+                  paddingInline={0}
                 >
-                  <Text fontSize={{ base: "xs", lg: "sm" }} color={"#77838F"}>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Minima eligendi qui expedita modi ex est quo illum inventore
-                    ad ipsa!
-                  </Text>
+                  <Accordion h={"100%"}>
+                    {instructor?.experience?.map((exp, idx) => (
+                      <AccordionItem key={idx}>
+                        <Text>
+                          <AccordionButton cursor={"default"}>
+                            <Box as="span" flex="1" textAlign="left">
+                              <WrapItem
+                                display={"flex"}
+                                flexDir={"row"}
+                                justifyContent={"space-between"}
+                                alignItems={"center"}
+                              >
+                                <Grid>
+                                  <Text
+                                    fontSize={{ base: "xs", md: "sm" }}
+                                    color="#044F63"
+                                  >
+                                    {exp.organization}
+                                  </Text>
+                                  <Text fontSize={".7rem"} color={"#77838F"}>
+                                    {exp.role}
+                                  </Text>
+                                </Grid>
+                                <Text fontSize={".7rem"} color={"#77838F"}>
+                                  {`${exp.years} yrs.`}
+                                </Text>
+                              </WrapItem>
+                            </Box>
+                          </AccordionButton>
+                        </Text>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
                 </CardBody>
               </Card>
             )}
@@ -479,15 +545,30 @@ const InstructorProfile = () => {
               </Card>
             )}
           </Box>
-          {!loading && (
-            <Box
-              flex={{ md: 2.5, lg: 2 }}
-              w={"100%"}
-              h={"100%"}
-              display={"flex"}
-              flexDir={"column"}
-              rowGap={5}
-            >
+          {/* {!loading && ( */}
+          <Box
+            flex={{ md: 2.5, lg: 2 }}
+            w={"100%"}
+            h={"100%"}
+            display={"flex"}
+            flexDir={"column"}
+            rowGap={5}
+          >
+            {loading ? (
+              <Card
+                boxShadow={
+                  "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
+                }
+                w={"100%"}
+                p={{ base: 3, sm: 5 }}
+              >
+                <Stack p={0}>
+                  <Skeleton height="20px" />
+                  <Skeleton height="20px" />
+                  <Skeleton height="20px" />
+                </Stack>
+              </Card>
+            ) : (
               <Card
                 boxShadow={
                   "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
@@ -521,6 +602,22 @@ const InstructorProfile = () => {
                   ))}
                 </CardBody>
               </Card>
+            )}
+            {loading ? (
+              <Card
+                boxShadow={
+                  "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
+                }
+                w={"100%"}
+                p={{ base: 3, sm: 5 }}
+              >
+                <Stack p={0}>
+                  <Skeleton height="20px" />
+                  <Skeleton height="20px" />
+                  <Skeleton height="20px" />
+                </Stack>
+              </Card>
+            ) : (
               <Card
                 boxShadow={
                   "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
@@ -553,7 +650,23 @@ const InstructorProfile = () => {
                   ))}
                 </CardBody>
               </Card>
+            )}
 
+            {loading ? (
+              <Card
+                boxShadow={
+                  "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
+                }
+                w={"100%"}
+                p={{ base: 3, sm: 5 }}
+              >
+                <Stack p={0}>
+                  <Skeleton height="20px" />
+                  <Skeleton height="20px" />
+                  <Skeleton height="20px" />
+                </Stack>
+              </Card>
+            ) : (
               <Card
                 boxShadow={
                   "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
@@ -575,11 +688,36 @@ const InstructorProfile = () => {
                   rowGap={1}
                   p={3}
                 >
-                  <Text fontSize={{ base: "xs", lg: "sm" }} color={"#77838F"}>
-                    {instructor.address}
-                  </Text>
+                  <Box
+                    display={"flex"}
+                    columnGap={2}
+                    w={"100%"}
+                    alignItems={"center"}
+                    color="#044F63"
+                  >
+                    <MapIcon size={16} />
+                    <Text fontSize={{ base: "xs", lg: "sm" }}>
+                      {instructor.address}
+                    </Text>
+                  </Box>
                 </CardBody>
               </Card>
+            )}
+            {loading ? (
+              <Card
+                boxShadow={
+                  "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
+                }
+                w={"100%"}
+                p={{ base: 3, sm: 5 }}
+              >
+                <Stack p={0}>
+                  <Skeleton height="20px" />
+                  <Skeleton height="20px" />
+                  <Skeleton height="20px" />
+                </Stack>
+              </Card>
+            ) : (
               <Card
                 boxShadow={
                   "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
@@ -602,16 +740,54 @@ const InstructorProfile = () => {
                   flexDirection={"column"}
                   rowGap={1}
                   p={3}
+                  paddingInline={0}
                 >
-                  <Text fontSize={{ base: "xs", lg: "sm" }} color={"#77838F"}>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Minima eligendi qui expedita modi ex est quo illum inventore
-                    ad ipsa!
-                  </Text>
+                  <Accordion h={"100%"}>
+                    {instructor?.achievements
+                      ?.sort((a, b) => {
+                        return Number(b.year) - Number(a.year);
+                      })
+                      .map((achievement, idx) => (
+                        <AccordionItem key={idx}>
+                          <Text>
+                            <AccordionButton cursor={"default"}>
+                              <Box as="span" flex="1" textAlign="left">
+                                <WrapItem
+                                  display={"flex"}
+                                  flexDir={"row"}
+                                  justifyContent={"space-between"}
+                                  alignItems={"center"}
+                                >
+                                  <Grid>
+                                    <Text
+                                      fontSize={{ base: "xs", lg: "sm" }}
+                                      color="#044F63"
+                                      display={"flex"}
+                                      alignItems={"center"}
+                                      columnGap={2}
+                                    >
+                                      <MedalIcon size={16} />
+                                      {achievement.title}
+                                    </Text>
+                                  </Grid>
+                                  <Text
+                                    fontSize={{ base: "xs", lg: "sm" }}
+                                    color={"#77838F"}
+                                  >
+                                    {`${achievement.year}`}
+                                  </Text>
+                                </WrapItem>
+                              </Box>
+                            </AccordionButton>
+                          </Text>
+                        </AccordionItem>
+                      ))}
+                  </Accordion>
                 </CardBody>
               </Card>
-            </Box>
-          )}
+            )}
+          </Box>
+          {/* )} */}
         </Box>
       </Box>
     </Box>

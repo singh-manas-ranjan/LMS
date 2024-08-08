@@ -97,6 +97,16 @@ export type TEducation = {
   institution: string;
   passingYear: string;
 };
+export type TExperience = {
+  organization: string;
+  role: string;
+  years: string;
+};
+
+export type TAchievement = {
+  title: string;
+  year: string;
+};
 
 export type TUser = {
   _id?: string;
@@ -114,6 +124,8 @@ export type TUser = {
   services?: string[];
   languages?: string[];
   education?: TEducation[];
+  experience?: TExperience[];
+  achievements?: TAchievement[];
   enrolledCourses?: TCourse[];
 };
 
