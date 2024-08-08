@@ -121,21 +121,6 @@ const InstructorProfileEditForm = ({
     label: string;
   };
 
-  //   const languageOptions = [
-  //     "English",
-  //     "Hindi",
-  //     "Telugu",
-  //     "Konkani",
-  //     "Gujarati",
-  //     "Kannada",
-  //     "Malayalam",
-  //     "Odia",
-  //     "Tamil",
-  //     "Telugu",
-  //     "Bengali",
-  //     "Marathi",
-  //     "Punjabi",
-  //   ];
   const languageOptions: TLanguage[] = [
     { value: "English", label: "English" },
     { value: "Hindi", label: "Hindi" },
@@ -156,24 +141,24 @@ const InstructorProfileEditForm = ({
     onClose();
     console.log(e);
 
-    // handleUpdateInstructor(e);
-    // try {
-    //   const response = await axios.patch(
-    //     `https://learnopia-backend.vercel.app/api/v1/instructors/${userId}`,
-    //     // `http://localhost:3131/api/v1/students/${userId}`,
-    //     e
-    //   );
-    //   if (response.data.body) {
-    //     displayToast("Success", "success", "Updated Successfully");
-    //     removeUserInfoFromLocalStorage();
-    //     addUserInfoToLocalStorage(e);
-    //   } else {
-    //     throw new Error(response.statusText);
-    //   }
-    // } catch (error) {
-    //   handleUpdateInstructor(userInfo);
-    //   console.error(error);
-    // }
+    handleUpdateInstructor(e);
+    try {
+      const response = await axios.patch(
+        `https://learnopia-backend.vercel.app/api/v1/instructors/${userId}`,
+        // `http://localhost:3131/api/v1/students/${userId}`,
+        e
+      );
+      if (response.data.body) {
+        displayToast("Success", "success", "Updated Successfully");
+        removeUserInfoFromLocalStorage();
+        addUserInfoToLocalStorage(e);
+      } else {
+        throw new Error(response.statusText);
+      }
+    } catch (error) {
+      handleUpdateInstructor(userInfo);
+      console.error(error);
+    }
   };
 
   const onAddressSubmit = (e: TAddress) => {
@@ -205,7 +190,7 @@ const InstructorProfileEditForm = ({
         onClose={onClose}
         size={{ base: "xs", md: "lg", lg: "xl" }}
         closeOnEsc={true}
-        // scrollBehavior="inside"
+        scrollBehavior="inside"
       >
         <ModalOverlay />
         <ModalContent>
@@ -420,13 +405,14 @@ const InstructorProfileEditForm = ({
                                 {...field}
                                 isMulti
                                 onChange={(selected: MultiValue<TLanguage>) =>
-                                  field.onChange(selected)
+                                  field.onChange(
+                                    selected.map((optn) => optn.value)
+                                  )
                                 }
-                                value={
-                                  field.value as
-                                    | PropsValue<TLanguage>
-                                    | undefined
-                                }
+                                value={field.value?.map((value) => ({
+                                  value,
+                                  label: value,
+                                }))}
                                 options={languageOptions}
                                 size={"sm"}
                               />

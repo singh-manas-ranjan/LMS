@@ -633,21 +633,29 @@ const InstructorProfile = () => {
                 >
                   <Heading size={{ base: "sm", xl: "md" }}>Languages</Heading>
                 </CardHeader>
-                <CardBody
-                  display={"flex"}
-                  flexDirection={"row"}
-                  rowGap={1}
-                  columnGap={2}
-                  p={3}
-                  paddingInline={0}
-                >
-                  {instructor.languages?.map((language, idx) => (
-                    <HStack key={idx}>
-                      <Button key={idx} size={"sm"} color="#044F63">
+                <CardBody display={"flex"} paddingInline={0}>
+                  <Box
+                    display={"flex"}
+                    flexDir={"row"}
+                    flexWrap={"wrap"}
+                    flexDirection={"row"}
+                    rowGap={2}
+                    columnGap={2}
+                    paddingInline={0}
+                    w={"100%"}
+                    h={"100%"}
+                  >
+                    {instructor.languages?.map((language, idx) => (
+                      <Button
+                        key={idx}
+                        size={"sm"}
+                        color="#044F63"
+                        borderRadius={4}
+                      >
                         {language}
                       </Button>
-                    </HStack>
-                  ))}
+                    ))}
+                  </Box>
                 </CardBody>
               </Card>
             )}
