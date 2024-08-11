@@ -592,14 +592,26 @@ const InstructorProfile = () => {
                   rowGap={2}
                   p={3}
                   paddingInline={0}
+                  pb={0}
                 >
-                  {instructor.services?.map((service, idx) => (
-                    <HStack key={idx}>
-                      <Button key={idx} size={"sm"} color="#044F63">
+                  <HStack
+                    w={"100%"}
+                    display={"flex"}
+                    flexWrap={"wrap"}
+                    columnGap={2}
+                    rowGap={2}
+                  >
+                    {instructor.services?.map((service, idx) => (
+                      <Button
+                        key={idx}
+                        size={"xs"}
+                        color="#044F63"
+                        borderRadius={4}
+                      >
                         {service}
                       </Button>
-                    </HStack>
-                  ))}
+                    ))}
+                  </HStack>
                 </CardBody>
               </Card>
             )}
@@ -633,7 +645,7 @@ const InstructorProfile = () => {
                 >
                   <Heading size={{ base: "sm", xl: "md" }}>Languages</Heading>
                 </CardHeader>
-                <CardBody display={"flex"} paddingInline={0}>
+                <CardBody display={"flex"} paddingInline={0} p={3} pb={0}>
                   <Box
                     display={"flex"}
                     flexDir={"row"}
@@ -648,7 +660,7 @@ const InstructorProfile = () => {
                     {instructor.languages?.map((language, idx) => (
                       <Button
                         key={idx}
-                        size={"sm"}
+                        size={"xs"}
                         color="#044F63"
                         borderRadius={4}
                       >
@@ -695,6 +707,8 @@ const InstructorProfile = () => {
                   flexDirection={"column"}
                   rowGap={1}
                   p={3}
+                  paddingInline={1}
+                  pb={0}
                 >
                   <Box
                     display={"flex"}
@@ -704,9 +718,7 @@ const InstructorProfile = () => {
                     color="#044F63"
                   >
                     <MapIcon size={16} />
-                    <Text fontSize={{ base: "xs", lg: "sm" }}>
-                      {instructor.address}
-                    </Text>
+                    <Text fontSize={{ base: "xs" }}>{instructor.address}</Text>
                   </Box>
                 </CardBody>
               </Card>
@@ -749,6 +761,7 @@ const InstructorProfile = () => {
                   rowGap={1}
                   p={3}
                   paddingInline={0}
+                  pb={0}
                 >
                   <Accordion h={"100%"}>
                     {instructor?.achievements
@@ -758,7 +771,10 @@ const InstructorProfile = () => {
                       .map((achievement, idx) => (
                         <AccordionItem key={idx}>
                           <Text>
-                            <AccordionButton cursor={"default"}>
+                            <AccordionButton
+                              cursor={"default"}
+                              paddingInline={1}
+                            >
                               <Box as="span" flex="1" textAlign="left">
                                 <WrapItem
                                   display={"flex"}
@@ -768,7 +784,7 @@ const InstructorProfile = () => {
                                 >
                                   <Grid>
                                     <Text
-                                      fontSize={{ base: "xs", lg: "sm" }}
+                                      fontSize={{ base: "xs" }}
                                       color="#044F63"
                                       display={"flex"}
                                       alignItems={"center"}
@@ -779,7 +795,7 @@ const InstructorProfile = () => {
                                     </Text>
                                   </Grid>
                                   <Text
-                                    fontSize={{ base: "xs", lg: "sm" }}
+                                    fontSize={{ base: "xs" }}
                                     color={"#77838F"}
                                   >
                                     {`${achievement.year}`}

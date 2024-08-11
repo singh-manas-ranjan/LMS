@@ -3,7 +3,6 @@ import {
   Box,
   CardFooter,
   Text,
-  Image,
   Card,
   CardBody,
   CardHeader,
@@ -13,6 +12,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { getUserInfoFromLocalStorage, TUser } from "../navbar/Navbar";
 import NextLink from "next/link";
+import Image from "next/image";
 
 type Props = {
   instructors: TUser[];
@@ -39,30 +39,36 @@ const InstructorList = ({ instructors }: Props) => {
               "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
             }
             direction={"row"}
-            h={{ base: "100px", md: "150px" }}
+            h={{ base: "100px", md: "110px" }}
             w={"100%"}
             alignItems={"center"}
             display={"flex"}
             columnGap={2}
           >
             <CardHeader
-              p={2}
-              pl={{ base: 3, md: 4 }}
-              h={{ base: "60%", md: "70%" }}
+              p={0}
+              pl={{ base: 3, md: 5 }}
+              // h={{ base: "60%", md: "70%" }}
               flexShrink={"unset"}
             >
               <Image
+                src={instructor.avatar ?? "/avatar.svg"}
+                width={80}
+                height={80}
+                style={{ borderRadius: "4px" }}
+                alt=""
+              />
+              {/* <Image
                 src={instructor.avatar}
                 alt={instructor.firstName}
                 // borderRadius={"50%"}
                 w={"100%"}
                 h={"100%"}
-                minW={"0px"}
                 borderRadius={6}
                 boxShadow={
                   "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
                 }
-              />
+              /> */}
             </CardHeader>
             <CardBody
               p={1}
@@ -102,7 +108,13 @@ const InstructorList = ({ instructors }: Props) => {
               >
                 {instructor._id === instructorId && (
                   <NextLink href={"/instructor-dashboard/profile"}>
-                    <Button as={"a"} size={"sm"} colorScheme="teal">
+                    <Button
+                      as={"a"}
+                      size={{ base: "xs", md: "sm" }}
+                      colorScheme="teal"
+                      fontSize={{ base: "xs", md: "sm" }}
+                      borderRadius={4}
+                    >
                       Profile
                     </Button>
                   </NextLink>

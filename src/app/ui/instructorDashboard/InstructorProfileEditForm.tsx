@@ -413,7 +413,9 @@ const InstructorProfileEditForm = ({
                                   value,
                                   label: value,
                                 }))}
-                                options={languageOptions}
+                                options={languageOptions.sort((a, b) =>
+                                  a.label.localeCompare(b.label)
+                                )}
                                 size={"sm"}
                               />
                             )}
