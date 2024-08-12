@@ -39,10 +39,9 @@ const InstructorCard = ({ instructor }: { instructor: TUser }) => {
         <Image
           src={instructor.avatar}
           alt={instructor.firstName}
-          borderRadius={"50%"}
           w={"100%"}
           h={"100%"}
-          minW={"0px"}
+          borderRadius={4}
         />
       </CardHeader>
       <CardBody
@@ -88,7 +87,7 @@ const InstructorCard = ({ instructor }: { instructor: TUser }) => {
         >
           <Box
             display={{ base: "none", md: "grid" }}
-            rowGap={2}
+            rowGap={1.5}
             textAlign={"right"}
           >
             <Text sx={textStyle}>

@@ -235,7 +235,7 @@ const InstructorProfile = () => {
                         fontSize={{ base: "xs", lg: "sm" }}
                         display={"flex"}
                       >
-                        {instructor.address}
+                        {`${instructor.address?.addressLine1}, ${instructor.address?.addressLine2}, ${instructor.address?.state}, ${instructor.address?.country}`}
                       </Text>
                     </Box>
                   </Flex>
@@ -718,7 +718,9 @@ const InstructorProfile = () => {
                     color="#044F63"
                   >
                     <MapIcon size={16} />
-                    <Text fontSize={{ base: "xs" }}>{instructor.address}</Text>
+                    <Text
+                      fontSize={{ base: "xs" }}
+                    >{`${instructor.address?.addressLine1}, ${instructor.address?.addressLine2}, ${instructor.address?.state}, ${instructor.address?.country}`}</Text>
                   </Box>
                 </CardBody>
               </Card>

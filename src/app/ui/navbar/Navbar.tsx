@@ -93,17 +93,20 @@ export type TAddress = {
 };
 
 export type TEducation = {
+  _id?: string;
   degree: string;
   institution: string;
   passingYear: string;
 };
 export type TExperience = {
+  _id?: string;
   organization: string;
   role: string;
   years: string;
 };
 
 export type TAchievement = {
+  _id?: string;
   title: string;
   year: string;
 };
@@ -120,7 +123,7 @@ export type TUser = {
   avatar: string;
   aboutMe?: string;
   domain?: string;
-  address?: string;
+  address?: TAddress;
   services?: string[];
   languages?: string[];
   education?: TEducation[];

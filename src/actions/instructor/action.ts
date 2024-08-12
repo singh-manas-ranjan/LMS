@@ -2,6 +2,32 @@
 import axios from "axios";
 import { TCourse } from "../../../public/courses";
 
+export type TAddress = {
+  addressLine1: string;
+  addressLine2: string;
+  state: string;
+  country: string;
+};
+
+export type TEducation = {
+  _id?: string;
+  degree: string;
+  institution: string;
+  passingYear: string;
+};
+export type TExperience = {
+  _id?: string;
+  organization: string;
+  role: string;
+  years: string;
+};
+
+export type TAchievement = {
+  _id?: string;
+  title: string;
+  year: string;
+};
+
 export type TInstructor = {
   _id: string;
   firstName: string;
@@ -10,8 +36,15 @@ export type TInstructor = {
   phone: string;
   gender: string;
   role: string;
-  address: string;
+  aboutMe?: string;
+  domain?: string;
+  address: TAddress;
   avatar: string;
+  services?: string[];
+  languages?: string[];
+  education?: TEducation[];
+  experience?: TExperience[];
+  achievements?: TAchievement[];
   publishedCourses: TCourse[];
 };
 

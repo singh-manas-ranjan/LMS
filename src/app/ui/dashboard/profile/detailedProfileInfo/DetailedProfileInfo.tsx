@@ -28,7 +28,6 @@ export type TUserInfo = {
   phone: string;
   gender: string;
   qualification: string;
-  address: string;
 };
 
 const getGender = (gender: string): string => {
@@ -82,7 +81,6 @@ const DetailedProfileInfo = () => {
       phone,
       gender: getGender(gender),
       qualification: getQualification(qualification),
-      address,
     } as TUserInfo);
   }, []);
 

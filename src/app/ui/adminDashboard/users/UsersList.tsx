@@ -54,7 +54,6 @@ const UsersList = async ({
               alt={"profilePic"}
               h={"100%"}
               w={"100%"}
-              borderRadius={"50%"}
             />
           </CardHeader>
           <CardBody
@@ -113,7 +112,7 @@ const UsersList = async ({
                   studentFirstName={student.firstName}
                 />
               </Box>
-              <Text
+              {/* <Text
                 flex={1}
                 justifyContent={"center"}
                 alignItems={"center"}
@@ -121,7 +120,7 @@ const UsersList = async ({
                 display={{ base: "none", xl: "flex" }}
               >
                 {student.address}
-              </Text>
+              </Text> */}
             </Box>
           </CardBody>
           <CardFooter
