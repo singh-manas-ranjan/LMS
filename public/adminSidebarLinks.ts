@@ -13,7 +13,6 @@ const adminSidebarLinks = {
       link: "/admin-dashboard/students",
     },
     { name: "Messages", icon: "message", link: "/admin-dashboard/messages" },
-    { name: "Invoice", icon: "invoice", link: "/admin-dashboard/invoice" },
   ],
   Settings: [
     { name: "Profile", icon: "profile", link: "/admin-dashboard/profile" },
