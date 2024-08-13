@@ -74,7 +74,10 @@ const SignInModal = () => {
                 </TabPanel>
                 <TabPanel>
                   <LoginForm
-                    access={{ role: "admin", successPath: "/home" }}
+                    access={{
+                      role: "admin",
+                      successPath: "/admin-dashboard/home",
+                    }}
                     onClose={onClose}
                   />
                 </TabPanel>

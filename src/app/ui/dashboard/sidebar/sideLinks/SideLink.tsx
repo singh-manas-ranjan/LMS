@@ -5,20 +5,26 @@ import { NavLinkType } from "../../../../../../public/sidebarLinks";
 import { usePathname } from "next/navigation";
 import styles from "./SideLink.module.css";
 import { Box } from "@chakra-ui/react";
-import { MdSpaceDashboard } from "react-icons/md";
 import { PiExamFill } from "react-icons/pi";
-import { MdPlayLesson } from "react-icons/md";
 import { FaRegCreditCard } from "react-icons/fa";
 import { GiProgression } from "react-icons/gi";
-import { RiProfileFill } from "react-icons/ri";
-import { IoMdSettings } from "react-icons/io";
-import { ImBooks } from "react-icons/im";
-import { IoPerson } from "react-icons/io5";
-import { FaUsers } from "react-icons/fa6";
-import { BiSolidMessageDetail } from "react-icons/bi";
 import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { FaTrophy } from "react-icons/fa";
-import { FaChalkboardTeacher } from "react-icons/fa";
+import {
+  BookOpenCheck,
+  Edit,
+  Home,
+  LayoutDashboardIcon,
+  Loader,
+  MessagesSquareIcon,
+  NotebookText,
+  SettingsIcon,
+  Trophy,
+  User,
+  Users,
+  VideoIcon,
+  VideotapeIcon,
+} from "lucide-react";
 
 interface Props {
   sideLink: NavLinkType;
@@ -27,30 +33,32 @@ interface Props {
 
 export const getIcon = (iconName: string): JSX.Element | null => {
   switch (iconName) {
+    case "home":
+      return <Home size={18} />;
     case "dashboard":
-      return <MdSpaceDashboard />;
+      return <LayoutDashboardIcon size={18} />;
     case "courses":
-      return <ImBooks />;
+      return <NotebookText size={18} />;
     case "exams":
-      return <PiExamFill />;
+      return <BookOpenCheck size={18} />;
     case "myCourses":
-      return <MdPlayLesson />;
+      return <VideoIcon size={18} />;
     case "card":
       return <FaRegCreditCard />;
     case "progress":
-      return <GiProgression />;
+      return <Loader size={18} />;
     case "profile":
-      return <RiProfileFill />;
+      return <Edit size={18} />;
     case "completed":
-      return <FaTrophy />;
+      return <Trophy size={18} />;
     case "settings":
-      return <IoMdSettings />;
+      return <SettingsIcon size={18} />;
     case "person":
-      return <FaChalkboardTeacher />;
+      return <User size={18} />;
     case "multiPersons":
-      return <FaUsers />;
+      return <Users size={18} />;
     case "message":
-      return <BiSolidMessageDetail />;
+      return <MessagesSquareIcon size={18} />;
     case "invoice":
       return <FaFileInvoiceDollar />;
     default:

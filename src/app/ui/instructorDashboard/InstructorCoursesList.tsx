@@ -18,7 +18,7 @@ import { getUserInfoFromLocalStorage } from "../navbar/Navbar";
 import { fetchInstructorCourses } from "@/actions/instructor/action";
 
 const textStyle = {
-  fontSize: { base: "xs", md: "sm" },
+  fontSize: { base: "xs", lg: "md" },
 };
 
 const InstructorCoursesList = () => {
@@ -116,7 +116,11 @@ const InstructorCoursesList = () => {
           direction={{ base: "row" }}
           height={{ base: "100px", sm: "initial" }}
         >
-          <CardHeader p={3} pl={3} pr={{ base: 0, sm: "initial" }} flex={1}>
+          <CardHeader
+            p={{ base: 3, md: 5 }}
+            pr={{ base: 0, sm: "initial" }}
+            flex={1}
+          >
             <Image
               src={course.courseImg}
               alt={course.courseName}
@@ -133,7 +137,7 @@ const InstructorCoursesList = () => {
             flexDirection={"column"}
             rowGap={1}
             p={{ base: 3, md: 5 }}
-            pr={0}
+            pr={{ md: 0 }}
           >
             <Heading sx={textStyle}>{course.courseName}</Heading>
             <Grid>

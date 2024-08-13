@@ -162,11 +162,7 @@ const Dashboard = async () => {
                                 name={student.name}
                                 src={student.imageSrc}
                               />
-                              <Text
-                                m={2}
-                                ml={5}
-                                fontSize={{ base: "sm", xl: "md" }}
-                              >
+                              <Text m={2} ml={5} fontSize={{ base: "sm" }}>
                                 {student.name}
                               </Text>
                             </WrapItem>

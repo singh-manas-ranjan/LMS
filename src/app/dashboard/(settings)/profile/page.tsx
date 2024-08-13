@@ -3,7 +3,6 @@ import React from "react";
 import BriefProfileInfo from "@/app/ui/dashboard/profile/briefProfileInfo/BriefProfileInfo";
 import DetailedProfileInfo from "@/app/ui/dashboard/profile/detailedProfileInfo/DetailedProfileInfo";
 import { sxScrollbar } from "../../../../../public/scrollbarStyle";
-import EditPersonalInfo from "@/app/ui/dashboard/profile/editPersonalInfo/EditPersonalInfo";
 import UploadProfilePicBtn from "@/app/ui/dashboard/profile/UploadProfilePicBtn";
 
 const main = {

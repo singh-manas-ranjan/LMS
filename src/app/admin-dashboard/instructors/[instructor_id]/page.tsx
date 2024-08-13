@@ -14,7 +14,6 @@ import {
   AccordionItem,
   AccordionPanel,
   WrapItem,
-  Stack,
   Button,
   Flex,
   HStack,
@@ -23,7 +22,6 @@ import React from "react";
 import { sxScrollbar } from "../../../../../public/scrollbarStyle";
 import { BookAIcon, MailCheckIcon, MapIcon, MedalIcon } from "lucide-react";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
-import UploadProfilePicBtn from "@/app/ui/dashboard/profile/UploadProfilePicBtn";
 
 const main = {
   width: "100%",
