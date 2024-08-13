@@ -15,8 +15,8 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 import React from "react";
-import studentRankings from "../../../../../../public/rankingData";
 import { sxScrollbar } from "../../../../../../public/scrollbarStyle";
+import { TUser } from "@/app/ui/navbar/Navbar";
 
 const headings = ["Students enrolled", "Popular tasks", "Group progress"];
 
@@ -47,7 +47,10 @@ const groups: TGroup[] = [
   { name: "Group 6", students: 25, progress: 15 },
 ];
 
-const OverviewBottomCards = () => {
+interface Props {
+  students: TUser[];
+}
+const OverviewBottomCards = ({ students }: Props) => {
   return (
     <Box
       w={"100%"}
@@ -72,72 +75,73 @@ const OverviewBottomCards = () => {
           alignItems={{ base: "center", sm: "baseline" }}
         >
           <Flex justifyContent={"space-between"} alignItems={"center"}>
-            <Heading size={{ base: "sm", sm: "md" }}>{headings[0]}</Heading>
+            <Heading size={{ base: "sm" }}>{headings[0]}</Heading>
           </Flex>
         </CardHeader>
         <CardBody height={"fit-content"} pt={0}>
           <Box h={"250px"} w={"100%"}>
             <Accordion h={"100%"} overflowY={"scroll"} sx={sxScrollbar}>
-              {studentRankings.map((student, idx) => (
-                <AccordionItem key={idx}>
-                  <Text>
-                    <AccordionButton>
-                      <Box as="span" flex="1" textAlign="left">
-                        <WrapItem
-                          display={"flex"}
-                          alignItems={{
-                            base: "center",
-                            md: "start",
-                            lg: "center",
-                          }}
-                          flexDirection={{ md: "column", lg: "row" }}
-                          columnGap={{ base: ".5rem", md: "0" }}
-                        >
-                          <Avatar
-                            name={student.name}
-                            src={student.imageSrc}
-                            boxSize={{ base: "2rem", lg: "2.5rem" }}
-                          />
-                          <Grid m={{ lg: 2 }} ml={{ lg: 5 }} width={"100%"}>
-                            <Flex
-                              justifyContent={"space-between"}
-                              alignItems={"center"}
-                              width={"100%"}
-                            >
-                              <Text fontSize={{ base: "sm", xl: "md" }}>
-                                {student.name}
-                              </Text>
-                              <Box
-                                width={{ base: "20%" }}
-                                height={".33rem"}
-                                borderRadius={25}
+              {Array.isArray(students) &&
+                students.slice(0, 4).map((student, idx) => (
+                  <AccordionItem key={idx}>
+                    <Text>
+                      <AccordionButton>
+                        <Box as="span" flex="1" textAlign="left">
+                          <WrapItem
+                            display={"flex"}
+                            alignItems={{
+                              base: "center",
+                              md: "start",
+                              lg: "center",
+                            }}
+                            flexDirection={{ md: "column", lg: "row" }}
+                            columnGap={{ base: ".5rem", md: "0" }}
+                          >
+                            <Avatar
+                              name={`${student.firstName} ${student.lastName}`}
+                              src={student.avatar}
+                              boxSize={{ base: "2rem", lg: "2.5rem" }}
+                            />
+                            <Grid m={{ lg: 2 }} ml={{ lg: 5 }} width={"100%"}>
+                              <Flex
+                                justifyContent={"space-between"}
+                                alignItems={"center"}
+                                width={"100%"}
                               >
-                                <Progress
+                                <Text fontSize={{ base: "sm" }}>
+                                  {`${student.firstName} ${student.lastName}`}
+                                </Text>
+                                <Box
+                                  width={{ base: "20%" }}
+                                  height={".33rem"}
+                                  borderRadius={25}
+                                >
+                                  {/* <Progress
                                   value={student.courseCompletion}
                                   width={"100%"}
                                   height={"100%"}
                                   borderRadius={25}
                                   colorScheme={"green"}
-                                />
-                              </Box>
-                            </Flex>
-                            <Text
-                              fontSize={{
-                                base: ".6rem",
-                                sm: ".75rem",
-                                lg: ".8rem",
-                              }}
-                              color={"#8D94A3"}
-                            >
-                              {student.enrolledCourse}
-                            </Text>
-                          </Grid>
-                        </WrapItem>
-                      </Box>
-                    </AccordionButton>
-                  </Text>
-                </AccordionItem>
-              ))}
+                                /> */}
+                                </Box>
+                              </Flex>
+                              <Text
+                                fontSize={{
+                                  base: ".6rem",
+                                  sm: ".75rem",
+                                  lg: ".8rem",
+                                }}
+                                color={"#8D94A3"}
+                              >
+                                {}
+                              </Text>
+                            </Grid>
+                          </WrapItem>
+                        </Box>
+                      </AccordionButton>
+                    </Text>
+                  </AccordionItem>
+                ))}
             </Accordion>
           </Box>
         </CardBody>
@@ -153,7 +157,7 @@ const OverviewBottomCards = () => {
           alignItems={{ base: "center", sm: "baseline" }}
         >
           <Flex justifyContent={"space-between"} alignItems={"center"}>
-            <Heading size={{ base: "sm", sm: "md" }}>{headings[1]}</Heading>
+            <Heading size={{ base: "sm" }}>{headings[1]}</Heading>
           </Flex>
         </CardHeader>
         <CardBody height={"fit-content"} pt={0}>
@@ -166,9 +170,7 @@ const OverviewBottomCards = () => {
                       <Box as="span" flex="1" textAlign="left">
                         <WrapItem>
                           <Grid m={2}>
-                            <Text fontSize={{ base: "sm", xl: "md" }}>
-                              {task.name}
-                            </Text>
+                            <Text fontSize={{ base: "sm" }}>{task.name}</Text>
                             <Text
                               fontSize={{
                                 base: ".6rem",
@@ -199,7 +201,7 @@ const OverviewBottomCards = () => {
           alignItems={{ base: "center", sm: "baseline" }}
         >
           <Flex justifyContent={"space-between"} alignItems={"center"}>
-            <Heading size={{ base: "sm", sm: "md" }}>{headings[2]}</Heading>
+            <Heading size={{ base: "sm" }}>{headings[2]}</Heading>
           </Flex>
         </CardHeader>
         <CardBody height={"fit-content"} pt={0}>
@@ -216,9 +218,7 @@ const OverviewBottomCards = () => {
                           alignItems={"center"}
                         >
                           <Grid>
-                            <Text fontSize={{ base: "sm", xl: "md" }}>
-                              {group.name}
-                            </Text>
+                            <Text fontSize={{ base: "sm" }}>{group.name}</Text>
                             <Text
                               fontSize={{
                                 base: ".6rem",

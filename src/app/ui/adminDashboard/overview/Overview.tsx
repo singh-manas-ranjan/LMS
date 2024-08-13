@@ -12,7 +12,7 @@ import {
   TabList,
   Tabs,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { LuView } from "react-icons/lu";
 import { LuClock } from "react-icons/lu";
 import { TbFriends } from "react-icons/tb";
@@ -26,6 +26,8 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import allStats from "../../../../../public/adminDashboardStats";
 import { sxScrollbar } from "../../../../../public/scrollbarStyle";
+import { TUser } from "../../navbar/Navbar";
+import { fetchAllUsers } from "@/actions/users/action";
 
 const getIcon = (iconName: string): JSX.Element | null => {
   switch (iconName) {
@@ -58,6 +60,14 @@ const tabList = {
 };
 
 const Overview = () => {
+  const [students, setStudents] = useState<TUser[]>([]);
+  useEffect(() => {
+    const fetchStudents = async () => {
+      const data = await fetchAllUsers("students");
+      setStudents(data);
+    };
+    fetchStudents();
+  }, []);
   const searchParams = useSearchParams();
   const searchStats = searchParams.get("stats");
 
@@ -168,10 +178,10 @@ const Overview = () => {
           </SimpleGrid>
         </Box>
         <OverviewMiddleCards />
-        <OverviewBottomCards />
+        <OverviewBottomCards students={students} />
       </Box>
     </>
   );
 };
 
-export default Overview;
+export default React.memo(Overview);

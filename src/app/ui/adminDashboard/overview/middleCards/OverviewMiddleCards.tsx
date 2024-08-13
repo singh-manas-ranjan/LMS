@@ -149,13 +149,14 @@ const OverviewMiddleCards = () => {
           }
         >
           <CardHeader>
-            <Heading size={{ base: "sm", sm: "md" }}>{chart.title}</Heading>
+            <Heading size={{ base: "sm" }}>{chart.title}</Heading>
           </CardHeader>
           <CardBody
             height={"fit-content"}
             overflow={"hidden"}
             display={{ lg: "flex" }}
             justifyContent={"center"}
+            fontSize={"xs"}
           >
             <Chart
               chartType="Bar"
