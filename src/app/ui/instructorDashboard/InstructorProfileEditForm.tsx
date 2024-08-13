@@ -15,7 +15,6 @@ import {
   TabPanels,
   Tabs,
   FormControl,
-  FormHelperText,
   FormLabel,
   Input,
   Box,
@@ -50,11 +49,7 @@ import {
 import axios from "axios";
 import { ChevronDownIcon } from "lucide-react";
 import { sxScrollbar } from "../../../../public/scrollbarStyle";
-import {
-  Select as ChakraSelect,
-  MultiValue,
-  PropsValue,
-} from "chakra-react-select";
+import { Select as ChakraSelect, MultiValue } from "chakra-react-select";
 
 const errorText = {
   fontSize: "xs",
@@ -614,6 +609,32 @@ const InstructorProfileEditForm = ({
                                   label: value,
                                 }))}
                                 options={languageOptions.sort((a, b) =>
+                                  a.label.localeCompare(b.label)
+                                )}
+                                size={"sm"}
+                              />
+                            )}
+                          />
+                        </FormControl>
+                        <FormControl mt={5}>
+                          <FormLabel fontSize={"sm"}>Services</FormLabel>
+                          <Controller
+                            name="services"
+                            control={control}
+                            render={({ field }) => (
+                              <ChakraSelect
+                                {...field}
+                                isMulti
+                                onChange={(selected: MultiValue<TServices>) =>
+                                  field.onChange(
+                                    selected.map((optn) => optn.value)
+                                  )
+                                }
+                                value={field.value?.map((value) => ({
+                                  value,
+                                  label: value,
+                                }))}
+                                options={servicesOptions.sort((a, b) =>
                                   a.label.localeCompare(b.label)
                                 )}
                                 size={"sm"}
