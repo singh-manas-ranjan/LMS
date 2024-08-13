@@ -289,7 +289,7 @@ const InstructorProfile = () => {
                   borderRadius={4}
                   bgColor={"#F4F3F3"}
                 >
-                  <Heading size={{ base: "sm", xl: "md" }}>About Me</Heading>
+                  <Heading size={{ base: "sm" }}>About Me</Heading>
                 </CardHeader>
                 <CardBody
                   display={"flex"}
@@ -331,7 +331,7 @@ const InstructorProfile = () => {
                   borderRadius={4}
                   bgColor={"#F4F3F3"}
                 >
-                  <Heading size={{ base: "sm", xl: "md" }}>Education</Heading>
+                  <Heading size={{ base: "sm" }}>Education</Heading>
                 </CardHeader>
                 <CardBody
                   display={"flex"}
@@ -404,9 +404,7 @@ const InstructorProfile = () => {
                   borderRadius={4}
                   bgColor={"#F4F3F3"}
                 >
-                  <Heading size={{ base: "sm", xl: "md" }}>
-                    Work Experience
-                  </Heading>
+                  <Heading size={{ base: "sm" }}>Work Experience</Heading>
                 </CardHeader>
                 <CardBody
                   display={"flex"}
@@ -479,9 +477,7 @@ const InstructorProfile = () => {
                   borderRadius={4}
                   bgColor={"#F4F3F3"}
                 >
-                  <Heading size={{ base: "sm", xl: "md" }}>
-                    Available Timings
-                  </Heading>
+                  <Heading size={{ base: "sm" }}>Available Timings</Heading>
                 </CardHeader>
                 <CardBody
                   display={"flex"}
@@ -505,10 +501,7 @@ const InstructorProfile = () => {
                         <Text>
                           <AccordionButton borderRadius={4}>
                             <Box as="span" flex="1" textAlign="left">
-                              <Text
-                                fontSize={{ base: "sm", xl: "md" }}
-                                color="#044F63"
-                              >
+                              <Text fontSize={{ base: "sm" }} color="#044F63">
                                 {avail.day}
                               </Text>
                             </Box>
@@ -582,9 +575,7 @@ const InstructorProfile = () => {
                   borderRadius={4}
                   bgColor={"#F4F3F3"}
                 >
-                  <Heading size={{ base: "sm", xl: "md" }}>
-                    Offered Services
-                  </Heading>
+                  <Heading size={{ base: "sm" }}>Offered Services</Heading>
                 </CardHeader>
                 <CardBody
                   display={"flex"}
@@ -643,7 +634,7 @@ const InstructorProfile = () => {
                   borderRadius={4}
                   bgColor={"#F4F3F3"}
                 >
-                  <Heading size={{ base: "sm", xl: "md" }}>Languages</Heading>
+                  <Heading size={{ base: "sm" }}>Languages</Heading>
                 </CardHeader>
                 <CardBody display={"flex"} paddingInline={0} p={3} pb={0}>
                   <Box
@@ -700,7 +691,7 @@ const InstructorProfile = () => {
                   borderRadius={4}
                   bgColor={"#F4F3F3"}
                 >
-                  <Heading size={{ base: "sm", xl: "md" }}>Location</Heading>
+                  <Heading size={{ base: "sm" }}>Location</Heading>
                 </CardHeader>
                 <CardBody
                   display={"flex"}
@@ -753,7 +744,7 @@ const InstructorProfile = () => {
                   borderRadius={4}
                   bgColor={"#F4F3F3"}
                 >
-                  <Heading size={{ base: "sm", xl: "md" }}>
+                  <Heading size={{ base: "sm" }}>
                     Awards and Recognitions
                   </Heading>
                 </CardHeader>

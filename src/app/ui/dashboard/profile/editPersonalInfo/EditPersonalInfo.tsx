@@ -42,6 +42,7 @@ import {
   TAddress,
   TUser,
 } from "@/app/ui/navbar/Navbar";
+import axios from "axios";
 
 const errorText = {
   fontSize: "xs",
@@ -86,9 +87,10 @@ const EditPersonalInfo = ({
   const {
     register: addressRegister,
     handleSubmit: addressHandleSubmit,
-    reset: addressReset,
     formState: { errors: addressErrors },
-  } = useForm<TAddress>({});
+  } = useForm<TAddress>({
+    values: userInfo.address,
+  });
 
   const onSubmit = async (e: TUser) => {
     onClose();
@@ -103,11 +105,12 @@ const EditPersonalInfo = ({
       role,
       avatar,
       enrolledCourses,
+      address,
     } = e;
     try {
       const response = await fetch(
-        // `http://localhost:3131/api/v1/students/${userId}`,
-        `https://learnopia-backend.vercel.app/api/v1/students/${userId}`,
+        `http://localhost:3131/api/v1/students/${userId}`,
+        // `https://learnopia-backend.vercel.app/api/v1/students/${userId}`,
         {
           method: "PATCH",
           headers: {
@@ -129,7 +132,6 @@ const EditPersonalInfo = ({
           "success",
           "Student Information Updated Successfully"
         );
-        const user = getUserInfoFromLocalStorage();
         removeUserInfoFromLocalStorage();
         addUserInfoToLocalStorage({
           _id,
@@ -141,17 +143,17 @@ const EditPersonalInfo = ({
           role,
           avatar,
           enrolledCourses,
+          qualification,
+          address,
         } as TUser);
         handleUpdateUserInfo({
-          _id,
           firstName,
           lastName,
           email,
           phone,
           gender,
-          role,
-          avatar,
-          enrolledCourses,
+          qualification,
+          address,
         } as TUser);
       } else {
         throw new Error(response.statusText);
@@ -161,8 +163,40 @@ const EditPersonalInfo = ({
     }
   };
 
-  const onAddressSubmit = (e: TAddress) => {
-    console.log(e);
+  const onAddressSubmit = async (e: TAddress) => {
+    // console.log(e);
+    const { firstName, lastName, email, phone, gender, qualification } =
+      userInfo;
+    try {
+      const response = await axios.patch(
+        `http://localhost:3131/api/v1/students/${userId}`,
+        // `https://learnopia-backend.vercel.app/api/v1/students/${userId}`,
+        { ...userInfo, address: e }
+      );
+      if (response.data.body) {
+        displayToast(
+          "Success",
+          "success",
+          "Student Information Updated Successfully"
+        );
+        removeUserInfoFromLocalStorage();
+        handleUpdateUserInfo({
+          firstName,
+          lastName,
+          email,
+          phone,
+          gender,
+          qualification,
+          address: { ...e },
+        } as TUser);
+        addUserInfoToLocalStorage({ ...userInfo, address: { ...e } });
+      } else {
+        throw new Error(response.statusText);
+      }
+    } catch (error) {
+      console.error(error);
+      handleUpdateUserInfo(userInfo);
+    }
   };
 
   const onReset = () => {
@@ -409,7 +443,7 @@ const EditPersonalInfo = ({
                             })}
                             type="text"
                             size={"sm"}
-                            placeholder="2337 1st Main"
+                            placeholder="Address Line 1"
                           />
                         </InputGroup>
                         {addressErrors.addressLine1 && (
@@ -433,7 +467,7 @@ const EditPersonalInfo = ({
                             })}
                             type="text"
                             size={"sm"}
-                            placeholder="13th Lane"
+                            placeholder="Address Line 2"
                           />
                         </InputGroup>
                         {addressErrors.addressLine2 && (
@@ -466,7 +500,7 @@ const EditPersonalInfo = ({
                             })}
                             type="text"
                             size={"sm"}
-                            placeholder="Bengaluru"
+                            placeholder="State"
                           />
                         </InputGroup>
                         {addressErrors.state && (
@@ -490,7 +524,7 @@ const EditPersonalInfo = ({
                             })}
                             type="text"
                             size={"sm"}
-                            placeholder="INDIA"
+                            placeholder="Country"
                           />
                         </InputGroup>
                         {addressErrors.country && (
@@ -500,6 +534,27 @@ const EditPersonalInfo = ({
                         )}
                       </FormControl>
                     </Box>
+                    <ModalFooter pr={0} pb={2} pt={10}>
+                      <Button
+                        colorScheme="teal"
+                        size={"sm"}
+                        width={"30%"}
+                        type="reset"
+                        mr={10}
+                        onClick={() => onReset()}
+                      >
+                        Reset
+                      </Button>
+                      <Button
+                        type="submit"
+                        colorScheme="blue"
+                        size={"sm"}
+                        width={"30%"}
+                        onSubmit={() => onAddressSubmit}
+                      >
+                        Submit
+                      </Button>
+                    </ModalFooter>
                   </form>
                 </TabPanel>
               </TabPanels>

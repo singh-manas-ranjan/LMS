@@ -112,15 +112,17 @@ const UsersList = async ({
                   studentFirstName={student.firstName}
                 />
               </Box>
-              {/* <Text
+              <Text
                 flex={1}
                 justifyContent={"center"}
                 alignItems={"center"}
                 fontSize={{ base: "xs", md: "sm" }}
                 display={{ base: "none", xl: "flex" }}
               >
-                {student.address}
-              </Text> */}
+                {student.address?.addressLine1
+                  ? `${student.address?.state}, ${student.address?.country}`
+                  : "-NA-"}
+              </Text>
             </Box>
           </CardBody>
           <CardFooter

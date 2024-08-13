@@ -13,7 +13,7 @@ import NextLink from "next/link";
 import { TUser } from "../navbar/Navbar";
 
 const textStyle = {
-  fontSize: { base: "xs", md: "sm" },
+  fontSize: { base: "xs" },
 };
 
 const InstructorCard = ({ instructor }: { instructor: TUser }) => {
@@ -56,16 +56,18 @@ const InstructorCard = ({ instructor }: { instructor: TUser }) => {
           display={"flex"}
           flexDir={"column"}
           justifyContent={"center"}
-          rowGap={{ md: 2 }}
+          rowGap={{ md: 1 }}
         >
           <Text sx={textStyle}>
             {`${instructor.firstName} ${instructor.lastName}`}
           </Text>
-          <Text sx={textStyle}>{instructor.email}</Text>
-          <Text sx={textStyle}>{instructor.phone}</Text>
           <Text sx={textStyle} display={{ base: "none", sm: "initial" }}>
-            {instructor.role}
+            {instructor.email}
           </Text>
+          <Text sx={textStyle} display={{ base: "none", md: "initial" }}>
+            {instructor.phone}
+          </Text>
+          <Text sx={textStyle}>{instructor.domain}</Text>
         </Box>
       </CardBody>
       <CardFooter
@@ -79,23 +81,12 @@ const InstructorCard = ({ instructor }: { instructor: TUser }) => {
           h={"100%"}
           display={"flex"}
           flexDir={"column"}
-          justifyContent={{ base: "center", md: "space-between" }}
-          alignItems={"end"}
+          justifyContent={{ base: "center" }}
+          alignItems={"center"}
           paddingTop={5}
           pb={4}
           pr={{ md: 5 }}
         >
-          <Box
-            display={{ base: "none", md: "grid" }}
-            rowGap={1.5}
-            textAlign={"right"}
-          >
-            <Text sx={textStyle}>
-              {`${instructor.firstName} ${instructor.lastName}`}
-            </Text>
-            <Text sx={textStyle}>{instructor.email}</Text>
-            <Text sx={textStyle}>{instructor.phone}</Text>
-          </Box>
           <NextLink href={`/admin-dashboard/instructors/${instructorId}`}>
             <Button
               colorScheme="teal"

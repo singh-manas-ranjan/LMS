@@ -17,7 +17,11 @@ import SocialLinks from "../socialLinks/SocialLinks";
 import TextEditor from "../textEditor/TextEditor";
 import { sxScrollbar } from "../../../../../../public/scrollbarStyle";
 import PersonalInfo from "./PersonalInfo";
-import { getUserInfoFromLocalStorage, TUser } from "../../../navbar/Navbar";
+import {
+  getUserInfoFromLocalStorage,
+  TAddress,
+  TUser,
+} from "../../../navbar/Navbar";
 import EditPersonalInfo from "../editPersonalInfo/EditPersonalInfo";
 
 export type TUserInfo = {
@@ -28,6 +32,7 @@ export type TUserInfo = {
   phone: string;
   gender: string;
   qualification: string;
+  address: TAddress;
 };
 
 const getGender = (gender: string): string => {
@@ -81,18 +86,19 @@ const DetailedProfileInfo = () => {
       phone,
       gender: getGender(gender),
       qualification: getQualification(qualification),
+      address,
     } as TUserInfo);
   }, []);
 
-  const handleNewUserInfo = useCallback(
-    (newUserInfo: TUser) =>
-      setUserInfo({
-        ...newUserInfo,
-        gender: getGender(newUserInfo["gender"]),
-        qualification: getQualification(newUserInfo["qualification"]),
-      } as TUserInfo),
-    []
-  );
+  const handleNewUserInfo = useCallback((newUserInfo: TUser) => {
+    console.log(newUserInfo);
+
+    setUserInfo({
+      ...newUserInfo,
+      gender: getGender(newUserInfo["gender"]),
+      qualification: getQualification(newUserInfo["qualification"]),
+    } as TUserInfo);
+  }, []);
 
   return (
     <Tabs w={"100%"} h={"100%"}>

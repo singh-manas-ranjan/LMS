@@ -1,4 +1,3 @@
-import { TUser } from "@/app/ui/navbar/Navbar";
 import { Heading, Text, Box, Flex, Skeleton, Stack } from "@chakra-ui/react";
 import React from "react";
 import { TUserInfo } from "./DetailedProfileInfo";
@@ -28,7 +27,7 @@ const PersonalInfo = ({ userData }: Props) => {
       rowGap={2}
       ml={{ md: ".8rem" }}
     >
-      {Object.entries(userData).map((entry, idx) => (
+      {Object.entries(userData).map(([key, value], idx) => (
         <Box
           key={idx}
           display={"flex"}
@@ -38,16 +37,16 @@ const PersonalInfo = ({ userData }: Props) => {
         >
           <Heading
             fontSize={{ base: ".8rem", sm: "sm" }}
-            width={{ base: "35%", lg: "20%" }}
+            width={{ base: "45%", lg: "20%" }}
             display={"flex"}
             justifyContent={"space-between"}
             alignItems={"center"}
             color={"#364A63"}
           >
-            {`${entry[0]
+            {`${key
               .charAt(0)
               .toUpperCase()
-              .concat(entry[0].substring(1).toLocaleLowerCase())} `}{" "}
+              .concat(key.substring(1).toLocaleLowerCase())} `}{" "}
             <span>:</span>
           </Heading>
           <Text
@@ -56,12 +55,14 @@ const PersonalInfo = ({ userData }: Props) => {
               sm: ".8rem",
               lg: "sm",
             }}
-            width={{ base: "60%", lg: "70%" }}
+            width={{ base: "50%", lg: "70%" }}
             display={"flex"}
             alignItems={"center"}
             color={"#364A63"}
           >
-            {entry[1] === "" ? "-NA-" : entry[1]}
+            {typeof value === "object" && value !== null
+              ? `${value.addressLine1}, ${value.addressLine2}, ${value.state}, ${value.country}`
+              : value}
           </Text>
         </Box>
       ))}
