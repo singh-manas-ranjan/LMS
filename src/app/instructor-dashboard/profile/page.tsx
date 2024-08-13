@@ -235,7 +235,9 @@ const InstructorProfile = () => {
                         fontSize={{ base: "xs", lg: "sm" }}
                         display={"flex"}
                       >
-                        {`${instructor.address?.addressLine1}, ${instructor.address?.addressLine2}, ${instructor.address?.state}, ${instructor.address?.country}`}
+                        {instructor.address?.addressLine1
+                          ? `${instructor.address?.addressLine1}, ${instructor.address?.addressLine2}, ${instructor.address?.state}, ${instructor.address?.country}`
+                          : "Add Address"}
                       </Text>
                     </Box>
                   </Flex>
@@ -709,9 +711,11 @@ const InstructorProfile = () => {
                     color="#044F63"
                   >
                     <MapIcon size={16} />
-                    <Text
-                      fontSize={{ base: "xs" }}
-                    >{`${instructor.address?.addressLine1}, ${instructor.address?.addressLine2}, ${instructor.address?.state}, ${instructor.address?.country}`}</Text>
+                    <Text fontSize={{ base: "xs" }}>
+                      {instructor.address?.addressLine1
+                        ? `${instructor.address?.addressLine1}, ${instructor.address?.addressLine2}, ${instructor.address?.state}, ${instructor.address?.country}`
+                        : "Add Address"}
+                    </Text>
                   </Box>
                 </CardBody>
               </Card>
