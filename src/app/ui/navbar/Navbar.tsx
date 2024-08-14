@@ -30,6 +30,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/store";
 import { TCourse } from "../../../../public/courses";
 import { fetchAllCourses } from "@/actions/courses/actions";
 import { addCourses } from "@/lib/features/courses/coursesSlice";
+import axios from "axios";
 
 const nav = {
   bg: "#fff",
@@ -170,8 +171,22 @@ const Navbar = ({ navLinks }: Props) => {
 
   const toast = useToast();
 
+  const roleModelMap: { [key: string]: any } = {
+    student: "students",
+    instructor: "instructors",
+    admin: "admin",
+  };
+
   const handleSignOut = async () => {
     removeUserInfoFromLocalStorage();
+    await axios.post(
+      `http://localhost:3131/api/v1/${roleModelMap[userInfo.role]}/logout`,
+      // "https://learnopia-backend.vercel.app/api/v1/students/logout",
+      {},
+      {
+        withCredentials: true,
+      }
+    );
     router.push("/");
     setTimeout(() => {
       toast({
