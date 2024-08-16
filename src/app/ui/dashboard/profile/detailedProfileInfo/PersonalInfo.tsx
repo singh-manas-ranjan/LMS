@@ -3,13 +3,15 @@ import React from "react";
 import { TUserInfo } from "./DetailedProfileInfo";
 
 interface Props {
-  userData: TUserInfo;
+  userData: TUserInfo | undefined;
 }
 
 const PersonalInfo = ({ userData }: Props) => {
   if (!userData) {
     return (
       <Stack>
+        <Skeleton height="20px" />
+        <Skeleton height="20px" />
         <Skeleton height="20px" />
         <Skeleton height="20px" />
         <Skeleton height="20px" />
