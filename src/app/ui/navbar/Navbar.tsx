@@ -151,10 +151,10 @@ export function removeUserInfoFromLocalStorage() {
   localStorage.removeItem("enrolledCoursesList");
 }
 
-export const refreshToken = async () => {
+export const refreshToken = async (role: string) => {
   try {
     const response = await axios.post(
-      "http://localhost:3131/api/v1/students/refresh-token",
+      `http://localhost:3131/api/v1/${role}/refresh-token`,
       {},
       { withCredentials: true }
     );
@@ -227,7 +227,9 @@ const Navbar = ({ navLinks }: Props) => {
         const axiosError = error as AxiosError;
         if (axiosError.response && axiosError.response?.status === 401) {
           try {
-            await refreshToken();
+            await refreshToken(`${roleModelMap[userInfo.role]}`);
+            console.log(roleModelMap[userInfo.role]);
+
             await axios.post(
               `http://localhost:3131/api/v1/${
                 roleModelMap[userInfo.role]
@@ -248,13 +250,13 @@ const Navbar = ({ navLinks }: Props) => {
             }, 500);
           } catch (logoutError) {
             showToastMessage("Unable to logout", "error");
+          } finally {
+            removeUserInfoFromLocalStorage();
           }
         }
       } else {
         showToastMessage("Unexpected error occurred", "error");
       }
-    } finally {
-      removeUserInfoFromLocalStorage();
     }
   };
 

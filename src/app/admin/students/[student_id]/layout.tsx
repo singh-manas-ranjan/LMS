@@ -1,26 +1,36 @@
-import { Box } from "@chakra-ui/react";
 import { ReactNode } from "react";
-const main = {
-  width: "100%",
-  height: "100dvh",
-  borderRadius: "4px",
-  display: "flex",
-  flexDirection: "column",
-  padding: "1rem",
-  bg: "#ffffff",
-};
-const AdminStudentLayout = ({ children }: { children: ReactNode }) => {
+import { Box, Flex } from "@chakra-ui/react";
+import Sidebar from "@/app/ui/adminDashboard/Sidebar";
+import Navbar from "@/app/ui/adminDashboard/Navbar";
+import { TUser } from "@/app/ui/navbar/Navbar";
+import React from "react";
+import { fetchStudentById } from "@/actions/adminAccess/studentAction";
+
+interface Props {
+  children: ReactNode;
+  params: { student_id: string };
+}
+
+const Layout = async ({ children, params: { student_id } }: Props) => {
+  const student: TUser | null = await fetchStudentById(student_id);
+
   return (
-    <Box
-      as="main"
-      sx={main}
-      rowGap={5}
-      overflow={"hidden"}
-      alignContent={"center"}
-    >
-      {children}
-    </Box>
+    <Flex direction="row">
+      <Sidebar studentId={student_id} />
+
+      <Flex direction="column" ml={{ sm: "80px" }} flex="1" bg="gray.100">
+        {student ? (
+          <Navbar user={student} studentId={student_id} />
+        ) : (
+          <Navbar user={{} as TUser} studentId={student_id} />
+        )}
+
+        <Box flex="1" w="100%" h={"100dvh"}>
+          {children}
+        </Box>
+      </Flex>
+    </Flex>
   );
 };
 
-export default AdminStudentLayout;
+export default Layout;

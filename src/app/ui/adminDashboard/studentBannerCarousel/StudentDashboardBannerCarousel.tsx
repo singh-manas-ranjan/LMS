@@ -8,13 +8,13 @@ import {
   Text,
   Image,
 } from "@chakra-ui/react";
-import styles from "./banner.module.css";
+import styles from "./StudentDashboardBannerCarousel.module.css";
 import React, { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { FaAngleRight } from "react-icons/fa6";
 
-const BannerCarousel = () => {
+const StudentDashboardBannerCarousel = () => {
   const [loading, setLoading] = useState<Boolean>(true);
 
   useEffect(() => {
@@ -158,18 +158,21 @@ const BannerCarousel = () => {
           >
             <Grid rowGap={3}>
               <Heading fontSize={{ base: "md", md: "2xl" }}>
-                Revolutionize Your Teaching with Interactive Lesson Plans!
+                New Exams available Now!
               </Heading>
               <Text
                 lineHeight={{ sm: "xs", md: "sm" }}
                 fontSize={{ base: "xs", md: "md" }}
               >
-                Introducing Interactive Lesson Plans from Learnopia! Transform
-                your classroom with our innovative tool, designed to create
-                dynamic, responsive lessons tailored to your students&apos;
-                needs. Easily integrate with your current resources and enhance
-                engagement. Check out our tutorials to make the most of this
-                feature and elevate your teaching!
+                🎉 Welcome to Our New Exam Feature! 🌟
+                <br />
+                We’re excited to introduce our latest exam tool, designed to
+                help you gauge your progress and check your results
+                effortlessly. See how well you’ve practiced for your papers and
+                boost your confidence with our top-notch service. Our platform
+                is here to support you every step of the way, ensuring you’re
+                well-prepared and confident for your exams. Start testing today
+                and experience the difference!
               </Text>
             </Grid>
             <Button
@@ -219,18 +222,22 @@ const BannerCarousel = () => {
           >
             <Grid rowGap={3}>
               <Heading fontSize={{ base: "md", md: "2xl" }}>
-                Elevate Your Teaching Journey with Learnopia!
+                New Courses Available
               </Heading>
               <Text
                 lineHeight={{ sm: "xs", md: "sm" }}
                 fontSize={{ base: "xs", md: "md" }}
               >
-                Maximize Your Impact with Learnopia! As a valued instructor, you
-                have access to interactive tools, exclusive workshops, and
-                certifications to boost your skills. Connect with our community
-                of educators, share ideas, and stay ahead in your field. Explore
-                new features and opportunities to enhance your teaching and
-                professional growth today.
+                🎉 Exciting News! 🌟 <br />
+                We’ve just expanded our course catalog with a range of NEW
+                offerings! 🚀 Whether you’re looking to enhance your skills,
+                dive into new interests, or advance your career, we’ve got
+                something for you. Our latest additions feature cutting-edge
+                tech, creative arts, professional development, and more. Learn
+                from industry experts, enjoy flexible, on-demand access, and
+                unlock new opportunities with our fresh and diverse course
+                options. Don’t miss out—explore our updated catalog and start
+                your next learning adventure today!
               </Text>
             </Grid>
             <Button
@@ -263,4 +270,4 @@ const BannerCarousel = () => {
   );
 };
 
-export default BannerCarousel;
+export default StudentDashboardBannerCarousel;

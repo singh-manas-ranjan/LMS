@@ -60,7 +60,7 @@ const UpdatePassword = () => {
 
         if (axiosError.response && axiosError.response.status === 401) {
           try {
-            await refreshToken();
+            await refreshToken("students");
             await axios.post(
               "http://localhost:3131/api/v1/students/password",
               // "https://learnopia-backend.vercel.app/api/v1/students/password",
