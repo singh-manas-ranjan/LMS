@@ -1,22 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Flex,
   IconButton,
-  Link,
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { House, Menu, NotebookIcon, Settings, User, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { endpoints } from "./Navbar";
+import { color } from "framer-motion";
 
 const Sidebar = ({ studentId }: { studentId: string }) => {
   const pathname = usePathname();
   const [isSidebarExpanded, setSidebarExpanded] = useState(false);
+  const [activeLink, setActiveLink] = useState("");
   const handleToggleSidebar = () => {
     setSidebarExpanded((prev) => !prev);
   };
@@ -54,15 +55,22 @@ const Sidebar = ({ studentId }: { studentId: string }) => {
       borderColor="gray.200"
       display={{ base: "none", sm: "flex" }}
     >
-      <Flex direction="column" p="4" mt={20}>
+      <Flex direction="column" p="4" mt={20} w={"100%"}>
         <IconButton
           aria-label="Toggle Menu"
-          icon={isSidebarExpanded ? <X size={18} /> : <Menu size={18} />}
+          icon={
+            isSidebarExpanded ? (
+              <X size={18} color={isSidebarExpanded ? "#2D89BA" : "#044F63"} />
+            ) : (
+              <Menu size={18} />
+            )
+          }
           onClick={handleToggleSidebar}
           mb="4"
           colorScheme="gray"
           size={"sm"}
           width={"50px"}
+          _hover={{ color: "#2D89BA" }}
         />
         <Flex direction="column" rowGap="5" mt={5}>
           {endpoints.map((link, idx) => {
@@ -71,6 +79,10 @@ const Sidebar = ({ studentId }: { studentId: string }) => {
               <NextLink
                 key={idx}
                 href={`/admin/students/${studentId}/${link.href}`}
+                onClick={() => {
+                  setSidebarExpanded(false);
+                  setActiveLink(link.href);
+                }}
               >
                 <Box
                   p={2}
@@ -78,11 +90,20 @@ const Sidebar = ({ studentId }: { studentId: string }) => {
                   justifyContent={"center"}
                   alignItems={"center"}
                   columnGap={4}
-                  _hover={{ textDecoration: "none" }}
+                  _hover={{ textDecoration: "none", bg: "gray.100" }}
+                  bg={activeLink === link.href ? "#2D89BA20" : "#fff"}
+                  borderRadius={4}
                 >
-                  <Box as={IconComponent} color="#044F63" size={20} />
+                  <Box
+                    as={IconComponent}
+                    color={activeLink === link.href ? "#2D89BA" : "#044F63"}
+                    size={20}
+                  />
                   {
-                    <Text sx={isSidebarExpanded ? open : close}>
+                    <Text
+                      sx={isSidebarExpanded ? open : close}
+                      color={activeLink === link.href ? "#2D89BA" : "#044F63"}
+                    >
                       {link.name}
                     </Text>
                   }

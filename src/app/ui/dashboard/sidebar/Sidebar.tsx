@@ -87,7 +87,12 @@ const Sidebar = ({ navLinks }: Props) => {
             </Box>
           </Box>
           <Box sx={navLinksContainer}>
-            <HamMenu isMenuOpen={menuOpen} />
+            <Box
+              display={"flex"}
+              justifyContent={menuOpen ? "start" : "center"}
+            >
+              <HamMenu isMenuOpen={menuOpen} />
+            </Box>
             {Object.keys(navLinks).map((key, idx) => (
               <Box key={idx} sx={sectionContainer}>
                 <List sx={list}>
