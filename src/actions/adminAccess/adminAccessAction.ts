@@ -31,8 +31,8 @@ export async function fetchUserById(
 
     // return response.data.body as TUser;
     const response = await fetch(
-      `http://localhost:3131/api/v1/admin/access/${role}/${studentId}`,
-      // `https://learnopia-backend.vercel.app/api/v1/admin/access/${role}/${studentId}`,
+      // `http://localhost:3131/api/v1/admin/access/${role}/${studentId}`,
+      `https://learnopia-backend.vercel.app/api/v1/admin/access/${role}/${studentId}`,
       {
         method: "GET",
         headers: {
