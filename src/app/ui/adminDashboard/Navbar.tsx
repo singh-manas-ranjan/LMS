@@ -142,7 +142,7 @@ const Navbar = ({ user, userId }: { user: TUser; userId: string }) => {
                   const IconComponent = link.icon;
                   return (
                     <NextLink
-                      href={`/admin/${role}/${userId}/${link.href}`}
+                      href={`/admin/${role}/${userId}${link.href}`}
                       key={idx}
                       onClick={onClose}
                     >
