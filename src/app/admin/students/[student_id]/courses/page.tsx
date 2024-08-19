@@ -13,7 +13,7 @@ import {
 import React from "react";
 import { sxScrollbar } from "../../../../../../public/scrollbarStyle";
 import { TUser } from "@/app/ui/navbar/Navbar";
-import { fetchStudentById } from "@/actions/adminAccess/studentAction";
+import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
 
 const main = {
   width: "100%",
@@ -33,7 +33,7 @@ const textStyle = {
 };
 
 const MyCourses = async ({ params: { student_id } }: Props) => {
-  const student: TUser | null = await fetchStudentById(student_id);
+  const student: TUser | null = await fetchUserById(student_id, "students");
   const eCourses = student?.enrolledCourses;
   return (
     <Box as="main" sx={main} rowGap={5} overflow={"hidden"}>

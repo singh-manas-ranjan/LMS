@@ -5,15 +5,24 @@ import {
   CardHeader,
   Image,
   CardBody,
+  Grid,
   Text,
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  WrapItem,
+  Button,
   Flex,
+  HStack,
 } from "@chakra-ui/react";
 import React from "react";
-import { BookAIcon, MailCheckIcon, MapIcon } from "lucide-react";
+import { BookAIcon, MailCheckIcon, MapIcon, MedalIcon } from "lucide-react";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { sxScrollbar } from "../../../../../../public/scrollbarStyle";
-import { TUser } from "@/app/ui/navbar/Navbar";
 import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
+import { TUser } from "@/app/ui/navbar/Navbar";
 
 const main = {
   width: "100%",
@@ -32,27 +41,37 @@ const main = {
   color: "#364A63",
 };
 
-const getQualification = (qualification: string): string => {
-  switch (qualification) {
-    case "X":
-      return "Secondary";
-    case "XII":
-      return "Senior Secondary";
-    case "UG":
-      return "Under-Graduate";
-    case "PG":
-      return "Post-Graduate";
-    default:
-      return "-NA-";
-  }
+type TAvailable = {
+  day: string;
 };
 
-const AdminStudentDetail = async ({
+const availableTimings: TAvailable[] = [
+  { day: "Monday" },
+  { day: "Tuesday" },
+  { day: "Wednesday" },
+  { day: "Thursday" },
+  { day: "Friday" },
+  { day: "Saturday" },
+];
+
+const timings = [
+  "11:00am",
+  "12:00pm",
+  "01:00pm",
+  "02:00pm",
+  "03:00pm",
+  "04:00pm",
+];
+
+const AdminInstructorProfile = async ({
   params,
 }: {
-  params: { student_id: string };
+  params: { instructor_id: string };
 }) => {
-  const student: TUser = await fetchUserById(params.student_id, "students");
+  const instructor: TUser = await fetchUserById(
+    params.instructor_id,
+    "instructors"
+  );
 
   return (
     <Box as="main" sx={main} overflow={"hidden"}>
@@ -81,8 +100,8 @@ const AdminStudentDetail = async ({
               alignItems={"center"}
             >
               <Image
-                src={student?.avatar ?? "/avatar.svg"}
-                alt={student?.firstName}
+                src={instructor.avatar ?? "/avatar.svg"}
+                alt={instructor.firstName}
                 h={{ base: "80%", md: "100%" }}
                 w={"auto"}
                 borderRadius={6}
@@ -117,7 +136,7 @@ const AdminStudentDetail = async ({
                   width={"100%"}
                   justifyContent={{ base: "end", md: "initial" }}
                 >
-                  {`${student?.firstName} ${student?.lastName}`}
+                  {`${instructor.firstName} ${instructor.lastName}`}
                   <RiVerifiedBadgeFill size={20} color="green" />
                 </Heading>
                 <Flex
@@ -132,7 +151,7 @@ const AdminStudentDetail = async ({
                       <BookAIcon size={18} />
                     </Box>
                     <Text fontSize={{ base: "xs", lg: "sm" }} display={"flex"}>
-                      {getQualification(student.qualification)}
+                      {instructor.domain}
                     </Text>
                   </Box>
                   <Box display={"flex"} columnGap={2}>
@@ -140,10 +159,10 @@ const AdminStudentDetail = async ({
                       <MailCheckIcon size={18} />
                     </Box>
                     <Text fontSize={{ base: "xs", lg: "sm" }} display={"flex"}>
-                      {student.email}
+                      {instructor.email}
                     </Text>
                   </Box>
-                  {student.address?.addressLine1 !== "" && (
+                  {instructor.address?.addressLine1 !== "" && (
                     <Box display={{ base: "none", sm: "flex" }} columnGap={2}>
                       <Box display={{ base: "none", md: "flex" }}>
                         <MapIcon size={18} />
@@ -152,7 +171,7 @@ const AdminStudentDetail = async ({
                         fontSize={{ base: "xs", lg: "sm" }}
                         display={"flex"}
                       >
-                        {`${student.address?.addressLine1}, ${student.address?.addressLine2}, ${student.address?.state}, ${student.address?.country}`}
+                        {`${instructor.address?.addressLine1}, ${instructor.address?.addressLine2}, ${instructor.address?.state}, ${instructor.address?.country}`}
                       </Text>
                     </Box>
                   )}
@@ -200,7 +219,7 @@ const AdminStudentDetail = async ({
                 p={3}
               >
                 <Text fontSize={{ base: "xs", lg: "sm" }} color={"#77838F"}>
-                  {student.aboutMe}
+                  {instructor.aboutMe}
                 </Text>
               </CardBody>
             </Card>
@@ -227,8 +246,7 @@ const AdminStudentDetail = async ({
                 p={3}
                 paddingInline={0}
               >
-                {/* ======================= ADD Later ======================= */}
-                {/* <Accordion h={"100%"}>
+                <Accordion h={"100%"}>
                   {instructor?.education?.map((education, idx) => (
                     <AccordionItem key={idx}>
                       <Text>
@@ -260,7 +278,138 @@ const AdminStudentDetail = async ({
                       </Text>
                     </AccordionItem>
                   ))}
-                </Accordion> */}
+                </Accordion>
+              </CardBody>
+            </Card>
+
+            <Card
+              boxShadow={
+                "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
+              }
+              w={"100%"}
+              p={{ base: 3, sm: 5 }}
+            >
+              <CardHeader
+                color="#044F63"
+                p={4}
+                borderRadius={4}
+                bgColor={"#F4F3F3"}
+              >
+                <Heading size={{ base: "sm" }}>Work Experience</Heading>
+              </CardHeader>
+              <CardBody
+                display={"flex"}
+                flexDirection={"column"}
+                rowGap={1}
+                p={3}
+                paddingInline={0}
+              >
+                <Accordion h={"100%"}>
+                  {instructor?.experience?.map((exp, idx) => (
+                    <AccordionItem key={idx}>
+                      <Text>
+                        <AccordionButton cursor={"default"}>
+                          <Box as="span" flex="1" textAlign="left">
+                            <WrapItem
+                              display={"flex"}
+                              flexDir={"row"}
+                              justifyContent={"space-between"}
+                              alignItems={"center"}
+                            >
+                              <Grid>
+                                <Text
+                                  fontSize={{ base: "xs", md: "sm" }}
+                                  color="#044F63"
+                                >
+                                  {exp.organization}
+                                </Text>
+                                <Text fontSize={".7rem"} color={"#77838F"}>
+                                  {exp.role}
+                                </Text>
+                              </Grid>
+                              <Text fontSize={".7rem"} color={"#77838F"}>
+                                {`${exp.years} yrs.`}
+                              </Text>
+                            </WrapItem>
+                          </Box>
+                        </AccordionButton>
+                      </Text>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </CardBody>
+            </Card>
+
+            <Card
+              boxShadow={
+                "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
+              }
+              w={"100%"}
+              p={{ base: 3, sm: 5 }}
+            >
+              <CardHeader
+                color="#044F63"
+                p={4}
+                borderRadius={4}
+                bgColor={"#F4F3F3"}
+              >
+                <Heading size={{ base: "sm" }}>Available Timings</Heading>
+              </CardHeader>
+              <CardBody
+                display={"flex"}
+                flexDirection={"column"}
+                rowGap={1}
+                p={3}
+                paddingInline={0}
+              >
+                <Accordion
+                  allowToggle
+                  display={"flex"}
+                  flexDir={"column"}
+                  rowGap={3}
+                >
+                  {availableTimings.map((avail, idx) => (
+                    <AccordionItem
+                      key={idx}
+                      borderRadius={4}
+                      bgColor={"#F4F3F3"}
+                    >
+                      <Text>
+                        <AccordionButton borderRadius={4}>
+                          <Box as="span" flex="1" textAlign="left">
+                            <Text fontSize={{ base: "sm" }} color="#044F63">
+                              {avail.day}
+                            </Text>
+                          </Box>
+                          <AccordionIcon color="#044F63" />
+                        </AccordionButton>
+                      </Text>
+                      <AccordionPanel pb={4} bg={"#fff"}>
+                        <Box
+                          w={"100%"}
+                          display={"flex"}
+                          columnGap={3}
+                          rowGap={3}
+                          flexWrap={"wrap"}
+                          mt={2}
+                        >
+                          {timings.map((time, idx) => (
+                            <Button
+                              key={idx}
+                              size={"sm"}
+                              width={"80px"}
+                              fontSize={{ base: "xs" }}
+                              color={"#77838F"}
+                              borderRadius={2}
+                            >
+                              {time}
+                            </Button>
+                          ))}
+                        </Box>
+                      </AccordionPanel>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
               </CardBody>
             </Card>
           </Box>
@@ -272,8 +421,51 @@ const AdminStudentDetail = async ({
             flexDir={"column"}
             rowGap={5}
           >
-            {/* ======================= ADD LATER ======================= */}
-            {/* <Card
+            <Card
+              boxShadow={
+                "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
+              }
+              w={"100%"}
+              p={{ base: 3, sm: 5 }}
+            >
+              <CardHeader
+                color="#044F63"
+                p={4}
+                borderRadius={4}
+                bgColor={"#F4F3F3"}
+              >
+                <Heading size={{ base: "sm" }}>Offered Services</Heading>
+              </CardHeader>
+              <CardBody
+                display={"flex"}
+                flexDirection={"column"}
+                rowGap={2}
+                p={3}
+                paddingInline={0}
+                pb={0}
+              >
+                <HStack
+                  w={"100%"}
+                  display={"flex"}
+                  flexWrap={"wrap"}
+                  columnGap={2}
+                  rowGap={2}
+                >
+                  {instructor.services?.map((service, idx) => (
+                    <Button
+                      key={idx}
+                      size={"xs"}
+                      color="#044F63"
+                      borderRadius={4}
+                    >
+                      {service}
+                    </Button>
+                  ))}
+                </HStack>
+              </CardBody>
+            </Card>
+
+            <Card
               boxShadow={
                 "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
               }
@@ -312,7 +504,7 @@ const AdminStudentDetail = async ({
                   ))}
                 </Box>
               </CardBody>
-            </Card> */}
+            </Card>
 
             <Card
               boxShadow={
@@ -347,12 +539,12 @@ const AdminStudentDetail = async ({
                   <MapIcon size={16} />
                   <Text
                     fontSize={{ base: "xs" }}
-                  >{`${student.address?.addressLine1}, ${student.address?.addressLine2}, ${student.address?.state}, ${student.address?.country}`}</Text>
+                  >{`${instructor.address?.addressLine1}, ${instructor.address?.addressLine2}, ${instructor.address?.state}, ${instructor.address?.country}`}</Text>
                 </Box>
               </CardBody>
             </Card>
-            {/* ================ ADD Later ===================*/}
-            {/* <Card
+
+            <Card
               boxShadow={
                 "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
               }
@@ -417,7 +609,7 @@ const AdminStudentDetail = async ({
                     ))}
                 </Accordion>
               </CardBody>
-            </Card> */}
+            </Card>
           </Box>
           {/* )} */}
         </Box>
@@ -426,4 +618,4 @@ const AdminStudentDetail = async ({
   );
 };
 
-export default AdminStudentDetail;
+export default AdminInstructorProfile;

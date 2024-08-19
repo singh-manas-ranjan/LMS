@@ -11,16 +11,18 @@ import {
 import { Menu, X } from "lucide-react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
-import { endpoints } from "./Navbar";
-import { color } from "framer-motion";
+import { instructorEndpoints, studentEndpoints, TEndpoint } from "./Navbar";
 
-const Sidebar = ({ studentId }: { studentId: string }) => {
-  const pathname = usePathname();
+const Sidebar = ({ userId }: { userId: string }) => {
   const [isSidebarExpanded, setSidebarExpanded] = useState(false);
   const [activeLink, setActiveLink] = useState("");
   const handleToggleSidebar = () => {
     setSidebarExpanded((prev) => !prev);
   };
+  const pathname = usePathname();
+  const role = pathname.includes("admin/students") ? "students" : "instructors";
+  const endpoints: TEndpoint[] =
+    role === "students" ? studentEndpoints : instructorEndpoints;
 
   const sidebarWidth = useBreakpointValue({
     base: "80px",
@@ -78,7 +80,7 @@ const Sidebar = ({ studentId }: { studentId: string }) => {
             return (
               <NextLink
                 key={idx}
-                href={`/admin/students/${studentId}/${link.href}`}
+                href={`/admin/${role}/${userId}/${link.href}`}
                 onClick={() => {
                   setSidebarExpanded(false);
                   setActiveLink(link.href);

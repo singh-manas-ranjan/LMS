@@ -261,7 +261,9 @@ const StudentDashboardBannerCarousel = () => {
         >
           <Image
             alt="teacher-avatar"
-            src={"/teacher1.png"}
+            src={
+              "https://res.cloudinary.com/learnopia/image/upload/v1724049456/teacher1_oqlhu9.png"
+            }
             width={{ md: 250 }}
           />
         </Box>

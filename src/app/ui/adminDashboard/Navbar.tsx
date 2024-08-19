@@ -11,9 +11,7 @@ import {
   MenuList,
   Button,
   useMediaQuery,
-  Link,
   useDisclosure,
-  IconButton,
   Drawer,
   DrawerOverlay,
   DrawerContent,
@@ -25,8 +23,17 @@ import { TbLogout2 } from "react-icons/tb";
 import { FaHandsClapping } from "react-icons/fa6";
 import { TUser } from "../navbar/Navbar";
 import NextLink from "next/link";
-import { useRouter } from "next/navigation";
-import { X, MenuIcon, House, NotebookIcon, User, Settings } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  X,
+  MenuIcon,
+  House,
+  NotebookIcon,
+  User,
+  Settings,
+  LucideProps,
+} from "lucide-react";
+import { ForwardRefExoticComponent, RefAttributes } from "react";
 
 const profile = {
   display: "flex",
@@ -35,11 +42,6 @@ const profile = {
   columnGap: ".5rem",
   padding: ".3rem",
   color: "#044F63",
-};
-
-const notificationContainer = {
-  justifyContent: "center",
-  alignItems: "center",
 };
 
 const button = {
@@ -64,7 +66,29 @@ const link = {
   _hover: { bg: "#EFF8FF" },
 };
 
-export const endpoints = [
+export interface TEndpoint {
+  name: string;
+  icon: ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+  >;
+  href: string;
+}
+
+export const studentEndpoints: TEndpoint[] = [
+  {
+    name: "Home",
+    icon: House,
+    href: "",
+  },
+  {
+    name: "Courses",
+    icon: NotebookIcon,
+    href: "/courses",
+  },
+  { name: "Profile", icon: User, href: "/profile" },
+  { name: "Settings", icon: Settings, href: "/settings" },
+];
+export const instructorEndpoints: TEndpoint[] = [
   {
     name: "Home",
     icon: House,
@@ -79,10 +103,14 @@ export const endpoints = [
   { name: "Settings", icon: Settings, href: "/settings" },
 ];
 
-const Navbar = ({ user, studentId }: { user: TUser; studentId: string }) => {
+const Navbar = ({ user, userId }: { user: TUser; userId: string }) => {
   const [minWidth600] = useMediaQuery("(min-width: 600px)");
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const pathname = usePathname();
+  const role = pathname.includes("admin/students") ? "students" : "instructors";
+  const endpoints: TEndpoint[] =
+    role === "students" ? studentEndpoints : instructorEndpoints;
 
   return (
     <Flex
@@ -114,7 +142,7 @@ const Navbar = ({ user, studentId }: { user: TUser; studentId: string }) => {
                   const IconComponent = link.icon;
                   return (
                     <NextLink
-                      href={`/admin/students/${studentId}/${link.href}`}
+                      href={`/admin/${role}/${userId}/${link.href}`}
                       key={idx}
                       onClick={onClose}
                     >
@@ -171,9 +199,7 @@ const Navbar = ({ user, studentId }: { user: TUser; studentId: string }) => {
               }}
             >
               <Text
-                onClick={() =>
-                  router.push("/admin-dashboard/accounts/students")
-                }
+                onClick={() => router.push(`/admin-dashboard/accounts/${role}`)}
                 textAlign={"center"}
                 sx={link}
                 fontSize={{ base: "xs", sm: "sm" }}

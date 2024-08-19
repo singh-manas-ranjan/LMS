@@ -176,9 +176,9 @@ const InstructorDashboard = async () => {
                   My Courses
                 </Heading>
                 <NextLink href="/instructor-dashboard/courses">
-                  <Link color={"#2D89BA"} fontSize={{ base: "sm" }}>
+                  <Text color={"#2D89BA"} fontSize={{ base: "sm" }}>
                     View All
-                  </Link>
+                  </Text>
                 </NextLink>
               </CardHeader>
               <CardBody

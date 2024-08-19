@@ -1,26 +1,34 @@
-import { Box } from "@chakra-ui/react";
 import { ReactNode } from "react";
-const main = {
-  width: "100%",
-  height: "100dvh",
-  borderRadius: "4px",
-  display: "flex",
-  flexDirection: "column",
-  padding: "1rem",
-  bg: "#ffffff",
-};
-const AdminInstructorLayout = ({ children }: { children: ReactNode }) => {
+import { Box, Flex } from "@chakra-ui/react";
+import Sidebar from "@/app/ui/adminDashboard/Sidebar";
+import Navbar from "@/app/ui/adminDashboard/Navbar";
+import { TUser } from "@/app/ui/navbar/Navbar";
+import React from "react";
+import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
+
+interface Props {
+  children: ReactNode;
+  params: { instructor_id: string };
+}
+
+const Layout = async ({ children, params: { instructor_id } }: Props) => {
+  const instructor: TUser | null = await fetchUserById(
+    instructor_id,
+    "instructors"
+  );
+
   return (
-    <Box
-      as="main"
-      sx={main}
-      rowGap={5}
-      overflow={"hidden"}
-      alignContent={"center"}
-    >
-      {children}
-    </Box>
+    <Flex direction="row">
+      <Sidebar userId={instructor_id} />
+
+      <Flex direction="column" ml={{ sm: "80px" }} flex="1" bg="gray.100">
+        <Navbar user={instructor} userId={instructor_id} />
+        <Box flex="1" w="100%" h={"100dvh"}>
+          {children}
+        </Box>
+      </Flex>
+    </Flex>
   );
 };
 
-export default AdminInstructorLayout;
+export default Layout;

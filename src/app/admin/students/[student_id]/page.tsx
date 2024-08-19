@@ -46,7 +46,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import NextLink from "next/link";
-import { fetchStudentById } from "@/actions/adminAccess/studentAction";
+import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
 import { TUser } from "@/app/ui/navbar/Navbar";
 import { popularTasks } from "@/app/ui/adminDashboard/overview/bottomCards/OverviewBottomCards";
 import StudentDashboardBannerCarousel from "@/app/ui/adminDashboard/studentBannerCarousel/StudentDashboardBannerCarousel";
@@ -56,7 +56,7 @@ interface Props {
   params: { student_id: string };
 }
 const AdminStudentDashboard = async ({ params: { student_id } }: Props) => {
-  const student: TUser = await fetchStudentById(student_id);
+  const student: TUser = await fetchUserById(student_id, "students");
   return (
     <Box
       as="main"

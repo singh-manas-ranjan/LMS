@@ -4,7 +4,7 @@ import Sidebar from "@/app/ui/adminDashboard/Sidebar";
 import Navbar from "@/app/ui/adminDashboard/Navbar";
 import { TUser } from "@/app/ui/navbar/Navbar";
 import React from "react";
-import { fetchStudentById } from "@/actions/adminAccess/studentAction";
+import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
 
 interface Props {
   children: ReactNode;
@@ -12,19 +12,14 @@ interface Props {
 }
 
 const Layout = async ({ children, params: { student_id } }: Props) => {
-  const student: TUser | null = await fetchStudentById(student_id);
+  const student: TUser | null = await fetchUserById(student_id, "students");
 
   return (
     <Flex direction="row">
-      <Sidebar studentId={student_id} />
+      <Sidebar userId={student_id} />
 
       <Flex direction="column" ml={{ sm: "80px" }} flex="1" bg="gray.100">
-        {student ? (
-          <Navbar user={student} studentId={student_id} />
-        ) : (
-          <Navbar user={{} as TUser} studentId={student_id} />
-        )}
-
+        <Navbar user={student} userId={student_id} />
         <Box flex="1" w="100%" h={"100dvh"}>
           {children}
         </Box>
