@@ -78,7 +78,7 @@ export const studentEndpoints: TEndpoint[] = [
   {
     name: "Home",
     icon: House,
-    href: "",
+    href: "/",
   },
   {
     name: "Courses",
@@ -100,7 +100,7 @@ export const instructorEndpoints: TEndpoint[] = [
     href: "/courses",
   },
   { name: "Profile", icon: User, href: "/profile" },
-  { name: "Settings", icon: Settings, href: "/settings" },
+  // { name: "Settings", icon: Settings, href: "/settings" },
 ];
 
 const Navbar = ({ user, userId }: { user: TUser; userId: string }) => {
