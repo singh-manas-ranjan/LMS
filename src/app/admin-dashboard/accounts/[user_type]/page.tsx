@@ -10,7 +10,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { use } from "react";
 
 const main = {
   width: "100%",

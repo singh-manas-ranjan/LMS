@@ -12,12 +12,17 @@ interface Props {
 }
 
 const Layout = async ({ children, params: { instructor_id } }: Props) => {
+  const instructor: TUser | null = await fetchUserById(
+    instructor_id,
+    "instructors"
+  );
+
   return (
     <Flex direction="row">
       <Sidebar userId={instructor_id} />
 
       <Flex direction="column" ml={{ sm: "80px" }} flex="1" bg="gray.100">
-        <Navbar userId={instructor_id} />
+        <Navbar user={instructor} userId={instructor_id} />
         <Box flex="1" w="100%" h={"100dvh"}>
           {children}
         </Box>

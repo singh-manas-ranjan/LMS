@@ -14,7 +14,8 @@ export async function fetchUserById(
     const accessToken = cookieStore.get("accessToken")?.value;
 
     if (!accessToken) {
-      throw new Error("No access token found");
+      console.error("No access token found in cookies");
+      return {} as TUser;
     }
 
     const response = await axios.get(

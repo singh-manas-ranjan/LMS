@@ -33,13 +33,7 @@ import {
   Settings,
   LucideProps,
 } from "lucide-react";
-import {
-  ForwardRefExoticComponent,
-  RefAttributes,
-  useEffect,
-  useState,
-} from "react";
-import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
+import { ForwardRefExoticComponent, RefAttributes } from "react";
 
 const profile = {
   display: "flex",
@@ -84,7 +78,7 @@ export const studentEndpoints: TEndpoint[] = [
   {
     name: "Home",
     icon: House,
-    href: "/",
+    href: "",
   },
   {
     name: "Courses",
@@ -98,7 +92,7 @@ export const instructorEndpoints: TEndpoint[] = [
   {
     name: "Home",
     icon: House,
-    href: "/",
+    href: "",
   },
   {
     name: "Courses",
@@ -109,7 +103,7 @@ export const instructorEndpoints: TEndpoint[] = [
   // { name: "Settings", icon: Settings, href: "/settings" },
 ];
 
-const Navbar = ({ userId }: { userId: string }) => {
+const Navbar = ({ user, userId }: { user: TUser; userId: string }) => {
   const [minWidth600] = useMediaQuery("(min-width: 600px)");
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -117,15 +111,6 @@ const Navbar = ({ userId }: { userId: string }) => {
   const role = pathname.includes("admin/students") ? "students" : "instructors";
   const endpoints: TEndpoint[] =
     role === "students" ? studentEndpoints : instructorEndpoints;
-
-  const [user, setUser] = useState<TUser>({} as TUser);
-  useEffect(() => {
-    async function getUser() {
-      const response = await fetchUserById(userId, role);
-      setUser(response);
-    }
-    getUser();
-  }, [role, userId]);
 
   return (
     <Flex
