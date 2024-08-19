@@ -21,8 +21,8 @@ import React from "react";
 import { BookAIcon, MailCheckIcon, MapIcon, MedalIcon } from "lucide-react";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { sxScrollbar } from "../../../../../../public/scrollbarStyle";
-import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
 import { TUser } from "@/app/ui/navbar/Navbar";
+import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
 
 const main = {
   width: "100%",

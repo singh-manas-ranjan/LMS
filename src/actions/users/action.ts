@@ -9,7 +9,6 @@ async function fetchAllUsers(
   try {
     const users: TUser[] = await axios
       .get(`${process.env.BASE_URL}/${userRole}`)
-      // .get(`https://learnopia-backend.vercel.app/api/v1/${userRole}`)
       .then((res) => res.data.body);
     return users;
   } catch (error) {

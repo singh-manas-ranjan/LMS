@@ -20,8 +20,8 @@ import studentRankings, {
   TStudentRankings,
 } from "../../../../../public/rankingData";
 import BannerCarousel from "@/app/ui/bannerCarousel/BannerCarousel";
-import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
 import { popularTasks } from "@/app/ui/adminDashboard/overview/bottomCards/OverviewBottomCards";
+import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
 
 const main = {
   width: "100%",
