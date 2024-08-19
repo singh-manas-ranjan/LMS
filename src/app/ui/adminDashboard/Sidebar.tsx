@@ -80,7 +80,7 @@ const Sidebar = ({ userId }: { userId: string }) => {
             return (
               <NextLink
                 key={idx}
-                href={`/admin/${role}/${userId}/${link.href}`}
+                href={`/admin/${role}/${userId}${link.href}`}
                 onClick={() => {
                   setSidebarExpanded(false);
                   setActiveLink(link.href);
