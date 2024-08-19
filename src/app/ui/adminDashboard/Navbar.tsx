@@ -33,7 +33,13 @@ import {
   Settings,
   LucideProps,
 } from "lucide-react";
-import { ForwardRefExoticComponent, RefAttributes } from "react";
+import {
+  ForwardRefExoticComponent,
+  RefAttributes,
+  useEffect,
+  useState,
+} from "react";
+import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
 
 const profile = {
   display: "flex",
@@ -103,7 +109,7 @@ export const instructorEndpoints: TEndpoint[] = [
   // { name: "Settings", icon: Settings, href: "/settings" },
 ];
 
-const Navbar = ({ user, userId }: { user: TUser; userId: string }) => {
+const Navbar = ({ userId }: { userId: string }) => {
   const [minWidth600] = useMediaQuery("(min-width: 600px)");
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -111,6 +117,15 @@ const Navbar = ({ user, userId }: { user: TUser; userId: string }) => {
   const role = pathname.includes("admin/students") ? "students" : "instructors";
   const endpoints: TEndpoint[] =
     role === "students" ? studentEndpoints : instructorEndpoints;
+
+  const [user, setUser] = useState<TUser>({} as TUser);
+  useEffect(() => {
+    async function getUser() {
+      const response = await fetchUserById(userId, role);
+      setUser(response);
+    }
+    getUser();
+  }, [role, userId]);
 
   return (
     <Flex
