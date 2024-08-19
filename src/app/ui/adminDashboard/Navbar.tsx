@@ -86,13 +86,13 @@ export const studentEndpoints: TEndpoint[] = [
     href: "/courses",
   },
   { name: "Profile", icon: User, href: "/profile" },
-  { name: "Settings", icon: Settings, href: "/settings" },
+  // { name: "Settings", icon: Settings, href: "/settings" },
 ];
 export const instructorEndpoints: TEndpoint[] = [
   {
     name: "Home",
     icon: House,
-    href: "",
+    href: "/",
   },
   {
     name: "Courses",
