@@ -18,6 +18,7 @@ export async function fetchUserById(
     }
 
     const response = await axios.get(
+      // `http://localhost:3131/api/v1/admin/access/${role}/${studentId}`,
       `https://learnopia-backend.vercel.app/api/v1/admin/access/${role}/${studentId}`,
       {
         headers: {
@@ -30,7 +31,7 @@ export async function fetchUserById(
     return response.data.body as TUser;
   } catch (error) {
     console.error("Error fetching student by ID:", error);
-    redirect(`/admin-dashboard/accounts/${role}`);
+    // redirect(`/admin-dashboard/accounts/${role}`);
     return {} as TUser;
   }
 }
