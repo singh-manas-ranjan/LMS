@@ -226,6 +226,7 @@ const Navbar = ({ navLinks }: Props) => {
           "Come back soon!"
         );
       }, 500);
+      removeUserInfoFromLocalStorage();
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;
@@ -233,9 +234,9 @@ const Navbar = ({ navLinks }: Props) => {
           try {
             await refreshToken();
             await axios.post(
-              // `http://localhost:3131/api/v1/${
-              //   roleModelMap[userInfo.role]
-              // }/logout`,
+              //   `http://localhost:3131/api/v1/${
+              //     roleModelMap[userInfo.role]
+              //   }/logout`,
               `https://learnopia-backend.vercel.app/api/v1/${
                 roleModelMap[userInfo.role]
               }/logout`,
@@ -260,6 +261,7 @@ const Navbar = ({ navLinks }: Props) => {
         }
       } else {
         showToastMessage("Unexpected error occurred", "error");
+        removeUserInfoFromLocalStorage();
       }
     }
   };
