@@ -155,7 +155,8 @@ export function removeUserInfoFromLocalStorage() {
 export const refreshToken = async () => {
   try {
     const response = await axios.post(
-      `http://localhost:3131/api/v1/refresh-token`,
+      // `http://localhost:3131/api/v1/refresh-token`,
+      `https://learnopia-backend.vercel.app/api/v1/refresh-token`,
       {},
       { withCredentials: true }
     );
@@ -208,10 +209,10 @@ const Navbar = ({ navLinks }: Props) => {
   const handleSignOut = async () => {
     try {
       await axios.post(
-        // `http://localhost:3131/api/v1/${roleModelMap[userInfo.role]}/logout`,
-        `https://learnopia-backend.vercel.app/api/v1/${
-          roleModelMap[userInfo.role]
-        }/logout`,
+        `http://localhost:3131/api/v1/${roleModelMap[userInfo.role]}/logout`,
+        // `https://learnopia-backend.vercel.app/api/v1/${
+        //   roleModelMap[userInfo.role]
+        // }/logout`,
         {},
         {
           withCredentials: true,
@@ -232,12 +233,12 @@ const Navbar = ({ navLinks }: Props) => {
           try {
             await refreshToken();
             await axios.post(
-              // `http://localhost:3131/api/v1/${
-              //   roleModelMap[userInfo.role]
-              // }/logout`,
-              `https://learnopia-backend.vercel.app/api/v1/${
+              `http://localhost:3131/api/v1/${
                 roleModelMap[userInfo.role]
               }/logout`,
+              // `https://learnopia-backend.vercel.app/api/v1/${
+              //   roleModelMap[userInfo.role]
+              // }/logout`,
               {},
               {
                 withCredentials: true,
