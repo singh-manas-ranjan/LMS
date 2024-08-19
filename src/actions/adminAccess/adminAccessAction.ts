@@ -18,7 +18,7 @@ export async function fetchUserById(
     }
 
     const response = await axios.get(
-      `${process.env.BASE_URL}/admin/access/${role}/${studentId}`,
+      `https://learnopia-backend.vercel.app/api/v1/admin/access/${role}/${studentId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,

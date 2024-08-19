@@ -53,7 +53,7 @@ export const fetchInstructorCourses = async (
 ): Promise<TCourse[]> => {
   try {
     const response = await axios.get(
-      `${process.env.BASE_URL}/instructors/courses/${id}`
+      `https://learnopia-backend.vercel.app/api/v1/instructors/courses/${id}`
     );
 
     if (!response.data) {
@@ -69,7 +69,7 @@ export const fetchInstructorCourses = async (
 export const fetchInstructorById = async (id: string): Promise<TInstructor> => {
   try {
     const response = await axios.get(
-      `${process.env.BASE_URL}/instructors/profile/${id}`
+      `https://learnopia-backend.vercel.app/api/v1/instructors/profile/${id}`
     );
     if (!response.data || !response.data.body) {
       throw new Error("Failed to fetch instructor by id: No data in response");
