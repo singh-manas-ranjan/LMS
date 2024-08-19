@@ -1,3 +1,34 @@
+// import { fetchStudentById } from "@/actions/adminAccess/studentAction";
+// import { TUser } from "@/app/ui/navbar/Navbar";
+// import { Box, Heading } from "@chakra-ui/react";
+// import axios from "axios";
+// import { cookies } from "next/headers";
+
+// interface Props {
+//   params: { student_id: string };
+// }
+// const AdminStudentDashboard = async ({ params: { student_id } }: Props) => {
+//   const student: TUser | null = await fetchStudentById(student_id);
+//   return (
+//     <Box
+//       w={"100%"}
+//       h={"100%"}
+//       margin={"auto"}
+//       bg={"#fff"}
+//       borderRadius={4}
+//       p={5}
+//     >
+//       <Heading>
+//         {student?._id
+//           ? `${student.firstName} ${student.lastName}`
+//           : "Admin Student Dashboard"}
+//       </Heading>
+//     </Box>
+//   );
+// };
+
+// export default AdminStudentDashboard;
+
 import {
   Box,
   Flex,
@@ -12,57 +43,33 @@ import {
   Grid,
   Text,
   WrapItem,
-  Avatar,
 } from "@chakra-ui/react";
 import React from "react";
-import BannerCarousel from "../ui/bannerCarousel/BannerCarousel";
-import { popularTasks } from "../ui/adminDashboard/overview/bottomCards/OverviewBottomCards";
-import studentRankings, { TStudentRankings } from "../../../public/rankingData";
-import InstructorDashboardCourses from "../ui/instructorDashboard/InstructorDashboardCourses";
 import NextLink from "next/link";
+import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
+import { TUser } from "@/app/ui/navbar/Navbar";
+import { popularTasks } from "@/app/ui/adminDashboard/overview/bottomCards/OverviewBottomCards";
+import StudentDashboardBannerCarousel from "@/app/ui/adminDashboard/studentBannerCarousel/StudentDashboardBannerCarousel";
+import { sxScrollbar } from "../../../../../public/scrollbarStyle";
 
-const main = {
-  width: "100%",
-  height: "100%",
-  bg: "#fff",
-  borderRadius: "4px",
-  display: "flex",
-  flexDirection: "column",
-  padding: "1rem",
-  overflow: "scroll",
-};
-
-type TReview = {
-  student: TStudentRankings;
-  body: string;
-};
-
-const reviews: TReview[] = [
-  {
-    student: studentRankings[1],
-    body: "I won't say much, but this is enough. 'I successfully delivered two projects over two and half years, completely based on this course'. Hats off to OmPrakashChavan.",
-  },
-  {
-    student: studentRankings[4],
-    body: "The professor takes his time to explain everything on detail, also he speaks very well and his english is perfectly understandable, you can understand everything .",
-  },
-  {
-    student: studentRankings[2],
-    body: "Parts of the course are outdated, but the practical lessons are very nice. Also, the teacher seems to answer every question very fast and it really seems like he is trying to solve your issue. His assistants are below average, though.",
-  },
-  {
-    student: studentRankings[3],
-    body: "Very useful tutorials and gave me confident setting things up and running.Thank you Omprakash.",
-  },
-  {
-    student: studentRankings[0],
-    body: "Out dated content. Waste of money.Poor video quality.Text of most of the videos were not clear.Although he explains well. This course is not for noobs.",
-  },
-];
-
-const InstructorDashboard = async () => {
+interface Props {
+  params: { student_id: string };
+}
+const AdminStudentDashboard = async ({ params: { student_id } }: Props) => {
+  const student: TUser = await fetchUserById(student_id, "students");
   return (
-    <Box as="main" sx={main}>
+    <Box
+      as="main"
+      w={"100%"}
+      h={"100%"}
+      bg={"#fff"}
+      borderRadius={"4px"}
+      display={"flex"}
+      flexDir={"column"}
+      p={"1rem"}
+      overflow={"scroll"}
+      sx={sxScrollbar}
+    >
       <Box
         w={"100%"}
         h={"100%"}
@@ -76,7 +83,7 @@ const InstructorDashboard = async () => {
           rowGap={10}
           display={"grid"}
         >
-          <BannerCarousel />
+          <StudentDashboardBannerCarousel />
         </Flex>
         <Flex flex={2} flexDirection={"column"} p={".5rem"} rowGap={10}>
           <Box
@@ -84,6 +91,7 @@ const InstructorDashboard = async () => {
             borderRadius={8}
             position={"relative"}
             overflow={"hidden"}
+            sx={sxScrollbar}
           >
             <Box
               display={"flex"}
@@ -107,9 +115,7 @@ const InstructorDashboard = async () => {
                     justifyContent={{ base: "space-between" }}
                     alignItems={{ base: "center", sm: "baseline" }}
                   >
-                    <Heading size={{ base: "sm" }} color={"#2D2F31"}>
-                      Active Students
-                    </Heading>
+                    <Heading size={{ base: "sm" }} color={"#2D2F31"}></Heading>
                   </CardHeader>
                   <CardBody
                     display={"flex"}
@@ -131,9 +137,7 @@ const InstructorDashboard = async () => {
                     justifyContent={{ base: "space-between" }}
                     alignItems={{ base: "center", sm: "baseline" }}
                   >
-                    <Heading size={{ base: "sm" }} color={"#2D2F31"}>
-                      New Enrolment
-                    </Heading>
+                    <Heading size={{ base: "sm" }} color={"#2D2F31"}></Heading>
                   </CardHeader>
                   <CardBody
                     display={"flex"}
@@ -160,6 +164,7 @@ const InstructorDashboard = async () => {
             position={"relative"}
             overflow={"hidden"}
             p={".5rem"}
+            sx={sxScrollbar}
           >
             <Card
               h={"100%"}
@@ -175,7 +180,7 @@ const InstructorDashboard = async () => {
                 <Heading size={{ base: "sm" }} color={"#2D2F31"}>
                   My Courses
                 </Heading>
-                <NextLink href="/instructor-dashboard/courses">
+                <NextLink href={`/admin/students/${student_id}/courses`}>
                   <Text color={"#2D89BA"} fontSize={{ base: "sm" }}>
                     View All
                   </Text>
@@ -188,7 +193,34 @@ const InstructorDashboard = async () => {
                 paddingTop={0}
                 paddingInline={{ base: 0, md: "1rem" }}
               >
-                <InstructorDashboardCourses />
+                <Box h={"100%"} w={"100%"}>
+                  <Accordion h={"100%"}>
+                    {student.enrolledCourses?.slice(0, 4).map((course, idx) => (
+                      <AccordionItem key={idx}>
+                        <Text>
+                          <AccordionButton>
+                            <Box as="span" flex="1" textAlign="left">
+                              <WrapItem>
+                                <Grid m={2}>
+                                  <Text fontSize={{ base: "xs", md: "sm" }}>
+                                    {course.courseName}
+                                  </Text>
+                                  <Text
+                                    fontSize={{
+                                      base: "xs",
+                                      md: "sm",
+                                    }}
+                                    color={"#8D94A3"}
+                                  >{`Rating: ${course.courseRating}`}</Text>
+                                </Grid>
+                              </WrapItem>
+                            </Box>
+                          </AccordionButton>
+                        </Text>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </Box>
               </CardBody>
             </Card>
           </Box>
@@ -199,6 +231,7 @@ const InstructorDashboard = async () => {
             borderRadius={8}
             position={"relative"}
             overflow={"hidden"}
+            sx={sxScrollbar}
             p={".5rem"}
           >
             <Card
@@ -212,9 +245,7 @@ const InstructorDashboard = async () => {
                 justifyContent={{ base: "space-between" }}
                 alignItems={{ base: "center", sm: "baseline" }}
               >
-                <Heading size={{ base: "sm" }} color={"#2D2F31"}>
-                  Student&apos;s Feedback
-                </Heading>
+                <Heading size={{ base: "sm" }} color={"#2D2F31"}></Heading>
                 <Link color={"#2D89BA"} fontSize={{ base: "sm" }}>
                   View All
                 </Link>
@@ -233,76 +264,7 @@ const InstructorDashboard = async () => {
                   display={"flex"}
                   flexDir={"column"}
                   rowGap={3}
-                >
-                  {reviews && (
-                    <Box w={"100%"} h={"100%"}>
-                      <Accordion h={"100%"}>
-                        {reviews?.slice(0, 4).map((review, idx) => (
-                          <AccordionItem key={idx}>
-                            <Text>
-                              <AccordionButton>
-                                <Box as="span" flex="1" textAlign="left">
-                                  <WrapItem
-                                    display={"flex"}
-                                    alignItems={{
-                                      base: "center",
-                                      md: "start",
-                                      lg: "center",
-                                    }}
-                                    flexDirection={{
-                                      md: "column",
-                                      lg: "row",
-                                    }}
-                                    columnGap={{
-                                      base: ".5rem",
-                                      md: "0",
-                                    }}
-                                  >
-                                    <Avatar
-                                      name={review.student.name}
-                                      src={review.student.imageSrc}
-                                      boxSize={{
-                                        base: "2rem",
-                                        lg: "2.5rem",
-                                      }}
-                                    />
-                                    <Grid
-                                      m={{ lg: 2 }}
-                                      ml={{ lg: 5 }}
-                                      width={"100%"}
-                                    >
-                                      <Flex
-                                        justifyContent={"space-between"}
-                                        alignItems={"center"}
-                                        width={"100%"}
-                                      >
-                                        <Text
-                                          fontSize={{ base: "xs", md: "sm" }}
-                                        >
-                                          {review.student.name}
-                                        </Text>
-                                      </Flex>
-                                      <Text
-                                        fontSize={{
-                                          base: ".6rem",
-                                          sm: ".75rem",
-                                          lg: ".8rem",
-                                        }}
-                                        color={"#8D94A3"}
-                                      >
-                                        {`${review.body.substring(0, 80)} ...`}
-                                      </Text>
-                                    </Grid>
-                                  </WrapItem>
-                                </Box>
-                              </AccordionButton>
-                            </Text>
-                          </AccordionItem>
-                        ))}
-                      </Accordion>
-                    </Box>
-                  )}
-                </Box>
+                ></Box>
               </CardBody>
             </Card>
           </Box>
@@ -314,6 +276,7 @@ const InstructorDashboard = async () => {
             position={"relative"}
             overflow={"hidden"}
             p={".5rem"}
+            sx={sxScrollbar}
           >
             <Card
               h={"100%"}
@@ -342,7 +305,7 @@ const InstructorDashboard = async () => {
               >
                 <Box h={"100%"} w={"100%"}>
                   <Accordion h={"100%"}>
-                    {popularTasks.map((task, idx) => (
+                    {popularTasks.slice(0, 4).map((task, idx) => (
                       <AccordionItem key={idx}>
                         <Text>
                           <AccordionButton>
@@ -378,4 +341,4 @@ const InstructorDashboard = async () => {
   );
 };
 
-export default InstructorDashboard;
+export default AdminStudentDashboard;

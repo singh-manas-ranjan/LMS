@@ -1,6 +1,6 @@
 const adminSidebarLinks = {
   Dashboard: [
-    { name: "Home", icon: "home", link: "/admin-dashboard/home" },
+    { name: "Home", icon: "home", link: "/home" },
     { name: "Dashboard", icon: "dashboard", link: "/admin-dashboard" },
     { name: "Courses", icon: "courses", link: "/admin-dashboard/courses" },
     {

@@ -15,11 +15,13 @@ import {
   Avatar,
 } from "@chakra-ui/react";
 import React from "react";
-import BannerCarousel from "../ui/bannerCarousel/BannerCarousel";
-import { popularTasks } from "../ui/adminDashboard/overview/bottomCards/OverviewBottomCards";
-import studentRankings, { TStudentRankings } from "../../../public/rankingData";
-import InstructorDashboardCourses from "../ui/instructorDashboard/InstructorDashboardCourses";
 import NextLink from "next/link";
+import studentRankings, {
+  TStudentRankings,
+} from "../../../../../public/rankingData";
+import BannerCarousel from "@/app/ui/bannerCarousel/BannerCarousel";
+import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
+import { popularTasks } from "@/app/ui/adminDashboard/overview/bottomCards/OverviewBottomCards";
 
 const main = {
   width: "100%",
@@ -60,7 +62,15 @@ const reviews: TReview[] = [
   },
 ];
 
-const InstructorDashboard = async () => {
+interface Props {
+  params: { instructor_id: string };
+}
+
+const AdminInstructorDashboard = async ({
+  params: { instructor_id },
+}: Props) => {
+  const instructor = await fetchUserById(instructor_id, "instructors");
+
   return (
     <Box as="main" sx={main}>
       <Box
@@ -188,7 +198,36 @@ const InstructorDashboard = async () => {
                 paddingTop={0}
                 paddingInline={{ base: 0, md: "1rem" }}
               >
-                <InstructorDashboardCourses />
+                <Box h={"100%"} w={"100%"}>
+                  <Accordion h={"100%"}>
+                    {instructor.publishedCourses
+                      .slice(0, 4)
+                      .map((course, idx) => (
+                        <AccordionItem key={idx}>
+                          <Text>
+                            <AccordionButton>
+                              <Box as="span" flex="1" textAlign="left">
+                                <WrapItem>
+                                  <Grid m={2}>
+                                    <Text fontSize={{ base: "xs", md: "sm" }}>
+                                      {course.courseName}
+                                    </Text>
+                                    <Text
+                                      fontSize={{
+                                        base: "xs",
+                                        md: "sm",
+                                      }}
+                                      color={"#8D94A3"}
+                                    >{`Rating: ${course.courseRating}`}</Text>
+                                  </Grid>
+                                </WrapItem>
+                              </Box>
+                            </AccordionButton>
+                          </Text>
+                        </AccordionItem>
+                      ))}
+                  </Accordion>
+                </Box>
               </CardBody>
             </Card>
           </Box>
@@ -378,4 +417,4 @@ const InstructorDashboard = async () => {
   );
 };
 
-export default InstructorDashboard;
+export default AdminInstructorDashboard;

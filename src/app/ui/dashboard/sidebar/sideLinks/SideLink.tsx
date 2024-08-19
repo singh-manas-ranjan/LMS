@@ -5,11 +5,8 @@ import { NavLinkType } from "../../../../../../public/sidebarLinks";
 import { usePathname } from "next/navigation";
 import styles from "./SideLink.module.css";
 import { Box } from "@chakra-ui/react";
-import { PiExamFill } from "react-icons/pi";
 import { FaRegCreditCard } from "react-icons/fa";
-import { GiProgression } from "react-icons/gi";
 import { FaFileInvoiceDollar } from "react-icons/fa6";
-import { FaTrophy } from "react-icons/fa";
 import {
   BookOpenCheck,
   Edit,
@@ -23,7 +20,6 @@ import {
   User,
   Users,
   VideoIcon,
-  VideotapeIcon,
 } from "lucide-react";
 
 interface Props {

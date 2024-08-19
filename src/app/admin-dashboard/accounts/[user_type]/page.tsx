@@ -9,6 +9,8 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
+import { use } from "react";
 
 const main = {
   width: "100%",
@@ -102,15 +104,15 @@ const UsersAccounts = async ({ params: { user_type } }: Props) => {
                 pb={4}
                 pr={{ md: 5 }}
               >
-                {/* <NextLink href={`/admin-dashboard/instructors/${instructorId}`}> */}
-                <Button
-                  colorScheme="teal"
-                  size={{ base: "xs", md: "sm" }}
-                  borderRadius={4}
-                >
-                  Profile
-                </Button>
-                {/* </NextLink> */}
+                <NextLink href={`/admin/${user_type}/${user._id}`}>
+                  <Button
+                    colorScheme="teal"
+                    size={{ base: "xs", md: "sm" }}
+                    borderRadius={4}
+                  >
+                    Profile
+                  </Button>
+                </NextLink>
               </Box>
             </CardFooter>
           </Card>

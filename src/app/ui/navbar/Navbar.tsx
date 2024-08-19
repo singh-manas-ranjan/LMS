@@ -30,6 +30,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/store";
 import { TCourse } from "../../../../public/courses";
 import { fetchAllCourses } from "@/actions/courses/actions";
 import { addCourses } from "@/lib/features/courses/coursesSlice";
+import axios, { AxiosError } from "axios";
 
 const nav = {
   bg: "#fff",
@@ -130,6 +131,7 @@ export type TUser = {
   experience?: TExperience[];
   achievements?: TAchievement[];
   enrolledCourses?: TCourse[];
+  publishedCourses: TCourse[];
 };
 
 export function getUserInfoFromLocalStorage() {
@@ -149,6 +151,19 @@ export function removeUserInfoFromLocalStorage() {
   localStorage.removeItem("userInfo");
   localStorage.removeItem("enrolledCoursesList");
 }
+
+export const refreshToken = async () => {
+  try {
+    const response = await axios.post(
+      `http://localhost:3131/api/v1/refresh-token`,
+      {},
+      { withCredentials: true }
+    );
+    return response.data.body;
+  } catch (error) {
+    throw new Error("Failed to refresh token");
+  }
+};
 
 const Navbar = ({ navLinks }: Props) => {
   const pathname = usePathname();
@@ -170,19 +185,78 @@ const Navbar = ({ navLinks }: Props) => {
 
   const toast = useToast();
 
+  function showToastMessage(
+    title: string,
+    status: "success" | "error",
+    description?: string
+  ) {
+    toast({
+      title,
+      status,
+      duration: 2000,
+      isClosable: true,
+      position: "top",
+    });
+  }
+
+  const roleModelMap: { [key: string]: any } = {
+    student: "students",
+    instructor: "instructors",
+    admin: "admin",
+  };
+
   const handleSignOut = async () => {
-    removeUserInfoFromLocalStorage();
-    router.push("/");
-    setTimeout(() => {
-      toast({
-        title: "Logged out successfully",
-        description: "Come back soon!",
-        status: "success",
-        duration: 5000,
-        position: "top",
-        isClosable: true,
-      });
-    }, 500);
+    try {
+      await axios.post(
+        `http://localhost:3131/api/v1/${roleModelMap[userInfo.role]}/logout`,
+        // "https://learnopia-backend.vercel.app/api/v1/students/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      router.push("/");
+      setTimeout(() => {
+        showToastMessage(
+          "Logged out successfully",
+          "success",
+          "Come back soon!"
+        );
+      }, 500);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response && axiosError.response?.status === 401) {
+          try {
+            await refreshToken();
+            await axios.post(
+              `http://localhost:3131/api/v1/${
+                roleModelMap[userInfo.role]
+              }/logout`,
+              // "https://learnopia-backend.vercel.app/api/v1/students/logout",
+              {},
+              {
+                withCredentials: true,
+              }
+            );
+            router.push("/");
+            setTimeout(() => {
+              showToastMessage(
+                "Logged out successfully",
+                "success",
+                "Come back soon!"
+              );
+            }, 500);
+          } catch (logoutError) {
+            showToastMessage("Unable to logout", "error");
+          } finally {
+            removeUserInfoFromLocalStorage();
+          }
+        }
+      } else {
+        showToastMessage("Unexpected error occurred", "error");
+      }
+    }
   };
 
   const handleClick = () => {

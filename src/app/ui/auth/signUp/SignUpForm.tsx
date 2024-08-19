@@ -58,6 +58,31 @@ type Props = {
   onClose: () => void;
 };
 
+export const validatePassword = (value: string) => {
+  const minLength = 8;
+  const hasDigit = /\d/;
+  const hasLowercase = /[a-z]/;
+  const hasUppercase = /[A-Z]/;
+  const hasSpecialChar = /[^\w\s]/;
+
+  if (value.length < minLength) {
+    return "Password must be at least 8 characters long.";
+  }
+  if (!hasDigit.test(value)) {
+    return "Password must include at least one digit.";
+  }
+  if (!hasLowercase.test(value)) {
+    return "Password must contain at least one lowercase letter.";
+  }
+  if (!hasUppercase.test(value)) {
+    return "Password needs at least one uppercase letter.";
+  }
+  if (!hasSpecialChar.test(value)) {
+    return "Include at least one special character (e.g., !, @, #, $, %).";
+  }
+  return true;
+};
+
 const SignUpForm = ({ role, onClose }: Props) => {
   const {
     register,
@@ -104,8 +129,8 @@ const SignUpForm = ({ role, onClose }: Props) => {
 
     try {
       const response = await axios.post(
-        `https://learnopia-backend.vercel.app/api/v1/${role}/register`,
-        // `http://localhost:3131/api/v1/${role}/register`,
+        // `https://learnopia-backend.vercel.app/api/v1/${role}/register`,
+        `http://localhost:3131/api/v1/${role}/register`,
         data
       );
 
@@ -127,31 +152,6 @@ const SignUpForm = ({ role, onClose }: Props) => {
         failedToast("Unable to create account try again later.");
       }
     }
-  };
-
-  const validatePassword = (value: string) => {
-    const minLength = 8;
-    const hasDigit = /\d/;
-    const hasLowercase = /[a-z]/;
-    const hasUppercase = /[A-Z]/;
-    const hasSpecialChar = /[^\w\s]/;
-
-    if (value.length < minLength) {
-      return "Password must be at least 8 characters long.";
-    }
-    if (!hasDigit.test(value)) {
-      return "Password must include at least one digit.";
-    }
-    if (!hasLowercase.test(value)) {
-      return "Password must contain at least one lowercase letter.";
-    }
-    if (!hasUppercase.test(value)) {
-      return "Password needs at least one uppercase letter.";
-    }
-    if (!hasSpecialChar.test(value)) {
-      return "Include at least one special character (e.g., !, @, #, $, %).";
-    }
-    return true;
   };
 
   return (

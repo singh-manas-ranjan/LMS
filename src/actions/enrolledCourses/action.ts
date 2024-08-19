@@ -5,8 +5,8 @@ import { TCourse } from "../../../public/courses";
 export const getEnrolledCourses = async (id: string): Promise<TCourse[]> => {
   try {
     const response = await fetch(
-      `https://learnopia-backend.vercel.app/api/v1/students/courses/${id}`
-      // `http://localhost:3131/api/v1/students/courses/${id}`
+      // `https://learnopia-backend.vercel.app/api/v1/students/courses/${id}`
+      `http://localhost:3131/api/v1/students/courses/${id}`
     );
 
     if (!response.ok) {
@@ -35,8 +35,8 @@ export const setEnrolledCourses = async (
 ): Promise<number> => {
   try {
     const response = await fetch(
-      `https://learnopia-backend.vercel.app/api/v1/students/courses/${id}`,
-      // `http://localhost:3131/api/v1/students/courses/${id}`,
+      // `https://learnopia-backend.vercel.app/api/v1/students/courses/${id}`,
+      `${process.env.BASE_URL}/students/courses/${id}`,
       {
         method: "PATCH",
         headers: {

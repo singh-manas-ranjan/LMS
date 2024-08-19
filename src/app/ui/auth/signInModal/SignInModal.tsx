@@ -76,7 +76,7 @@ const SignInModal = () => {
                   <LoginForm
                     access={{
                       role: "admin",
-                      successPath: "/admin-dashboard/home",
+                      successPath: "/home",
                     }}
                     onClose={onClose}
                   />

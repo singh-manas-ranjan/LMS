@@ -4,15 +4,18 @@ import {
   Divider,
   Flex,
   Heading,
+  Skeleton,
+  Stack,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
+  Text,
 } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
 import socialLinksData from "../../../../../../public/socialLinksData";
-import ResetPassword from "../resetPassword/ResetPassword";
+import UpdatePassword from "../UpdatePassword";
 import SocialLinks from "../socialLinks/SocialLinks";
 import TextEditor from "../textEditor/TextEditor";
 import { sxScrollbar } from "../../../../../../public/scrollbarStyle";
@@ -64,7 +67,7 @@ const getQualification = (qualification: string): string => {
 };
 
 const DetailedProfileInfo = () => {
-  const [userInfo, setUserInfo] = useState<TUserInfo>({} as TUserInfo);
+  const [userInfo, setUserInfo] = useState<TUserInfo>();
   const [user, setUser] = useState<TUser>({} as TUser);
 
   useEffect(() => {
@@ -99,7 +102,6 @@ const DetailedProfileInfo = () => {
       qualification: getQualification(newUserInfo["qualification"]),
     } as TUserInfo);
   }, []);
-
   return (
     <Tabs w={"100%"} h={"100%"}>
       <TabList color={"#364A63"}>
@@ -184,7 +186,7 @@ const DetailedProfileInfo = () => {
           </Box>
         </TabPanel>
         <TabPanel>
-          <ResetPassword />
+          <UpdatePassword />
         </TabPanel>
         <TabPanel>
           <Box h={"100%"}>
