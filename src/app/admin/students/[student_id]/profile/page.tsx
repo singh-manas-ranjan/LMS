@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   Heading,
@@ -8,12 +9,13 @@ import {
   Text,
   Flex,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BookAIcon, MailCheckIcon, MapIcon } from "lucide-react";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { sxScrollbar } from "../../../../../../public/scrollbarStyle";
 import { TUser } from "@/app/ui/navbar/Navbar";
 import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
+import axios from "axios";
 
 const main = {
   width: "100%",
@@ -47,12 +49,31 @@ const getQualification = (qualification: string): string => {
   }
 };
 
-const AdminStudentDetail = async ({
-  params,
+const AdminStudentDetail = ({
+  params: { student_id },
 }: {
   params: { student_id: string };
 }) => {
-  const student: TUser = await fetchUserById(params.student_id, "students");
+  const [student, setStudent] = useState<TUser>({} as TUser);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          `https://learnopia-backend.vercel.app/api/v1/admin/access/students/${student_id}`,
+          // `http://localhost:3131/api/v1/admin/access/students/${student_id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        setStudent(response.data.body);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [student_id]);
 
   return (
     <Box as="main" sx={main} overflow={"hidden"}>
@@ -426,4 +447,4 @@ const AdminStudentDetail = async ({
   );
 };
 
-export default AdminStudentDetail;
+export default React.memo(AdminStudentDetail);

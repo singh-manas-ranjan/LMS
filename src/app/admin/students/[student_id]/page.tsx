@@ -1,34 +1,4 @@
-// import { fetchStudentById } from "@/actions/adminAccess/studentAction";
-// import { TUser } from "@/app/ui/navbar/Navbar";
-// import { Box, Heading } from "@chakra-ui/react";
-// import axios from "axios";
-// import { cookies } from "next/headers";
-
-// interface Props {
-//   params: { student_id: string };
-// }
-// const AdminStudentDashboard = async ({ params: { student_id } }: Props) => {
-//   const student: TUser | null = await fetchStudentById(student_id);
-//   return (
-//     <Box
-//       w={"100%"}
-//       h={"100%"}
-//       margin={"auto"}
-//       bg={"#fff"}
-//       borderRadius={4}
-//       p={5}
-//     >
-//       <Heading>
-//         {student?._id
-//           ? `${student.firstName} ${student.lastName}`
-//           : "Admin Student Dashboard"}
-//       </Heading>
-//     </Box>
-//   );
-// };
-
-// export default AdminStudentDashboard;
-
+"use client";
 import {
   Box,
   Flex,
@@ -44,19 +14,38 @@ import {
   Text,
   WrapItem,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NextLink from "next/link";
-import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
 import { TUser } from "@/app/ui/navbar/Navbar";
 import { popularTasks } from "@/app/ui/adminDashboard/overview/bottomCards/OverviewBottomCards";
 import StudentDashboardBannerCarousel from "@/app/ui/adminDashboard/studentBannerCarousel/StudentDashboardBannerCarousel";
 import { sxScrollbar } from "../../../../../public/scrollbarStyle";
+import axios from "axios";
 
 interface Props {
   params: { student_id: string };
 }
-const AdminStudentDashboard = async ({ params: { student_id } }: Props) => {
-  const student: TUser = await fetchUserById(student_id, "students");
+const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
+  const [student, setStudent] = useState<TUser>({} as TUser);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          `https://learnopia-backend.vercel.app/api/v1/admin/access/students/${student_id}`,
+          // `http://localhost:3131/api/v1/admin/access/students/${student_id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        setStudent(response.data.body);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [student_id]);
   return (
     <Box
       as="main"
@@ -341,4 +330,4 @@ const AdminStudentDashboard = async ({ params: { student_id } }: Props) => {
   );
 };
 
-export default AdminStudentDashboard;
+export default React.memo(AdminStudentDashboard);

@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   Heading,
@@ -17,12 +18,12 @@ import {
   Flex,
   HStack,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BookAIcon, MailCheckIcon, MapIcon, MedalIcon } from "lucide-react";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { sxScrollbar } from "../../../../../../public/scrollbarStyle";
 import { TUser } from "@/app/ui/navbar/Navbar";
-import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
+import axios from "axios";
 
 const main = {
   width: "100%",
@@ -63,15 +64,31 @@ const timings = [
   "04:00pm",
 ];
 
-const AdminInstructorProfile = async ({
-  params,
+const AdminInstructorProfile = ({
+  params: { instructor_id },
 }: {
   params: { instructor_id: string };
 }) => {
-  const instructor: TUser = await fetchUserById(
-    params.instructor_id,
-    "instructors"
-  );
+  const [instructor, setInstructor] = useState<TUser>({} as TUser);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          `https://learnopia-backend.vercel.app/api/v1/admin/access/instructors/${instructor_id}`,
+          // `http://localhost:3131/api/v1/admin/access/instructors/${instructor_id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        setInstructor(response.data.body);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [instructor_id]);
 
   return (
     <Box as="main" sx={main} overflow={"hidden"}>
@@ -247,37 +264,38 @@ const AdminInstructorProfile = async ({
                 paddingInline={0}
               >
                 <Accordion h={"100%"}>
-                  {instructor?.education?.map((education, idx) => (
-                    <AccordionItem key={idx}>
-                      <Text>
-                        <AccordionButton cursor={"default"}>
-                          <Box as="span" flex="1" textAlign="left">
-                            <WrapItem
-                              display={"flex"}
-                              flexDir={"row"}
-                              justifyContent={"space-between"}
-                              alignItems={"center"}
-                            >
-                              <Grid>
-                                <Text
-                                  fontSize={{ base: "xs", md: "sm" }}
-                                  color="#044F63"
-                                >
-                                  {education.degree}
-                                </Text>
+                  {Array.isArray(instructor.education) &&
+                    instructor?.education?.map((education, idx) => (
+                      <AccordionItem key={idx}>
+                        <Text>
+                          <AccordionButton cursor={"default"}>
+                            <Box as="span" flex="1" textAlign="left">
+                              <WrapItem
+                                display={"flex"}
+                                flexDir={"row"}
+                                justifyContent={"space-between"}
+                                alignItems={"center"}
+                              >
+                                <Grid>
+                                  <Text
+                                    fontSize={{ base: "xs", md: "sm" }}
+                                    color="#044F63"
+                                  >
+                                    {education.degree}
+                                  </Text>
+                                  <Text fontSize={".7rem"} color={"#77838F"}>
+                                    {education.institution}
+                                  </Text>
+                                </Grid>
                                 <Text fontSize={".7rem"} color={"#77838F"}>
-                                  {education.institution}
+                                  {education.passingYear}
                                 </Text>
-                              </Grid>
-                              <Text fontSize={".7rem"} color={"#77838F"}>
-                                {education.passingYear}
-                              </Text>
-                            </WrapItem>
-                          </Box>
-                        </AccordionButton>
-                      </Text>
-                    </AccordionItem>
-                  ))}
+                              </WrapItem>
+                            </Box>
+                          </AccordionButton>
+                        </Text>
+                      </AccordionItem>
+                    ))}
                 </Accordion>
               </CardBody>
             </Card>
@@ -305,37 +323,38 @@ const AdminInstructorProfile = async ({
                 paddingInline={0}
               >
                 <Accordion h={"100%"}>
-                  {instructor?.experience?.map((exp, idx) => (
-                    <AccordionItem key={idx}>
-                      <Text>
-                        <AccordionButton cursor={"default"}>
-                          <Box as="span" flex="1" textAlign="left">
-                            <WrapItem
-                              display={"flex"}
-                              flexDir={"row"}
-                              justifyContent={"space-between"}
-                              alignItems={"center"}
-                            >
-                              <Grid>
-                                <Text
-                                  fontSize={{ base: "xs", md: "sm" }}
-                                  color="#044F63"
-                                >
-                                  {exp.organization}
-                                </Text>
+                  {Array.isArray(instructor.experience) &&
+                    instructor?.experience?.map((exp, idx) => (
+                      <AccordionItem key={idx}>
+                        <Text>
+                          <AccordionButton cursor={"default"}>
+                            <Box as="span" flex="1" textAlign="left">
+                              <WrapItem
+                                display={"flex"}
+                                flexDir={"row"}
+                                justifyContent={"space-between"}
+                                alignItems={"center"}
+                              >
+                                <Grid>
+                                  <Text
+                                    fontSize={{ base: "xs", md: "sm" }}
+                                    color="#044F63"
+                                  >
+                                    {exp.organization}
+                                  </Text>
+                                  <Text fontSize={".7rem"} color={"#77838F"}>
+                                    {exp.role}
+                                  </Text>
+                                </Grid>
                                 <Text fontSize={".7rem"} color={"#77838F"}>
-                                  {exp.role}
+                                  {`${exp.years} yrs.`}
                                 </Text>
-                              </Grid>
-                              <Text fontSize={".7rem"} color={"#77838F"}>
-                                {`${exp.years} yrs.`}
-                              </Text>
-                            </WrapItem>
-                          </Box>
-                        </AccordionButton>
-                      </Text>
-                    </AccordionItem>
-                  ))}
+                              </WrapItem>
+                            </Box>
+                          </AccordionButton>
+                        </Text>
+                      </AccordionItem>
+                    ))}
                 </Accordion>
               </CardBody>
             </Card>
@@ -368,47 +387,48 @@ const AdminInstructorProfile = async ({
                   flexDir={"column"}
                   rowGap={3}
                 >
-                  {availableTimings.map((avail, idx) => (
-                    <AccordionItem
-                      key={idx}
-                      borderRadius={4}
-                      bgColor={"#F4F3F3"}
-                    >
-                      <Text>
-                        <AccordionButton borderRadius={4}>
-                          <Box as="span" flex="1" textAlign="left">
-                            <Text fontSize={{ base: "sm" }} color="#044F63">
-                              {avail.day}
-                            </Text>
+                  {Array.isArray(availableTimings) &&
+                    availableTimings.map((avail, idx) => (
+                      <AccordionItem
+                        key={idx}
+                        borderRadius={4}
+                        bgColor={"#F4F3F3"}
+                      >
+                        <Text>
+                          <AccordionButton borderRadius={4}>
+                            <Box as="span" flex="1" textAlign="left">
+                              <Text fontSize={{ base: "sm" }} color="#044F63">
+                                {avail.day}
+                              </Text>
+                            </Box>
+                            <AccordionIcon color="#044F63" />
+                          </AccordionButton>
+                        </Text>
+                        <AccordionPanel pb={4} bg={"#fff"}>
+                          <Box
+                            w={"100%"}
+                            display={"flex"}
+                            columnGap={3}
+                            rowGap={3}
+                            flexWrap={"wrap"}
+                            mt={2}
+                          >
+                            {timings.map((time, idx) => (
+                              <Button
+                                key={idx}
+                                size={"sm"}
+                                width={"80px"}
+                                fontSize={{ base: "xs" }}
+                                color={"#77838F"}
+                                borderRadius={2}
+                              >
+                                {time}
+                              </Button>
+                            ))}
                           </Box>
-                          <AccordionIcon color="#044F63" />
-                        </AccordionButton>
-                      </Text>
-                      <AccordionPanel pb={4} bg={"#fff"}>
-                        <Box
-                          w={"100%"}
-                          display={"flex"}
-                          columnGap={3}
-                          rowGap={3}
-                          flexWrap={"wrap"}
-                          mt={2}
-                        >
-                          {timings.map((time, idx) => (
-                            <Button
-                              key={idx}
-                              size={"sm"}
-                              width={"80px"}
-                              fontSize={{ base: "xs" }}
-                              color={"#77838F"}
-                              borderRadius={2}
-                            >
-                              {time}
-                            </Button>
-                          ))}
-                        </Box>
-                      </AccordionPanel>
-                    </AccordionItem>
-                  ))}
+                        </AccordionPanel>
+                      </AccordionItem>
+                    ))}
                 </Accordion>
               </CardBody>
             </Card>
@@ -451,16 +471,17 @@ const AdminInstructorProfile = async ({
                   columnGap={2}
                   rowGap={2}
                 >
-                  {instructor.services?.map((service, idx) => (
-                    <Button
-                      key={idx}
-                      size={"xs"}
-                      color="#044F63"
-                      borderRadius={4}
-                    >
-                      {service}
-                    </Button>
-                  ))}
+                  {Array.isArray(instructor.services) &&
+                    instructor?.services?.map((service, idx) => (
+                      <Button
+                        key={idx}
+                        size={"xs"}
+                        color="#044F63"
+                        borderRadius={4}
+                      >
+                        {service}
+                      </Button>
+                    ))}
                 </HStack>
               </CardBody>
             </Card>
@@ -492,16 +513,17 @@ const AdminInstructorProfile = async ({
                   w={"100%"}
                   h={"100%"}
                 >
-                  {instructor.languages?.map((language, idx) => (
-                    <Button
-                      key={idx}
-                      size={"xs"}
-                      color="#044F63"
-                      borderRadius={4}
-                    >
-                      {language}
-                    </Button>
-                  ))}
+                  {Array.isArray(instructor.languages) &&
+                    instructor?.languages?.map((language, idx) => (
+                      <Button
+                        key={idx}
+                        size={"xs"}
+                        color="#044F63"
+                        borderRadius={4}
+                      >
+                        {language}
+                      </Button>
+                    ))}
                 </Box>
               </CardBody>
             </Card>
@@ -539,7 +561,7 @@ const AdminInstructorProfile = async ({
                   <MapIcon size={16} />
                   <Text
                     fontSize={{ base: "xs" }}
-                  >{`${instructor.address?.addressLine1}, ${instructor.address?.addressLine2}, ${instructor.address?.state}, ${instructor.address?.country}`}</Text>
+                  >{`${instructor?.address?.addressLine1}, ${instructor?.address?.addressLine2}, ${instructor?.address?.state}, ${instructor?.address?.country}`}</Text>
                 </Box>
               </CardBody>
             </Card>
@@ -568,45 +590,49 @@ const AdminInstructorProfile = async ({
                 pb={0}
               >
                 <Accordion h={"100%"}>
-                  {instructor?.achievements
-                    ?.sort((a, b) => {
-                      return Number(b.year) - Number(a.year);
-                    })
-                    .map((achievement, idx) => (
-                      <AccordionItem key={idx}>
-                        <Text>
-                          <AccordionButton cursor={"default"} paddingInline={1}>
-                            <Box as="span" flex="1" textAlign="left">
-                              <WrapItem
-                                display={"flex"}
-                                flexDir={"row"}
-                                justifyContent={"space-between"}
-                                alignItems={"center"}
-                              >
-                                <Grid>
+                  {Array.isArray(instructor.achievements) &&
+                    instructor?.achievements
+                      ?.sort((a, b) => {
+                        return Number(b.year) - Number(a.year);
+                      })
+                      .map((achievement, idx) => (
+                        <AccordionItem key={idx}>
+                          <Text>
+                            <AccordionButton
+                              cursor={"default"}
+                              paddingInline={1}
+                            >
+                              <Box as="span" flex="1" textAlign="left">
+                                <WrapItem
+                                  display={"flex"}
+                                  flexDir={"row"}
+                                  justifyContent={"space-between"}
+                                  alignItems={"center"}
+                                >
+                                  <Grid>
+                                    <Text
+                                      fontSize={{ base: "xs" }}
+                                      color="#044F63"
+                                      display={"flex"}
+                                      alignItems={"center"}
+                                      columnGap={2}
+                                    >
+                                      <MedalIcon size={16} />
+                                      {achievement.title}
+                                    </Text>
+                                  </Grid>
                                   <Text
                                     fontSize={{ base: "xs" }}
-                                    color="#044F63"
-                                    display={"flex"}
-                                    alignItems={"center"}
-                                    columnGap={2}
+                                    color={"#77838F"}
                                   >
-                                    <MedalIcon size={16} />
-                                    {achievement.title}
+                                    {`${achievement.year}`}
                                   </Text>
-                                </Grid>
-                                <Text
-                                  fontSize={{ base: "xs" }}
-                                  color={"#77838F"}
-                                >
-                                  {`${achievement.year}`}
-                                </Text>
-                              </WrapItem>
-                            </Box>
-                          </AccordionButton>
-                        </Text>
-                      </AccordionItem>
-                    ))}
+                                </WrapItem>
+                              </Box>
+                            </AccordionButton>
+                          </Text>
+                        </AccordionItem>
+                      ))}
                 </Accordion>
               </CardBody>
             </Card>
@@ -618,4 +644,4 @@ const AdminInstructorProfile = async ({
   );
 };
 
-export default AdminInstructorProfile;
+export default React.memo(AdminInstructorProfile);

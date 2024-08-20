@@ -53,6 +53,7 @@ export const fetchInstructorCourses = async (
 ): Promise<TCourse[]> => {
   try {
     const response = await axios.get(
+      // `http://localhost:3131/api/v1/instructors/courses/${id}`
       `https://learnopia-backend.vercel.app/api/v1/instructors/courses/${id}`
     );
 
@@ -69,6 +70,7 @@ export const fetchInstructorCourses = async (
 export const fetchInstructorById = async (id: string): Promise<TInstructor> => {
   try {
     const response = await axios.get(
+      // `http://localhost:3131/api/v1/instructors/profile/${id}`
       `https://learnopia-backend.vercel.app/api/v1/instructors/profile/${id}`
     );
     if (!response.data || !response.data.body) {

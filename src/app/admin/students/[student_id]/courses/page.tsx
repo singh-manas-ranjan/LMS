@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   CardHeader,
@@ -10,10 +11,11 @@ import {
   Grid,
   Card,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { sxScrollbar } from "../../../../../../public/scrollbarStyle";
 import { TUser } from "@/app/ui/navbar/Navbar";
 import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
+import axios from "axios";
 
 const main = {
   width: "100%",
@@ -32,8 +34,27 @@ const textStyle = {
   fontSize: { base: "sm" },
 };
 
-const MyCourses = async ({ params: { student_id } }: Props) => {
-  const student: TUser | null = await fetchUserById(student_id, "students");
+const MyCourses = ({ params: { student_id } }: Props) => {
+  const [student, setStudent] = useState<TUser>({} as TUser);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          `https://learnopia-backend.vercel.app/api/v1/admin/access/students/${student_id}`,
+          // `http://localhost:3131/api/v1/admin/access/students/${student_id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        setStudent(response.data.body);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [student_id]);
   const eCourses = student?.enrolledCourses;
   return (
     <Box as="main" sx={main} rowGap={5} overflow={"hidden"}>

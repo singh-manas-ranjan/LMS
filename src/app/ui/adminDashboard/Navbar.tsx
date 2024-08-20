@@ -21,19 +21,18 @@ import {
 } from "@chakra-ui/react";
 import { TbLogout2 } from "react-icons/tb";
 import { FaHandsClapping } from "react-icons/fa6";
-import { TUser } from "../navbar/Navbar";
 import NextLink from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { MenuIcon, House, NotebookIcon, User, LucideProps } from "lucide-react";
 import {
-  X,
-  MenuIcon,
-  House,
-  NotebookIcon,
-  User,
-  Settings,
-  LucideProps,
-} from "lucide-react";
-import { ForwardRefExoticComponent, RefAttributes } from "react";
+  ForwardRefExoticComponent,
+  RefAttributes,
+  useEffect,
+  useState,
+} from "react";
+import axios from "axios";
+import React from "react";
+import { TUser } from "../navbar/Navbar";
 
 const profile = {
   display: "flex",
@@ -103,7 +102,7 @@ export const instructorEndpoints: TEndpoint[] = [
   // { name: "Settings", icon: Settings, href: "/settings" },
 ];
 
-const Navbar = ({ user, userId }: { user: TUser; userId: string }) => {
+const Navbar = ({ userId }: { userId: string }) => {
   const [minWidth600] = useMediaQuery("(min-width: 600px)");
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -111,6 +110,27 @@ const Navbar = ({ user, userId }: { user: TUser; userId: string }) => {
   const role = pathname.includes("admin/students") ? "students" : "instructors";
   const endpoints: TEndpoint[] =
     role === "students" ? studentEndpoints : instructorEndpoints;
+
+  const [user, setUser] = useState<TUser>({} as TUser);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          `https://learnopia-backend.vercel.app/api/v1/admin/access/${role}/${userId}`,
+          // `http://localhost:3131/api/v1/admin/access/${role}/${userId}`,
+          {
+            withCredentials: true,
+          }
+        );
+        setUser(response.data.body);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [role, userId]);
 
   return (
     <Flex
@@ -215,4 +235,4 @@ const Navbar = ({ user, userId }: { user: TUser; userId: string }) => {
   );
 };
 
-export default Navbar;
+export default React.memo(Navbar);

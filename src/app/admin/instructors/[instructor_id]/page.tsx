@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   Flex,
@@ -14,14 +15,15 @@ import {
   WrapItem,
   Avatar,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NextLink from "next/link";
 import studentRankings, {
   TStudentRankings,
 } from "../../../../../public/rankingData";
 import BannerCarousel from "@/app/ui/bannerCarousel/BannerCarousel";
 import { popularTasks } from "@/app/ui/adminDashboard/overview/bottomCards/OverviewBottomCards";
-import { fetchUserById } from "@/actions/adminAccess/adminAccessAction";
+import axios from "axios";
+import { TUser } from "@/app/ui/navbar/Navbar";
 
 const main = {
   width: "100%",
@@ -66,10 +68,27 @@ interface Props {
   params: { instructor_id: string };
 }
 
-const AdminInstructorDashboard = async ({
-  params: { instructor_id },
-}: Props) => {
-  const instructor = await fetchUserById(instructor_id, "instructors");
+const AdminInstructorDashboard = ({ params: { instructor_id } }: Props) => {
+  const [instructor, setInstructor] = useState<TUser>({} as TUser);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          `https://learnopia-backend.vercel.app/api/v1/admin/access/instructors/${instructor_id}`,
+          // `http://localhost:3131/api/v1/admin/access/instructors/${instructor_id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        setInstructor(response.data.body);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [instructor_id]);
 
   return (
     <Box as="main" sx={main}>
@@ -200,8 +219,8 @@ const AdminInstructorDashboard = async ({
               >
                 <Box h={"100%"} w={"100%"}>
                   <Accordion h={"100%"}>
-                    {instructor.publishedCourses
-                      .slice(0, 4)
+                    {instructor?.publishedCourses
+                      ?.slice(0, 4)
                       .map((course, idx) => (
                         <AccordionItem key={idx}>
                           <Text>
@@ -417,4 +436,4 @@ const AdminInstructorDashboard = async ({
   );
 };
 
-export default AdminInstructorDashboard;
+export default React.memo(AdminInstructorDashboard);
