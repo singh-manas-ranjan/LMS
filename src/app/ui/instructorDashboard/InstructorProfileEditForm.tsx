@@ -322,7 +322,6 @@ const InstructorProfileEditForm = ({
     try {
       const response = await axios.patch(
         `https://learnopia-backend.vercel.app/api/v1/instructors/${userId}`,
-        // `http://localhost:3131/api/v1/instructors/${userId}`,
         e
       );
       if (response.data.body) {
@@ -345,7 +344,6 @@ const InstructorProfileEditForm = ({
     try {
       const response = await axios.patch(
         `https://learnopia-backend.vercel.app/api/v1/instructors/${userId}`,
-        // `http://localhost:3131/api/v1/instructors/${userId}`,
         { ...userInfo, address: e }
       );
       if (response.data.body) {

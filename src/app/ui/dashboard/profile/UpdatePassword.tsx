@@ -47,7 +47,6 @@ const UpdatePassword = () => {
   const onSubmit = async (data: FormType) => {
     try {
       await axios.post(
-        // "http://localhost:3131/api/v1/students/password",
         "https://learnopia-backend.vercel.app/api/v1/students/password",
         { oldPassword: data.currentPassword, newPassword: data.newPassword },
         { withCredentials: true }
@@ -62,7 +61,6 @@ const UpdatePassword = () => {
           try {
             await refreshToken();
             await axios.post(
-              // "http://localhost:3131/api/v1/students/password",
               "https://learnopia-backend.vercel.app/api/v1/students/password",
               {
                 oldPassword: data.currentPassword,

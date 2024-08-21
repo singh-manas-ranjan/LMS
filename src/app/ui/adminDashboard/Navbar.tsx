@@ -77,7 +77,7 @@ export const studentEndpoints: TEndpoint[] = [
   {
     name: "Home",
     icon: House,
-    href: "",
+    href: "/dashboard",
   },
   {
     name: "Courses",
@@ -91,7 +91,7 @@ export const instructorEndpoints: TEndpoint[] = [
   {
     name: "Home",
     icon: House,
-    href: "",
+    href: "/dashboard",
   },
   {
     name: "Courses",
@@ -118,7 +118,6 @@ const Navbar = ({ userId }: { userId: string }) => {
       try {
         const response = await axios.get(
           `https://learnopia-backend.vercel.app/api/v1/admin/access/${role}/${userId}`,
-          // `http://localhost:3131/api/v1/admin/access/${role}/${userId}`,
           {
             withCredentials: true,
           }

@@ -103,7 +103,7 @@ const UsersAccounts = async ({ params: { user_type } }: Props) => {
                 pb={4}
                 pr={{ md: 5 }}
               >
-                <NextLink href={`/admin/${user_type}/${user._id}`}>
+                <NextLink href={`/admin/${user_type}/${user._id}/dashboard`}>
                   <Button
                     colorScheme="teal"
                     size={{ base: "xs", md: "sm" }}

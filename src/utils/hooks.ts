@@ -9,7 +9,8 @@ export type DataState = {
 export type DataAction =
   | { type: "FETCH_REQUEST" }
   | { type: "FETCH_SUCCESS"; payload: TUser }
-  | { type: "FETCH_FAILURE" };
+  | { type: "FETCH_FAILURE" }
+  | { type: "UPDATE_USER"; payload: TUser };
 
 export const initialState: DataState = {
   data: {} as TUser,
@@ -28,6 +29,8 @@ export const userDataReducer = (
       return { ...state, loading: false, data: action.payload };
     case "FETCH_FAILURE":
       return { ...state, loading: false, error: true };
+    case "UPDATE_USER":
+      return { ...state, loading: false, data: action.payload };
     default:
       return state;
   }

@@ -15,7 +15,6 @@ import { instructorEndpoints, studentEndpoints, TEndpoint } from "./Navbar";
 
 const Sidebar = ({ userId }: { userId: string }) => {
   const [isSidebarExpanded, setSidebarExpanded] = useState(false);
-  const [activeLink, setActiveLink] = useState("");
   const handleToggleSidebar = () => {
     setSidebarExpanded((prev) => !prev);
   };
@@ -26,7 +25,7 @@ const Sidebar = ({ userId }: { userId: string }) => {
 
   const sidebarWidth = useBreakpointValue({
     base: "80px",
-    md: isSidebarExpanded ? "200px" : "80px",
+    sm: isSidebarExpanded ? "200px" : "80px",
   });
 
   const open = {
@@ -83,7 +82,6 @@ const Sidebar = ({ userId }: { userId: string }) => {
                 href={`/admin/${role}/${userId}${link.href}`}
                 onClick={() => {
                   setSidebarExpanded(false);
-                  setActiveLink(link.href);
                 }}
               >
                 <Box
@@ -93,18 +91,20 @@ const Sidebar = ({ userId }: { userId: string }) => {
                   alignItems={"center"}
                   columnGap={4}
                   _hover={{ textDecoration: "none", bg: "gray.100" }}
-                  bg={activeLink === link.href ? "#2D89BA20" : "#fff"}
+                  bg={pathname.includes(link.href) ? "#2D89BA20" : "#fff"}
                   borderRadius={4}
                 >
                   <Box
                     as={IconComponent}
-                    color={activeLink === link.href ? "#2D89BA" : "#044F63"}
+                    color={pathname.includes(link.href) ? "#2D89BA" : "#044F63"}
                     size={20}
                   />
                   {
                     <Text
                       sx={isSidebarExpanded ? open : close}
-                      color={activeLink === link.href ? "#2D89BA" : "#044F63"}
+                      color={
+                        pathname.includes(link.href) ? "#2D89BA" : "#044F63"
+                      }
                     >
                       {link.name}
                     </Text>

@@ -13,52 +13,85 @@ import {
   Grid,
   Text,
   WrapItem,
+  Avatar,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import NextLink from "next/link";
-import { TUser } from "@/app/ui/navbar/Navbar";
+
+import BannerCarousel from "@/app/ui/bannerCarousel/BannerCarousel";
 import { popularTasks } from "@/app/ui/adminDashboard/overview/bottomCards/OverviewBottomCards";
-import StudentDashboardBannerCarousel from "@/app/ui/adminDashboard/studentBannerCarousel/StudentDashboardBannerCarousel";
-import { sxScrollbar } from "../../../../../public/scrollbarStyle";
 import axios from "axios";
+import { TUser } from "@/app/ui/navbar/Navbar";
+import studentRankings, {
+  TStudentRankings,
+} from "../../../../../../public/rankingData";
+
+const main = {
+  width: "100%",
+  height: "100%",
+  bg: "#fff",
+  borderRadius: "4px",
+  display: "flex",
+  flexDirection: "column",
+  padding: "1rem",
+  overflow: "scroll",
+};
+
+type TReview = {
+  student: TStudentRankings;
+  body: string;
+};
+
+const reviews: TReview[] = [
+  {
+    student: studentRankings[1],
+    body: "I won't say much, but this is enough. 'I successfully delivered two projects over two and half years, completely based on this course'. Hats off to OmPrakashChavan.",
+  },
+  {
+    student: studentRankings[4],
+    body: "The professor takes his time to explain everything on detail, also he speaks very well and his english is perfectly understandable, you can understand everything .",
+  },
+  {
+    student: studentRankings[2],
+    body: "Parts of the course are outdated, but the practical lessons are very nice. Also, the teacher seems to answer every question very fast and it really seems like he is trying to solve your issue. His assistants are below average, though.",
+  },
+  {
+    student: studentRankings[3],
+    body: "Very useful tutorials and gave me confident setting things up and running.Thank you Omprakash.",
+  },
+  {
+    student: studentRankings[0],
+    body: "Out dated content. Waste of money.Poor video quality.Text of most of the videos were not clear.Although he explains well. This course is not for noobs.",
+  },
+];
 
 interface Props {
-  params: { student_id: string };
+  params: { instructor_id: string };
 }
-const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
-  const [student, setStudent] = useState<TUser>({} as TUser);
+
+const AdminInstructorDashboard = ({ params: { instructor_id } }: Props) => {
+  const [instructor, setInstructor] = useState<TUser>({} as TUser);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `https://learnopia-backend.vercel.app/api/v1/admin/access/students/${student_id}`,
-          // `http://localhost:3131/api/v1/admin/access/students/${student_id}`,
+          `https://learnopia-backend.vercel.app/api/v1/admin/access/instructors/${instructor_id}`,
           {
             withCredentials: true,
           }
         );
-        setStudent(response.data.body);
+        setInstructor(response.data.body);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
 
     fetchUserData();
-  }, [student_id]);
+  }, [instructor_id]);
+
   return (
-    <Box
-      as="main"
-      w={"100%"}
-      h={"100%"}
-      bg={"#fff"}
-      borderRadius={"4px"}
-      display={"flex"}
-      flexDir={"column"}
-      p={"1rem"}
-      overflow={"scroll"}
-      sx={sxScrollbar}
-    >
+    <Box as="main" sx={main}>
       <Box
         w={"100%"}
         h={"100%"}
@@ -72,7 +105,7 @@ const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
           rowGap={10}
           display={"grid"}
         >
-          <StudentDashboardBannerCarousel />
+          <BannerCarousel />
         </Flex>
         <Flex flex={2} flexDirection={"column"} p={".5rem"} rowGap={10}>
           <Box
@@ -80,7 +113,6 @@ const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
             borderRadius={8}
             position={"relative"}
             overflow={"hidden"}
-            sx={sxScrollbar}
           >
             <Box
               display={"flex"}
@@ -104,7 +136,9 @@ const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
                     justifyContent={{ base: "space-between" }}
                     alignItems={{ base: "center", sm: "baseline" }}
                   >
-                    <Heading size={{ base: "sm" }} color={"#2D2F31"}></Heading>
+                    <Heading size={{ base: "sm" }} color={"#2D2F31"}>
+                      Active Students
+                    </Heading>
                   </CardHeader>
                   <CardBody
                     display={"flex"}
@@ -126,7 +160,9 @@ const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
                     justifyContent={{ base: "space-between" }}
                     alignItems={{ base: "center", sm: "baseline" }}
                   >
-                    <Heading size={{ base: "sm" }} color={"#2D2F31"}></Heading>
+                    <Heading size={{ base: "sm" }} color={"#2D2F31"}>
+                      New Enrolment
+                    </Heading>
                   </CardHeader>
                   <CardBody
                     display={"flex"}
@@ -153,7 +189,6 @@ const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
             position={"relative"}
             overflow={"hidden"}
             p={".5rem"}
-            sx={sxScrollbar}
           >
             <Card
               h={"100%"}
@@ -169,7 +204,7 @@ const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
                 <Heading size={{ base: "sm" }} color={"#2D2F31"}>
                   My Courses
                 </Heading>
-                <NextLink href={`/admin/students/${student_id}/courses`}>
+                <NextLink href="/instructor-dashboard/courses">
                   <Text color={"#2D89BA"} fontSize={{ base: "sm" }}>
                     View All
                   </Text>
@@ -184,30 +219,32 @@ const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
               >
                 <Box h={"100%"} w={"100%"}>
                   <Accordion h={"100%"}>
-                    {student.enrolledCourses?.slice(0, 4).map((course, idx) => (
-                      <AccordionItem key={idx}>
-                        <Text>
-                          <AccordionButton>
-                            <Box as="span" flex="1" textAlign="left">
-                              <WrapItem>
-                                <Grid m={2}>
-                                  <Text fontSize={{ base: "xs", md: "sm" }}>
-                                    {course.courseName}
-                                  </Text>
-                                  <Text
-                                    fontSize={{
-                                      base: "xs",
-                                      md: "sm",
-                                    }}
-                                    color={"#8D94A3"}
-                                  >{`Rating: ${course.courseRating}`}</Text>
-                                </Grid>
-                              </WrapItem>
-                            </Box>
-                          </AccordionButton>
-                        </Text>
-                      </AccordionItem>
-                    ))}
+                    {instructor?.publishedCourses
+                      ?.slice(0, 4)
+                      .map((course, idx) => (
+                        <AccordionItem key={idx}>
+                          <Text>
+                            <AccordionButton>
+                              <Box as="span" flex="1" textAlign="left">
+                                <WrapItem>
+                                  <Grid m={2}>
+                                    <Text fontSize={{ base: "xs", md: "sm" }}>
+                                      {course.courseName}
+                                    </Text>
+                                    <Text
+                                      fontSize={{
+                                        base: "xs",
+                                        md: "sm",
+                                      }}
+                                      color={"#8D94A3"}
+                                    >{`Rating: ${course.courseRating}`}</Text>
+                                  </Grid>
+                                </WrapItem>
+                              </Box>
+                            </AccordionButton>
+                          </Text>
+                        </AccordionItem>
+                      ))}
                   </Accordion>
                 </Box>
               </CardBody>
@@ -220,7 +257,6 @@ const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
             borderRadius={8}
             position={"relative"}
             overflow={"hidden"}
-            sx={sxScrollbar}
             p={".5rem"}
           >
             <Card
@@ -234,7 +270,9 @@ const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
                 justifyContent={{ base: "space-between" }}
                 alignItems={{ base: "center", sm: "baseline" }}
               >
-                <Heading size={{ base: "sm" }} color={"#2D2F31"}></Heading>
+                <Heading size={{ base: "sm" }} color={"#2D2F31"}>
+                  Student&apos;s Feedback
+                </Heading>
                 <Link color={"#2D89BA"} fontSize={{ base: "sm" }}>
                   View All
                 </Link>
@@ -253,7 +291,76 @@ const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
                   display={"flex"}
                   flexDir={"column"}
                   rowGap={3}
-                ></Box>
+                >
+                  {reviews && (
+                    <Box w={"100%"} h={"100%"}>
+                      <Accordion h={"100%"}>
+                        {reviews?.slice(0, 4).map((review, idx) => (
+                          <AccordionItem key={idx}>
+                            <Text>
+                              <AccordionButton>
+                                <Box as="span" flex="1" textAlign="left">
+                                  <WrapItem
+                                    display={"flex"}
+                                    alignItems={{
+                                      base: "center",
+                                      md: "start",
+                                      lg: "center",
+                                    }}
+                                    flexDirection={{
+                                      md: "column",
+                                      lg: "row",
+                                    }}
+                                    columnGap={{
+                                      base: ".5rem",
+                                      md: "0",
+                                    }}
+                                  >
+                                    <Avatar
+                                      name={review.student.name}
+                                      src={review.student.imageSrc}
+                                      boxSize={{
+                                        base: "2rem",
+                                        lg: "2.5rem",
+                                      }}
+                                    />
+                                    <Grid
+                                      m={{ lg: 2 }}
+                                      ml={{ lg: 5 }}
+                                      width={"100%"}
+                                    >
+                                      <Flex
+                                        justifyContent={"space-between"}
+                                        alignItems={"center"}
+                                        width={"100%"}
+                                      >
+                                        <Text
+                                          fontSize={{ base: "xs", md: "sm" }}
+                                        >
+                                          {review.student.name}
+                                        </Text>
+                                      </Flex>
+                                      <Text
+                                        fontSize={{
+                                          base: ".6rem",
+                                          sm: ".75rem",
+                                          lg: ".8rem",
+                                        }}
+                                        color={"#8D94A3"}
+                                      >
+                                        {`${review.body.substring(0, 80)} ...`}
+                                      </Text>
+                                    </Grid>
+                                  </WrapItem>
+                                </Box>
+                              </AccordionButton>
+                            </Text>
+                          </AccordionItem>
+                        ))}
+                      </Accordion>
+                    </Box>
+                  )}
+                </Box>
               </CardBody>
             </Card>
           </Box>
@@ -265,7 +372,6 @@ const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
             position={"relative"}
             overflow={"hidden"}
             p={".5rem"}
-            sx={sxScrollbar}
           >
             <Card
               h={"100%"}
@@ -294,7 +400,7 @@ const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
               >
                 <Box h={"100%"} w={"100%"}>
                   <Accordion h={"100%"}>
-                    {popularTasks.slice(0, 4).map((task, idx) => (
+                    {popularTasks.map((task, idx) => (
                       <AccordionItem key={idx}>
                         <Text>
                           <AccordionButton>
@@ -330,4 +436,4 @@ const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
   );
 };
 
-export default React.memo(AdminStudentDashboard);
+export default React.memo(AdminInstructorDashboard);

@@ -109,7 +109,6 @@ const EditPersonalInfo = ({
     } = e;
     try {
       const response = await fetch(
-        // `http://localhost:3131/api/v1/students/${userId}`,
         `https://learnopia-backend.vercel.app/api/v1/students/${userId}`,
         {
           method: "PATCH",
@@ -169,7 +168,6 @@ const EditPersonalInfo = ({
       userInfo;
     try {
       const response = await axios.patch(
-        // `http://localhost:3131/api/v1/students/${userId}`,
         `https://learnopia-backend.vercel.app/api/v1/students/${userId}`,
         { ...userInfo, address: e }
       );

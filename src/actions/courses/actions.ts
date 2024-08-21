@@ -5,7 +5,6 @@ import { TCourse } from "../../../public/courses";
 export const fetchCourseById = async (courseId: string): Promise<TCourse> => {
   try {
     const response = await fetch(
-      // `http://localhost:3131/api/v1/courses/${courseId}`
       `https://learnopia-backend.vercel.app/api/v1/courses/${courseId}`
     );
 
@@ -30,7 +29,6 @@ import axios from "axios";
 export const fetchAllCourses = async (): Promise<TCourse[]> => {
   try {
     const response = await axios.get(
-      // `http://localhost:3131/api/v1/courses`
       `https://learnopia-backend.vercel.app/api/v1/courses`
     );
 

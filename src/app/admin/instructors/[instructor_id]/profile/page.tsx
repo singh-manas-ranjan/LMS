@@ -82,7 +82,6 @@ const AdminInstructorProfile = ({
         dispatch({ type: "FETCH_REQUEST" });
         const response = await axios.get(
           `https://learnopia-backend.vercel.app/api/v1/admin/access/instructors/${instructor_id}`,
-          // `http://localhost:3131/api/v1/admin/access/instructors/${instructor_id}`,
           {
             withCredentials: true,
           }

@@ -33,7 +33,6 @@ const UploadProfilePicBtn = ({
       const response: TUser = await axios
         .patch(
           `https://learnopia-backend.vercel.app/api/v1/${user.toLowerCase()}/avatar/${_id}`,
-          // `http://localhost:3131/api/v1/${user.toLowerCase()}/avatar/${_id}`,
           formData,
           {
             headers: {
