@@ -25,7 +25,6 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useReducer, useState } from "react";
 import { sxScrollbar } from "../../../../../../public/scrollbarStyle";
-import { TUser } from "@/app/ui/navbar/Navbar";
 import axios from "axios";
 import { Plus } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
@@ -53,7 +52,7 @@ interface TCourseId {
 }
 
 const textStyle = {
-  fontSize: { base: "xs", md: "sm" },
+  fontSize: { base: "xs", md: "sm", lg: "md" },
 };
 
 const MyCourses = ({ params: { student_id } }: Props) => {
@@ -287,7 +286,9 @@ const MyCourses = ({ params: { student_id } }: Props) => {
                   p={{ base: 3, md: 5 }}
                   pr={{ md: 0 }}
                 >
-                  <Heading sx={textStyle}>{course.courseName}</Heading>
+                  <Heading sx={textStyle} color={"#044F63"}>
+                    {course.courseName}
+                  </Heading>
                   <Grid>
                     <Text
                       fontSize={{ base: ".7rem", md: "xs", lg: "sm" }}
@@ -318,4 +319,4 @@ const MyCourses = ({ params: { student_id } }: Props) => {
   );
 };
 
-export default MyCourses;
+export default React.memo(MyCourses);

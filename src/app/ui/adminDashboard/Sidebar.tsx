@@ -12,6 +12,7 @@ import { Menu, X } from "lucide-react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { instructorEndpoints, studentEndpoints, TEndpoint } from "./Navbar";
+import React from "react";
 
 const Sidebar = ({ userId }: { userId: string }) => {
   const [isSidebarExpanded, setSidebarExpanded] = useState(false);
@@ -51,7 +52,7 @@ const Sidebar = ({ userId }: { userId: string }) => {
       pos="fixed"
       h="full"
       overflowY="auto"
-      bg="#fff"
+      bg="#F0FFFF"
       borderRight="1px"
       borderColor="gray.200"
       display={{ base: "none", sm: "flex" }}
@@ -68,7 +69,7 @@ const Sidebar = ({ userId }: { userId: string }) => {
           }
           onClick={handleToggleSidebar}
           mb="4"
-          colorScheme="gray"
+          bg={"#CBFFFF"}
           size={"sm"}
           width={"50px"}
           _hover={{ color: "#2D89BA" }}
@@ -91,7 +92,7 @@ const Sidebar = ({ userId }: { userId: string }) => {
                   alignItems={"center"}
                   columnGap={4}
                   _hover={{ textDecoration: "none", bg: "gray.100" }}
-                  bg={pathname.includes(link.href) ? "#2D89BA20" : "#fff"}
+                  bg={pathname.includes(link.href) ? "#CBFFFF" : "#F0FFFF"}
                   borderRadius={4}
                 >
                   <Box
@@ -119,4 +120,4 @@ const Sidebar = ({ userId }: { userId: string }) => {
   );
 };
 
-export default Sidebar;
+export default React.memo(Sidebar);

@@ -13,34 +13,38 @@ import {
   Grid,
   Text,
   WrapItem,
+  Spinner,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer } from "react";
 import NextLink from "next/link";
-import { TUser } from "@/app/ui/navbar/Navbar";
 import { popularTasks } from "@/app/ui/adminDashboard/overview/bottomCards/OverviewBottomCards";
 import StudentDashboardBannerCarousel from "@/app/ui/adminDashboard/studentBannerCarousel/StudentDashboardBannerCarousel";
 
 import axios from "axios";
 import { sxScrollbar } from "../../../../../../public/scrollbarStyle";
+import { userDataReducer, initialState } from "@/utils/hooks";
 
 interface Props {
   params: { student_id: string };
 }
 const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
-  const [student, setStudent] = useState<TUser>({} as TUser);
+  const [state, dispatch] = useReducer(userDataReducer, initialState);
+  const student = state.data;
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        dispatch({ type: "FETCH_REQUEST" });
         const response = await axios.get(
           `https://learnopia-backend.vercel.app/api/v1/admin/access/students/${student_id}`,
           {
             withCredentials: true,
           }
         );
-        setStudent(response.data.body);
+        dispatch({ type: "FETCH_SUCCESS", payload: response.data.body });
       } catch (error) {
         console.error("Error fetching user data:", error);
+        dispatch({ type: "FETCH_FAILURE" });
       }
     };
 
@@ -183,32 +187,51 @@ const AdminStudentDashboard = ({ params: { student_id } }: Props) => {
                 paddingInline={{ base: 0, md: "1rem" }}
               >
                 <Box h={"100%"} w={"100%"}>
-                  <Accordion h={"100%"}>
-                    {student.enrolledCourses?.slice(0, 4).map((course, idx) => (
-                      <AccordionItem key={idx}>
-                        <Text>
-                          <AccordionButton>
-                            <Box as="span" flex="1" textAlign="left">
-                              <WrapItem>
-                                <Grid m={2}>
-                                  <Text fontSize={{ base: "xs", md: "sm" }}>
-                                    {course.courseName}
-                                  </Text>
-                                  <Text
-                                    fontSize={{
-                                      base: "xs",
-                                      md: "sm",
-                                    }}
-                                    color={"#8D94A3"}
-                                  >{`Rating: ${course.courseRating}`}</Text>
-                                </Grid>
-                              </WrapItem>
-                            </Box>
-                          </AccordionButton>
-                        </Text>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
+                  {state.loading ? (
+                    <Box
+                      display={"grid"}
+                      placeItems={"center"}
+                      w={"100%"}
+                      h={"100%"}
+                    >
+                      <Spinner
+                        thickness="4px"
+                        speed="0.85s"
+                        emptyColor="gray.200"
+                        color="blue.500"
+                        size="xl"
+                      />
+                    </Box>
+                  ) : (
+                    <Accordion h={"100%"}>
+                      {student.enrolledCourses
+                        ?.slice(0, 4)
+                        .map((course, idx) => (
+                          <AccordionItem key={idx}>
+                            <Text>
+                              <AccordionButton>
+                                <Box as="span" flex="1" textAlign="left">
+                                  <WrapItem>
+                                    <Grid m={2}>
+                                      <Text fontSize={{ base: "xs", md: "sm" }}>
+                                        {course.courseName}
+                                      </Text>
+                                      <Text
+                                        fontSize={{
+                                          base: "xs",
+                                          md: "sm",
+                                        }}
+                                        color={"#8D94A3"}
+                                      >{`Rating: ${course.courseRating}`}</Text>
+                                    </Grid>
+                                  </WrapItem>
+                                </Box>
+                              </AccordionButton>
+                            </Text>
+                          </AccordionItem>
+                        ))}
+                    </Accordion>
+                  )}
                 </Box>
               </CardBody>
             </Card>

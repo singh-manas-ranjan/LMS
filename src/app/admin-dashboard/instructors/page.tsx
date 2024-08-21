@@ -11,6 +11,7 @@ import {
 import React from "react";
 import { sxScrollbar } from "../../../../public/scrollbarStyle";
 import UsersList from "@/app/ui/adminDashboard/users/UsersList";
+import FilterUser from "@/app/ui/adminDashboard/instructors/FilterUser";
 
 const main = {
   width: "100%",
@@ -42,34 +43,7 @@ const AdminInstructor = async () => {
           p={{ base: 3, lg: 0 }}
           w={"100%"}
         >
-          <Box width={{ base: "100%" }} paddingInline={{ md: 2 }}>
-            <FormControl w={"100%"}>
-              <FormLabel fontSize={"sm"}>Search Filter</FormLabel>
-              <Input
-                type="text"
-                size={"sm"}
-                placeholder="search"
-                borderRadius={4}
-              />
-            </FormControl>
-            <FormControl mt={3}>
-              <FormLabel fontSize={"sm"}>Location</FormLabel>
-              <Select size={"sm"} placeholder="Select location">
-                <option>Bengaluru</option>
-              </Select>
-            </FormControl>
-            <FormControl mt={3}>
-              <FormLabel fontSize={"sm"}>Courses</FormLabel>
-              <Select size={"sm"} placeholder="Select course">
-                <option>JavaScript</option>
-              </Select>
-            </FormControl>
-            <FormControl mt={5} display={"grid"}>
-              <Button colorScheme="teal" size={"sm"}>
-                Search
-              </Button>
-            </FormControl>
-          </Box>
+          <FilterUser />
         </Box>
         <Box
           flex={4}

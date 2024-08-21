@@ -137,7 +137,7 @@ const Navbar = ({ userId }: { userId: string }) => {
       justify="space-between"
       align="center"
       p="4"
-      bg="#fff"
+      bg="#F0FFFF"
       borderBottomWidth="1px"
       borderBottomColor="gray.200"
     >
@@ -150,13 +150,24 @@ const Navbar = ({ userId }: { userId: string }) => {
         >
           <MenuIcon size={18} />
         </Button>
-        <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
+        <Drawer
+          placement={"left"}
+          onClose={onClose}
+          isOpen={isOpen}
+          size={"xs"}
+        >
           <DrawerOverlay />
           <DrawerContent>
             <DrawerCloseButton />
-            <DrawerHeader borderBottomWidth="1px">Learnopia</DrawerHeader>
-            <DrawerBody>
-              <Flex direction="column" rowGap="5" mt={5}>
+            <DrawerHeader
+              borderBottomWidth="1px"
+              bg="#F0FFFF"
+              color={"#044F63"}
+            >
+              Learnopia
+            </DrawerHeader>
+            <DrawerBody bg={"#F0FFFF"}>
+              <Flex direction="column" rowGap={5} mt={5}>
                 {endpoints.map((link, idx) => {
                   const IconComponent = link.icon;
                   return (
@@ -173,8 +184,20 @@ const Navbar = ({ userId }: { userId: string }) => {
                         columnGap={4}
                         _hover={{ textDecoration: "none" }}
                       >
-                        <Box as={IconComponent} color="#044F63" size={20} />
-                        <Text>{link.name}</Text>
+                        <Box
+                          as={IconComponent}
+                          size={20}
+                          color={
+                            pathname.includes(link.href) ? "#0275d8" : "#044F63"
+                          }
+                        />
+                        <Text
+                          color={
+                            pathname.includes(link.href) ? "#0275d8" : "#044F63"
+                          }
+                        >
+                          {link.name}
+                        </Text>
                       </Box>
                     </NextLink>
                   );
