@@ -7,35 +7,44 @@ import {
   Input,
   Select,
 } from "@chakra-ui/react";
-import router from "next/router";
-import React from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
-interface TFilter {
+export interface TFilter {
   name: string;
   location: string;
-  course: string;
+  domain: string;
 }
 
 const FilterUser = () => {
-  const { register, handleSubmit, control } = useForm<TFilter>();
+  const searchParams = useSearchParams();
+  const searchValues: TFilter = {
+    name: searchParams.get("name") ?? "",
+    location: searchParams.get("location") ?? "",
+    domain: searchParams.get("domain") ?? "",
+  };
+  const { register, handleSubmit, control } = useForm<TFilter>({
+    values: searchValues,
+  });
+
+  const router = useRouter();
+  const pathName = usePathname();
 
   const onSubmit = async (data: TFilter) => {
     const filteredData: Record<string, string> = {};
 
     if (data.name) filteredData.name = data.name;
     if (data.location) filteredData.location = data.location;
-    if (data.course) filteredData.course = data.course;
+    if (data.domain) filteredData.domain = data.domain;
 
     const query = new URLSearchParams(filteredData).toString();
-
-    // router.push({
-    //   pathname: router.pathname,
-    //   query: query,
-    // });
-
-    console.log(query);
+    router.push(`${pathName}?${query}`);
   };
+
+  const handleClear = () => {
+    router.push(pathName);
+  };
+
   return (
     <Box width={{ base: "100%" }} paddingInline={{ md: 2 }}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -50,30 +59,40 @@ const FilterUser = () => {
           />
         </FormControl>
         <FormControl mt={3}>
-          <FormLabel fontSize={"sm"}>Location</FormLabel>
+          <FormLabel fontSize={"sm"}>Search By Location</FormLabel>
           <Controller
             name="location"
             control={control}
-            render={(fields) => (
-              <Select size={"sm"} placeholder="Select location" {...fields}>
-                <option>Bengaluru</option>
+            render={({ field }) => (
+              <Select size={"sm"} placeholder="Select location" {...field}>
+                <option value="Bengaluru">Bengaluru</option>
               </Select>
             )}
           />
         </FormControl>
         <FormControl mt={3}>
-          <FormLabel fontSize={"sm"}>Course</FormLabel>
+          <FormLabel fontSize={"sm"}>Search By Domain</FormLabel>
           <Controller
-            name="course"
+            name="domain"
             control={control}
-            render={(fields) => (
-              <Select size={"sm"} placeholder="Select course" {...fields}>
-                <option>JavaScript</option>
+            render={({ field }) => (
+              <Select size={"sm"} placeholder="Select course" {...field}>
+                <option value="Software Testing">Software Testing</option>
+                <option value="Front End">Front End</option>
+                <option value="Back End">Front End</option>
               </Select>
             )}
           />
         </FormControl>
-        <FormControl mt={5} display={"grid"}>
+        <FormControl mt={5} display={"grid"} rowGap={3}>
+          <Button
+            type="button"
+            colorScheme="orange"
+            size={"sm"}
+            onClick={() => handleClear()}
+          >
+            Clear
+          </Button>
           <Button type="submit" colorScheme="teal" size={"sm"}>
             Search
           </Button>
@@ -83,4 +102,4 @@ const FilterUser = () => {
   );
 };
 
-export default React.memo(FilterUser);
+export default FilterUser;

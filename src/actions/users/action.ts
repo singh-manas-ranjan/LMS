@@ -13,7 +13,7 @@ async function fetchAllUsers(
     return users;
   } catch (error) {
     console.error(`Error fetching users for ${userRole}:`, error);
-    return [];
+    return [] as TUser[];
   }
 }
 

@@ -1,14 +1,5 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  FormControl,
-  FormLabel,
-  Input,
-  Select,
-  Button,
-} from "@chakra-ui/react";
-import React from "react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
+import React, { Suspense } from "react";
 import { sxScrollbar } from "../../../../public/scrollbarStyle";
 import UsersList from "@/app/ui/adminDashboard/users/UsersList";
 import FilterUser from "@/app/ui/adminDashboard/instructors/FilterUser";
@@ -43,7 +34,9 @@ const AdminInstructor = async () => {
           p={{ base: 3, lg: 0 }}
           w={"100%"}
         >
-          <FilterUser />
+          <Suspense>
+            <FilterUser />
+          </Suspense>
         </Box>
         <Box
           flex={4}
@@ -52,7 +45,9 @@ const AdminInstructor = async () => {
           h={"100%"}
           sx={sxScrollbar}
         >
-          <UsersList userRole="instructors" />
+          <Suspense>
+            <UsersList userRole="instructors" />
+          </Suspense>
         </Box>
       </Box>
     </Box>

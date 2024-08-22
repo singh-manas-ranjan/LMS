@@ -1,3 +1,4 @@
+"use client";
 import {
   Badge,
   Box,
@@ -8,27 +9,71 @@ import {
   VStack,
   Image,
   Text,
+  Spinner,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import EnrollModal from "../enrollModal/EnrollModal";
-import { fetchAllUsers } from "@/actions/users/action";
 import { TUser } from "../../navbar/Navbar";
 import InstructorCard from "../../instructorDashboard/InstructorCard";
+import { useSearchParams } from "next/navigation";
+import { fetchAllUsers } from "@/actions/users/action";
 
 const textStyle = {
   fontSize: { base: "xs", xl: "sm" },
 };
-const UsersList = async ({
-  userRole,
-}: {
+
+interface Props {
   userRole: "students" | "instructors";
-}) => {
-  const users: TUser[] = await fetchAllUsers(userRole);
+}
+
+const UsersList = ({ userRole }: Props) => {
+  const searchParams = useSearchParams();
+  const [users, setUsers] = useState<TUser[]>([]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const response = await fetchAllUsers(userRole);
+      setUsers(response);
+    };
+
+    fetchUserData();
+  }, [userRole]);
+
+  const name = searchParams.get("name") || "";
+  const location = searchParams.get("location") || "";
+  const domain = searchParams.get("domain") || "";
+
+  const filteredUsers = users.filter((user) => {
+    return (
+      (!name ||
+        `${user.firstName} ${user.lastName}`
+          .toLowerCase()
+          .includes(name.toLowerCase())) &&
+      (!location ||
+        user.address?.state.toLowerCase().includes(location.toLowerCase())) &&
+      (!domain || user.domain?.toLowerCase().includes(domain.toLowerCase()))
+    );
+  });
+
+  if (users.length === 0) {
+    return (
+      <Box w={"100%"} display={"grid"} placeItems={"center"}>
+        <Spinner
+          thickness="4px"
+          speed="0.85s"
+          color="blue.500"
+          emptyColor="gray.200"
+          size="xl"
+          mt={20}
+        />
+      </Box>
+    );
+  }
 
   if (userRole === "instructors") {
     return (
       <Box display={"grid"} rowGap={5} p={".5rem"}>
-        {users.map((user, idx) => (
+        {filteredUsers.map((user, idx) => (
           <InstructorCard key={idx} instructor={user} />
         ))}
       </Box>
@@ -146,4 +191,4 @@ const UsersList = async ({
   );
 };
 
-export default UsersList;
+export default React.memo(UsersList);

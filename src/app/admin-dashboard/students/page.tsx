@@ -9,7 +9,7 @@ import {
   VStack,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { Suspense } from "react";
 import { sxScrollbar } from "../../../../public/scrollbarStyle";
 import UsersList from "@/app/ui/adminDashboard/users/UsersList";
 
@@ -127,7 +127,9 @@ const AdminStudents = async () => {
           </Card>
         </Box>
         <Box overflowY={"scroll"} w={"100%"} h={"100%"} sx={sxScrollbar}>
-          <UsersList userRole="students" />
+          <Suspense>
+            <UsersList userRole="students" />
+          </Suspense>
         </Box>
       </Box>
     </Box>
