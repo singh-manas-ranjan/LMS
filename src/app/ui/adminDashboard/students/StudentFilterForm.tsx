@@ -2,12 +2,8 @@
 import { Box, Button, FormControl, Input, Select } from "@chakra-ui/react";
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { TUser } from "../../navbar/Navbar";
-
-interface Props {
-  students: TUser[];
-}
 
 type SearchType = "name" | "course" | "location";
 
@@ -16,12 +12,7 @@ interface TSearch {
   searchBy: SearchType;
 }
 
-type TQueryParam = {
-  key: SearchType;
-  value: string;
-};
-
-const StudentFilterForm = ({ students }: Props) => {
+const StudentFilterForm = () => {
   const pathname = usePathname();
   const router = useRouter();
 

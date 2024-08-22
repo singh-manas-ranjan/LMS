@@ -13,7 +13,6 @@ import React, { Suspense } from "react";
 import { sxScrollbar } from "../../../../public/scrollbarStyle";
 import UsersList from "@/app/ui/adminDashboard/users/UsersList";
 import StudentFilterForm from "@/app/ui/adminDashboard/students/StudentFilterForm";
-import { fetchAllUsers } from "@/actions/users/action";
 
 const main = {
   width: "100%",
@@ -27,7 +26,6 @@ const main = {
 };
 
 const AdminStudents = async () => {
-  const studentsList = await fetchAllUsers("students");
   return (
     <Box as="main" sx={main} overflow={"hidden"}>
       <Flex p={".5rem"} alignItems={"center"}>
@@ -37,7 +35,7 @@ const AdminStudents = async () => {
         <Flex></Flex>
       </Flex>
       <Suspense>
-        <StudentFilterForm students={studentsList} />
+        <StudentFilterForm />
       </Suspense>
       <Box w={"100%"} h={"100%"}>
         <Box display={"grid"} rowGap={5} p={".5rem"}>

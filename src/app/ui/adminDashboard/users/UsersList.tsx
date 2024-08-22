@@ -77,7 +77,9 @@ const UsersList = ({ userRole }: Props) => {
   if (filteredUsers.length === 0) {
     return (
       <Box w={"100%"} display={"grid"} placeItems={"center"} paddingBlock={10}>
-        <Text fontSize={"xl"}>{`No ${userRole} found`}</Text>
+        <Text
+          fontSize={{ base: "sm", ld: "md" }}
+        >{`No ${userRole} found`}</Text>
       </Box>
     );
   }
