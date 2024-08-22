@@ -39,19 +39,23 @@ const UsersList = ({ userRole }: Props) => {
     fetchUserData();
   }, [userRole]);
 
-  const name = searchParams.get("name") || "";
-  const location = searchParams.get("location") || "";
-  const domain = searchParams.get("domain") || "";
+  const name = searchParams.get("name")?.toLowerCase() || "";
+  const location = searchParams.get("location")?.toLowerCase() || "";
+  const domain = searchParams.get("domain")?.toLowerCase() || "";
 
   const filteredUsers = users.filter((user) => {
+    const userFullName = `${user.firstName} ${user.lastName}`.toLowerCase();
+    const userLocation = user.address?.city?.toLowerCase() || "";
+    const userDomain = user.domain?.toLowerCase() || "";
+    const userServices =
+      user.services?.map((service) => service.toLowerCase()) || [];
+
     return (
-      (!name ||
-        `${user.firstName} ${user.lastName}`
-          .toLowerCase()
-          .includes(name.toLowerCase())) &&
-      (!location ||
-        user.address?.city.toLowerCase().includes(location.toLowerCase())) &&
-      (!domain || user.domain?.toLowerCase().includes(domain.toLowerCase()))
+      (!name || userFullName.includes(name)) &&
+      (!location || userLocation.includes(location)) &&
+      (!domain ||
+        userDomain.includes(domain) ||
+        userServices.some((service) => service.includes(domain)))
     );
   });
 

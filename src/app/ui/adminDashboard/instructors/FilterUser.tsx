@@ -69,13 +69,14 @@ const FilterUser = () => {
                 <option value="Hyderabad ">Hyderabad </option>
                 <option value="Pune">Pune </option>
                 <option value="Noida">Noida </option>
+                <option value="New Delhi">New Delhi </option>
                 <option value="Gurugram">Gurugram </option>
               </Select>
             )}
           />
         </FormControl>
         <FormControl mt={3}>
-          <FormLabel fontSize={"sm"}>Search By Domain</FormLabel>
+          <FormLabel fontSize={"sm"}>Search By Course</FormLabel>
           <Controller
             name="domain"
             control={control}
