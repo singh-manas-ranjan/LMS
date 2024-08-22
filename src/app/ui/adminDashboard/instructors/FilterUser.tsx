@@ -65,13 +65,11 @@ const FilterUser = () => {
             control={control}
             render={({ field }) => (
               <Select size={"sm"} placeholder="Select location" {...field}>
-                <option value="Bengaluru">Bengaluru</option>
-                <option value="New Delhi">New Delhi</option>
-                <option value="Hyderabad">Hyderabad</option>
-                <option value="Chennai">Chennai</option>
-                <option value="Mumbai">Mumbai</option>
-                <option value="Pune">Pune</option>
-                <option value="Noida">Noida</option>
+                <option value="Bengaluru">Bengaluru </option>
+                <option value="Hyderabad ">Hyderabad </option>
+                <option value="Pune">Pune </option>
+                <option value="Noida">Noida </option>
+                <option value="Gurugram">Gurugram </option>
               </Select>
             )}
           />
@@ -88,6 +86,10 @@ const FilterUser = () => {
                 <option value="Back End">Back End</option>
                 <option value="DevOps">DevOps</option>
                 <option value="UI/UX">UI/UX</option>
+                <option value="Java">Java</option>
+                <option value="JavaScript">JavaScript</option>
+                <option value="Python">Python</option>
+                <option value="Database">Database</option>
               </Select>
             )}
           />

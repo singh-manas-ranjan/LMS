@@ -89,6 +89,7 @@ interface Props {
 export type TAddress = {
   addressLine1: string;
   addressLine2: string;
+  city: string;
   state: string;
   country: string;
 };

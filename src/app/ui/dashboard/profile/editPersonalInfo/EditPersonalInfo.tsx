@@ -37,7 +37,6 @@ import { FaStreetView } from "react-icons/fa6";
 import { GiPathDistance } from "react-icons/gi";
 import {
   addUserInfoToLocalStorage,
-  getUserInfoFromLocalStorage,
   removeUserInfoFromLocalStorage,
   TAddress,
   TUser,
@@ -163,7 +162,6 @@ const EditPersonalInfo = ({
   };
 
   const onAddressSubmit = async (e: TAddress) => {
-    // console.log(e);
     const { firstName, lastName, email, phone, gender, qualification } =
       userInfo;
     try {

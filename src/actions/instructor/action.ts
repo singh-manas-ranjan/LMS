@@ -6,6 +6,7 @@ export type TAddress = {
   addressLine1: string;
   addressLine2: string;
   state: string;
+  city: string;
   country: string;
 };
 

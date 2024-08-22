@@ -50,7 +50,7 @@ const UsersList = ({ userRole }: Props) => {
           .toLowerCase()
           .includes(name.toLowerCase())) &&
       (!location ||
-        user.address?.state.toLowerCase().includes(location.toLowerCase())) &&
+        user.address?.city.toLowerCase().includes(location.toLowerCase())) &&
       (!domain || user.domain?.toLowerCase().includes(domain.toLowerCase()))
     );
   });
