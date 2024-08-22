@@ -13,7 +13,7 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 export interface TFilter {
   name: string;
   location: string;
-  domain: string;
+  course: string;
 }
 
 const FilterUser = () => {
@@ -21,7 +21,7 @@ const FilterUser = () => {
   const searchValues: TFilter = {
     name: searchParams.get("name") ?? "",
     location: searchParams.get("location") ?? "",
-    domain: searchParams.get("domain") ?? "",
+    course: searchParams.get("course") ?? "",
   };
   const { register, handleSubmit, control } = useForm<TFilter>({
     values: searchValues,
@@ -35,7 +35,7 @@ const FilterUser = () => {
 
     if (data.name) filteredData.name = data.name;
     if (data.location) filteredData.location = data.location;
-    if (data.domain) filteredData.domain = data.domain;
+    if (data.course) filteredData.course = data.course;
 
     const query = new URLSearchParams(filteredData).toString();
     router.push(`${pathName}?${query}`);
@@ -78,7 +78,7 @@ const FilterUser = () => {
         <FormControl mt={3}>
           <FormLabel fontSize={"sm"}>Search By Course</FormLabel>
           <Controller
-            name="domain"
+            name="course"
             control={control}
             render={({ field }) => (
               <Select size={"sm"} placeholder="Select course" {...field}>

@@ -41,21 +41,21 @@ const UsersList = ({ userRole }: Props) => {
 
   const name = searchParams.get("name")?.toLowerCase() || "";
   const location = searchParams.get("location")?.toLowerCase() || "";
-  const domain = searchParams.get("domain")?.toLowerCase() || "";
+  const course = searchParams.get("course")?.toLowerCase() || "";
 
   const filteredUsers = users.filter((user) => {
     const userFullName = `${user.firstName} ${user.lastName}`.toLowerCase();
     const userLocation = user.address?.city?.toLowerCase() || "";
-    const userDomain = user.domain?.toLowerCase() || "";
+    const userCourse = user.domain?.toLowerCase() || "";
     const userServices =
       user.services?.map((service) => service.toLowerCase()) || [];
 
     return (
       (!name || userFullName.includes(name)) &&
       (!location || userLocation.includes(location)) &&
-      (!domain ||
-        userDomain.includes(domain) ||
-        userServices.some((service) => service.includes(domain)))
+      (!course ||
+        userCourse.includes(course) ||
+        userServices.some((service) => service.includes(course)))
     );
   });
 
@@ -74,6 +74,14 @@ const UsersList = ({ userRole }: Props) => {
     );
   }
 
+  if (filteredUsers.length === 0) {
+    return (
+      <Box w={"100%"} display={"grid"} placeItems={"center"} paddingBlock={10}>
+        <Text fontSize={"xl"}>{`No ${userRole} found`}</Text>
+      </Box>
+    );
+  }
+
   if (userRole === "instructors") {
     return (
       <Box display={"grid"} rowGap={5} p={".5rem"}>
@@ -86,7 +94,7 @@ const UsersList = ({ userRole }: Props) => {
 
   return (
     <Box display={"grid"} rowGap={5} p={".5rem"}>
-      {users.map((student) => (
+      {filteredUsers.map((student) => (
         <Card
           key={student._id}
           color="teal"
