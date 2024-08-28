@@ -28,15 +28,17 @@ const main = {
 const AdminStudents = async () => {
   return (
     <Box as="main" sx={main} overflow={"hidden"}>
-      <Flex p={".5rem"} alignItems={"center"}>
+      <Flex p={".5rem"} justifyContent={"space-between"}>
         <Heading size={{ base: "sm", sm: "md" }} pl={".5rem"}>
           Students
         </Heading>
-        <Flex></Flex>
+        <Box>
+          <Suspense>
+            <StudentFilterForm />
+          </Suspense>
+        </Box>
       </Flex>
-      <Suspense>
-        <StudentFilterForm />
-      </Suspense>
+
       <Box w={"100%"} h={"100%"}>
         <Box display={"grid"} rowGap={5} p={".5rem"}>
           <Card color="#364A63" boxShadow={"none"} direction={"row"} h={"60px"}>

@@ -32,7 +32,7 @@ const StudentFilterForm = () => {
   };
 
   return (
-    <Box width={"100%"} mt={3} pr={{ base: 5, md: 10 }}>
+    <Box width={"100%"} pr={{ base: 5, md: 10 }}>
       <form
         style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
         onSubmit={handleSubmit(onSubmit)}
